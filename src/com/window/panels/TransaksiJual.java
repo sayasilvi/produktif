@@ -9,7 +9,7 @@ import com.manage.Waktu;
 import com.media.Audio;
 import com.media.Gambar;
 import com.sun.glass.events.KeyEvent;
-import com.users.Karyawan;
+//import com.users.Karyawan;
 import com.users.Users;
 import java.awt.Color;
 import java.awt.Cursor;
@@ -30,7 +30,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class TransaksiJual extends javax.swing.JPanel {
 
-    private final Karyawan karyawan = new Karyawan();
+//    private final Karyawan karyawan = new Karyawan();
 
     private final Users user = new Users();
     private final String namadb = Database.DB_NAME;
@@ -59,7 +59,7 @@ public class TransaksiJual extends javax.swing.JPanel {
         this.inpTotalHarga.setText(text.toMoneyCase("0"));
         this.inpID.setText("<html><p>:&nbsp;" + this.trj.createIDTransaksi() + "</p></html>");
         this.inpNamaPetugas.setText("<html><p>:&nbsp;" + this.user.getCurrentLoginName() + "</p></html>");
-        this.idKaryawan = this.karyawan.getIdKaryawan(this.user.getCurrentLogin());
+        this.idKaryawan = this.user.getIdKaryawan(this.user.getCurrentLogin());
         this.inpSaldo.setText(text.toMoneyCase(Integer.toString(getTotal("saldo", "jumlah_saldo", "WHERE id_saldo = 'S001'"))));
         this.btnBayar.setUI(new javax.swing.plaf.basic.BasicButtonUI());
         this.btnBatal.setUI(new javax.swing.plaf.basic.BasicButtonUI());
@@ -95,7 +95,6 @@ public class TransaksiJual extends javax.swing.JPanel {
     public void closeKoneksi() {
         db.closeConnection();
         user.closeConnection();
-        karyawan.closeConnection();
         barang.closeConnection();
         trj.closeConnection();
     }
@@ -226,6 +225,8 @@ public class TransaksiJual extends javax.swing.JPanel {
         inpHarga = new javax.swing.JLabel();
         inpTotalHarga = new javax.swing.JLabel();
         inpTanggal = new javax.swing.JLabel();
+        txtTotal1 = new javax.swing.JLabel();
+        txtTotal2 = new javax.swing.JLabel();
         txtTotal = new javax.swing.JLabel();
         inpJumlah = new javax.swing.JTextField();
         inpCariBarang = new javax.swing.JTextField();
@@ -241,48 +242,50 @@ public class TransaksiJual extends javax.swing.JPanel {
         background = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
-        setPreferredSize(new java.awt.Dimension(957, 650));
+        setPreferredSize(new java.awt.Dimension(1158, 728));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         inpSaldo.setBackground(new java.awt.Color(222, 222, 222));
         inpSaldo.setForeground(new java.awt.Color(255, 255, 255));
-        add(inpSaldo, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 11, 190, 36));
+        add(inpSaldo, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 10, 260, 34));
 
         inpID.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
         inpID.setForeground(new java.awt.Color(0, 0, 0));
         inpID.setText(":");
-        add(inpID, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 68, 200, 32));
+        add(inpID, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 70, 200, 26));
 
         inpNamaPetugas.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         inpNamaPetugas.setForeground(new java.awt.Color(0, 0, 0));
         inpNamaPetugas.setText(":");
-        add(inpNamaPetugas, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 115, 200, 32));
+        add(inpNamaPetugas, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 112, 250, 26));
 
         inpIDBarang.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
         inpIDBarang.setForeground(new java.awt.Color(0, 0, 0));
         inpIDBarang.setText(": ");
-        add(inpIDBarang, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 162, 200, 32));
+        add(inpIDBarang, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 155, 200, 26));
 
         inpNamaBarang.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         inpNamaBarang.setForeground(new java.awt.Color(0, 0, 0));
         inpNamaBarang.setText(":");
-        add(inpNamaBarang, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 207, 200, 32));
+        add(inpNamaBarang, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 199, 200, 26));
 
         inpHarga.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
         inpHarga.setForeground(new java.awt.Color(0, 0, 0));
         inpHarga.setText(":");
-        add(inpHarga, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 255, 200, 32));
+        add(inpHarga, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 242, 200, 26));
 
         inpTotalHarga.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
         inpTotalHarga.setForeground(new java.awt.Color(0, 0, 0));
         inpTotalHarga.setText(":");
-        add(inpTotalHarga, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 347, 200, 32));
+        add(inpTotalHarga, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 327, 200, 27));
 
         inpTanggal.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         inpTanggal.setForeground(new java.awt.Color(0, 0, 0));
         inpTanggal.setText(": 15 Oktober 2022 | 17:55");
-        add(inpTanggal, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 393, 200, 32));
-        add(txtTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 666, 160, 22));
+        add(inpTanggal, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 370, 200, 27));
+        add(txtTotal1, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 336, 340, 29));
+        add(txtTotal2, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 372, 340, 30));
+        add(txtTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 408, 340, 30));
 
         inpJumlah.setBackground(new java.awt.Color(255, 255, 255));
         inpJumlah.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
@@ -309,7 +312,7 @@ public class TransaksiJual extends javax.swing.JPanel {
                 inpJumlahKeyTyped(evt);
             }
         });
-        add(inpJumlah, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 300, 50, 32));
+        add(inpJumlah, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 285, 50, 27));
 
         inpCariBarang.setBackground(new java.awt.Color(255, 255, 255));
         inpCariBarang.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
@@ -327,7 +330,7 @@ public class TransaksiJual extends javax.swing.JPanel {
                 inpCariBarangKeyTyped(evt);
             }
         });
-        add(inpCariBarang, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 53, 345, 26));
+        add(inpCariBarang, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 55, 360, 35));
         inpCariBarang.getAccessibleContext().setAccessibleDescription("");
 
         tabelDataBarang.setBackground(new java.awt.Color(255, 255, 255));
@@ -365,7 +368,7 @@ public class TransaksiJual extends javax.swing.JPanel {
         });
         jScrollPane2.setViewportView(tabelDataBarang);
 
-        add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(435, 80, 500, 350));
+        add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 90, 590, 200));
 
         tabelData.setBackground(new java.awt.Color(255, 255, 255));
         tabelData.setFont(new java.awt.Font("Ebrima", 1, 14)); // NOI18N
@@ -402,11 +405,11 @@ public class TransaksiJual extends javax.swing.JPanel {
         });
         jScrollPane3.setViewportView(tabelData);
 
-        add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 460, 930, 200));
+        add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 490, 1090, 210));
 
         btnSimpan.setBackground(new java.awt.Color(34, 119, 237));
         btnSimpan.setForeground(new java.awt.Color(255, 255, 255));
-        btnSimpan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/image/gambar_icon/btn-tambah-075.png"))); // NOI18N
+        btnSimpan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/image/gambar_icon/btn-tambah.png"))); // NOI18N
         btnSimpan.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         btnSimpan.setOpaque(false);
         btnSimpan.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -425,11 +428,11 @@ public class TransaksiJual extends javax.swing.JPanel {
                 btnSimpanActionPerformed(evt);
             }
         });
-        add(btnSimpan, new org.netbeans.lib.awtextra.AbsoluteConstraints(17, 712, 150, 48));
+        add(btnSimpan, new org.netbeans.lib.awtextra.AbsoluteConstraints(37, 424, -1, -1));
 
         btnEdit.setBackground(new java.awt.Color(34, 119, 237));
         btnEdit.setForeground(new java.awt.Color(255, 255, 255));
-        btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/image/gambar_icon/btn-edit-075.png"))); // NOI18N
+        btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/image/gambar_icon/btn-edit.png"))); // NOI18N
         btnEdit.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         btnEdit.setOpaque(false);
         btnEdit.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -448,11 +451,11 @@ public class TransaksiJual extends javax.swing.JPanel {
                 btnEditActionPerformed(evt);
             }
         });
-        add(btnEdit, new org.netbeans.lib.awtextra.AbsoluteConstraints(197, 712, 150, 48));
+        add(btnEdit, new org.netbeans.lib.awtextra.AbsoluteConstraints(255, 424, -1, -1));
 
         btnHapus.setBackground(new java.awt.Color(34, 119, 237));
         btnHapus.setForeground(new java.awt.Color(255, 255, 255));
-        btnHapus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/image/gambar_icon/btn-hapus-075.png"))); // NOI18N
+        btnHapus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/image/gambar_icon/btn-hapus.png"))); // NOI18N
         btnHapus.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         btnHapus.setOpaque(false);
         btnHapus.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -471,11 +474,11 @@ public class TransaksiJual extends javax.swing.JPanel {
                 btnHapusActionPerformed(evt);
             }
         });
-        add(btnHapus, new org.netbeans.lib.awtextra.AbsoluteConstraints(378, 712, 150, 48));
+        add(btnHapus, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 424, -1, -1));
 
         btnBayar.setBackground(new java.awt.Color(34, 119, 237));
         btnBayar.setForeground(new java.awt.Color(255, 255, 255));
-        btnBayar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/image/gambar_icon/btn-bayar-075.png"))); // NOI18N
+        btnBayar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/image/gambar_icon/btn-bayar.png"))); // NOI18N
         btnBayar.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         btnBayar.setOpaque(false);
         btnBayar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -491,11 +494,11 @@ public class TransaksiJual extends javax.swing.JPanel {
                 btnBayarActionPerformed(evt);
             }
         });
-        add(btnBayar, new org.netbeans.lib.awtextra.AbsoluteConstraints(558, 712, 150, 48));
+        add(btnBayar, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 423, -1, -1));
 
         btnBatal.setBackground(new java.awt.Color(220, 41, 41));
         btnBatal.setForeground(new java.awt.Color(255, 255, 255));
-        btnBatal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/image/gambar_icon/btn-batal-075.png"))); // NOI18N
+        btnBatal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/image/gambar_icon/btn-batal.png"))); // NOI18N
         btnBatal.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         btnBatal.setOpaque(false);
         btnBatal.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -514,9 +517,9 @@ public class TransaksiJual extends javax.swing.JPanel {
                 btnBatalActionPerformed(evt);
             }
         });
-        add(btnBatal, new org.netbeans.lib.awtextra.AbsoluteConstraints(737, 712, 150, 48));
+        add(btnBatal, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 423, -1, -1));
 
-        background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/image/gambar/app-transaksi-jual-new-075.png"))); // NOI18N
+        background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/image/gambar/app-transaksi-jual.png"))); // NOI18N
         add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
@@ -841,11 +844,11 @@ public class TransaksiJual extends javax.swing.JPanel {
     }//GEN-LAST:event_btnSimpanMouseClicked
 
     private void btnSimpanMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSimpanMouseEntered
-        this.btnSimpan.setIcon(Gambar.getAktiveIcon(this.btnSimpan.getIcon().toString()));
+        this.btnSimpan.setIcon(Gambar.getNoAktiveIcon(this.btnSimpan.getIcon().toString()));
     }//GEN-LAST:event_btnSimpanMouseEntered
 
     private void btnSimpanMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSimpanMouseExited
-        this.btnSimpan.setIcon(Gambar.getBiasaIcon(this.btnSimpan.getIcon().toString()));
+        this.btnSimpan.setIcon(Gambar.getNoBiasaIcon(this.btnSimpan.getIcon().toString()));
     }//GEN-LAST:event_btnSimpanMouseExited
 
     private void btnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanActionPerformed
@@ -1027,12 +1030,12 @@ public class TransaksiJual extends javax.swing.JPanel {
 
     private void btnEditMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMouseEntered
         //jika cursor masuk ke btn edit maka ubah btn edit 
-        this.btnEdit.setIcon(Gambar.getAktiveIcon(this.btnEdit.getIcon().toString()));
+        this.btnEdit.setIcon(Gambar.getNoAktiveIcon(this.btnEdit.getIcon().toString()));
     }//GEN-LAST:event_btnEditMouseEntered
 
     private void btnEditMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMouseExited
         //jika cursor keluar dari btn edit maka ubah btn edit 
-        this.btnEdit.setIcon(Gambar.getBiasaIcon(this.btnEdit.getIcon().toString()));
+        this.btnEdit.setIcon(Gambar.getNoBiasaIcon(this.btnEdit.getIcon().toString()));
     }//GEN-LAST:event_btnEditMouseExited
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
@@ -1094,12 +1097,12 @@ public class TransaksiJual extends javax.swing.JPanel {
 
     private void btnHapusMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHapusMouseEntered
         //jika cursor masuk ke btn hapus maka ubah btn hapus 
-        this.btnHapus.setIcon(Gambar.getAktiveIcon(this.btnHapus.getIcon().toString()));
+        this.btnHapus.setIcon(Gambar.getNoAktiveIcon(this.btnHapus.getIcon().toString()));
     }//GEN-LAST:event_btnHapusMouseEntered
 
     private void btnHapusMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHapusMouseExited
         //jika cursor keluar dari btn hapus maka ubah btn hapus 
-        this.btnHapus.setIcon(Gambar.getBiasaIcon(this.btnHapus.getIcon().toString()));
+        this.btnHapus.setIcon(Gambar.getNoBiasaIcon(this.btnHapus.getIcon().toString()));
     }//GEN-LAST:event_btnHapusMouseExited
 
     private void btnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusActionPerformed
@@ -1108,12 +1111,12 @@ public class TransaksiJual extends javax.swing.JPanel {
 
     private void btnBayarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBayarMouseEntered
         //jika cursor masuk dari btn bayar maka ubah btn bayar
-        this.btnBayar.setIcon(Gambar.getAktiveIcon(this.btnBayar.getIcon().toString()));
+        this.btnBayar.setIcon(Gambar.getNoAktiveIcon(this.btnBayar.getIcon().toString()));
     }//GEN-LAST:event_btnBayarMouseEntered
 
     private void btnBayarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBayarMouseExited
         //jika cursor keluar dari btn bayar maka ubah btn bayar
-        this.btnBayar.setIcon(Gambar.getBiasaIcon(this.btnBayar.getIcon().toString()));
+        this.btnBayar.setIcon(Gambar.getNoBiasaIcon(this.btnBayar.getIcon().toString()));
     }//GEN-LAST:event_btnBayarMouseExited
 
     private void btnBayarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBayarActionPerformed
@@ -1148,7 +1151,7 @@ public class TransaksiJual extends javax.swing.JPanel {
                         pst = db.conn.prepareStatement(sql1);
                         pst.setString(1, this.idTr);
                         pst.setString(2, idKaryawan);
-                        pst.setString(3, this.karyawan.getNama(idKaryawan));
+                        pst.setString(3, this.user.getNamaKaryawan(idKaryawan));
                         pst.setInt(4, text.toIntCase(txtTotal.getText()));
                         pst.setInt(5, keuntungan);
                         pst.setString(6, waktu.getCurrentDateTime());
@@ -1209,12 +1212,12 @@ public class TransaksiJual extends javax.swing.JPanel {
 
     private void btnBatalMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBatalMouseEntered
         //jika cursor masuk dari btn batal maka ubah btn batal 
-        this.btnBatal.setIcon(Gambar.getAktiveIcon(this.btnBatal.getIcon().toString()));
+        this.btnBatal.setIcon(Gambar.getNoAktiveIcon(this.btnBatal.getIcon().toString()));
     }//GEN-LAST:event_btnBatalMouseEntered
 
     private void btnBatalMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBatalMouseExited
         //jika cursor keluar dari btn batal maka ubah btn batal 
-        this.btnBatal.setIcon(Gambar.getBiasaIcon(this.btnBatal.getIcon().toString()));
+        this.btnBatal.setIcon(Gambar.getNoBiasaIcon(this.btnBatal.getIcon().toString()));
     }//GEN-LAST:event_btnBatalMouseExited
 
     private void btnBatalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBatalActionPerformed
@@ -1331,5 +1334,7 @@ public class TransaksiJual extends javax.swing.JPanel {
     private javax.swing.JTable tabelData;
     private javax.swing.JTable tabelDataBarang;
     private javax.swing.JLabel txtTotal;
+    private javax.swing.JLabel txtTotal1;
+    private javax.swing.JLabel txtTotal2;
     // End of variables declaration//GEN-END:variables
 }

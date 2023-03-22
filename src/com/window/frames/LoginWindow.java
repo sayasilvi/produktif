@@ -246,9 +246,10 @@ public class LoginWindow extends javax.swing.JFrame {
             if (!kosong) {
                 JOptionPane.showMessageDialog(this, "Mohon tunggu sebentar\nSedang Memeriksa Username dan Password");
                 boolean login = user.login(this.username, password);
+//                login = true;
                 if (login) {
                     Audio.play(Audio.SOUND_INFO);
-                    JOptionPane.showMessageDialog(this, "Login Berhasil!\n\nSelamat datang " + user.getData(UserLevels.KARYAWAN.name(), "nama_karyawan", "WHERE id_karyawan = '" + user.getData(UserLevels.USERS.name(), "id_karyawan", "WHERE username = '" + this.username + "'") + "'"));
+                    JOptionPane.showMessageDialog(this, "Login Berhasil!\n\nSelamat datang " + user.getData(UserLevels.USERS.name(), "nama_karyawan", "WHERE id_karyawan = '" + user.getData(UserLevels.USERS.name(), "id_karyawan", "WHERE username = '" + this.username + "'") + "'"));
                     // membuka window dashboard
                     java.awt.EventQueue.invokeLater(new Runnable() {
                         @Override

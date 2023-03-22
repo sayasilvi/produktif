@@ -56,7 +56,7 @@ public class Dashboard extends javax.swing.JPanel {
     public Dashboard() throws ParseException {
         initComponents();
         db.startConnection();
-        System.out.println("dahsboard");
+//        System.out.println("dahsboard");
         updateTabel();
         
         this.hari = waktu.getTanggal();

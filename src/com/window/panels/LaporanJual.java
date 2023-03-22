@@ -12,7 +12,7 @@ import com.window.panels.detailLaporanJual;
 import com.media.Audio;
 import com.media.Gambar;
 import com.sun.glass.events.KeyEvent;
-import com.users.Karyawan;
+//import com.users.Karyawan;
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
@@ -40,7 +40,7 @@ public class LaporanJual extends javax.swing.JPanel {
     private final String namadb = Database.DB_NAME;
     private final ManageTransaksiJual trj = new ManageTransaksiJual();
 
-    private final Karyawan karyawan = new Karyawan();
+//    private final Karyawan karyawan = new Karyawan();
 
     private final Chart chart = new Chart();
 
@@ -292,7 +292,6 @@ public class LaporanJual extends javax.swing.JPanel {
             }
             db.closeConnection();
 
-            karyawan.closeConnection();
             trj.closeConnection();
         } catch (SQLException ex) {
             Logger.getLogger(LaporanJual.class.getName()).log(Level.SEVERE, null, ex);

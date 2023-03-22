@@ -161,6 +161,12 @@ public class Gambar {
     public static boolean isAktifIcon(String icon){
         return icon.substring(icon.lastIndexOf("-")-5, icon.lastIndexOf(".")-4).contains("aktif");
     }
+    public static boolean isNoHoverIcon(String icon){
+        return icon.substring(icon.lastIndexOf("-")-5, icon.lastIndexOf(".")).contains("hover");
+    }
+    public static boolean isNoAktifIcon(String icon){
+        return icon.substring(icon.lastIndexOf("-")-5, icon.lastIndexOf(".")).contains("aktif");
+    }
     
     public static ImageIcon getBiasaIcon(String icon){
         FileManager fm = new FileManager();
@@ -191,6 +197,32 @@ public class Gambar {
 //        System.out.println(file);
         return new ImageIcon(Gambar.DIREKTORY_ICON + file +format);
     }
+    public static ImageIcon getNoBiasaIcon(String icon){
+        FileManager fm = new FileManager();
+        String file = fm.getNamaFile(icon),
+                format = fm.getFormatFile(icon);
+        file = file.substring(0, file.lastIndexOf(".")-6);
+        return new ImageIcon(Gambar.DIREKTORY_ICON + file+format);
+    }
+    public static ImageIcon getNoHoverIcon(String icon){
+        FileManager fm = new FileManager();
+        String file = fm.getNamaFile(icon),
+                format = fm.getFormatFile(icon);
+        file = file.substring(0, file.lastIndexOf(".")) + "-hover";
+        return new ImageIcon(Gambar.DIREKTORY_ICON + file+format);
+    }
+    public static ImageIcon getNoAktiveIcon(String icon){
+        FileManager fm = new FileManager();
+        String file = fm.getNamaFile(icon),
+                format = fm.getFormatFile(icon);
+        if(Gambar.isNoHoverIcon(icon)|| Gambar.isNoAktifIcon(icon)){
+            System.out.println("hover atau aktif");
+            file = file.substring(0, file.lastIndexOf(".")-6) + "-aktif";
+        }else{
+            file = file.substring(0, file.lastIndexOf(".")) + "-aktif";
+        }
+        return new ImageIcon(Gambar.DIREKTORY_ICON + file+format);
+    }
     
     
     public static ImageIcon getDarkIcon(String icon){
@@ -199,10 +231,10 @@ public class Gambar {
         String file = fm.getNamaFile(icon),
                 file1 = fm.getNamaFile(icon),
                format = fm.getFormatFile(icon);
-        System.out.println("file nya"+file);
-        System.out.println("format nya"+format);
+//        System.out.println("file nya"+file);
+//        System.out.println("format nya"+format);
         file = file.substring(0, file.lastIndexOf(".")) + "-dark";
-        System.out.println("file baru "+file);
+//        System.out.println("file baru "+file);
         return new ImageIcon(Gambar.DIREKTORY_ICONS + file + format);
     }
     

@@ -10,7 +10,7 @@ package com.data.db;
 public enum DatabaseTables {
     
     USERS,
-    KARYAWAN,
+//    KARYAWAN,
     SUPPLIER,
     BARANG,
     TRANSAKSI_JUAL,

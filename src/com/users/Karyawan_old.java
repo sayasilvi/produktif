@@ -12,7 +12,7 @@ import java.sql.SQLException;
  *
  * @author Achmad Baihaqi
  */
-public class Karyawan extends Users {
+public class Karyawan_old extends Users {
 
     private final Text text = new Text();
     //digunakan untuk membuat id karyawan
@@ -24,35 +24,35 @@ public class Karyawan extends Users {
         return super.isExistID(idKaryawan, UserLevels.KARYAWAN, UserData.ID_KARYAWAN);
     }
     //digunakan utuk menambahkan karyawan dan user 
-    public final boolean addKaryawan(String namaKaryawan, String noTelp, String alamat, String pass, UserLevels level, String username) {
-        boolean isAdd = false;
-        PreparedStatement pst;
-        String idKaryawan = this.createID();
-        try {
-            // validasi data sebelum ditambahkan
-            if (this.validateAddKaryawan(idKaryawan, namaKaryawan, noTelp, alamat)) {
-                Log.addLog("Menambahkan data karyawan dengan nama '" + namaKaryawan + "'");
-                // menambahkan data kedalam Database
-                pst = this.conn.prepareStatement("INSERT INTO karyawan VALUES (?, ?, ?, ?)");
-                pst.setString(1, idKaryawan);
-                pst.setString(2, text.toCapitalize(namaKaryawan));
-                pst.setString(3, noTelp);
-                pst.setString(4, text.toCapitalize(alamat));
-
-                // mengekusi query
-                isAdd = pst.executeUpdate() > 0;
-            }
-            // mengecek apakah karyawan sudah ditambahkan ke tabel user
-            if (isAdd) {
-                // menambahkan data user ke tabel user
-                return super.addUser(username, pass, level, idKaryawan);
-            }
-        } catch (SQLException | InValidUserDataException ex) {
-            this.deleteKaryawan(idKaryawan);
-            System.out.println("Error Message : " + ex.getMessage());
-        }
-        return false;
-    }
+//    public final boolean addKaryawan(String namaKaryawan, String noTelp, String alamat, String pass, UserLevels level, String username) {
+//        boolean isAdd = false;
+//        PreparedStatement pst;
+//        String idKaryawan = this.createID();
+//        try {
+//            // validasi data sebelum ditambahkan
+//            if (this.validateAddKaryawan(idKaryawan, namaKaryawan, noTelp, alamat)) {
+//                Log.addLog("Menambahkan data karyawan dengan nama '" + namaKaryawan + "'");
+//                // menambahkan data kedalam Database
+//                pst = this.conn.prepareStatement("INSERT INTO karyawan VALUES (?, ?, ?, ?)");
+//                pst.setString(1, idKaryawan);
+//                pst.setString(2, text.toCapitalize(namaKaryawan));
+//                pst.setString(3, noTelp);
+//                pst.setString(4, text.toCapitalize(alamat));
+//
+//                // mengekusi query
+//                isAdd = pst.executeUpdate() > 0;
+//            }
+//            // mengecek apakah karyawan sudah ditambahkan ke tabel user
+//            if (isAdd) {
+//                // menambahkan data user ke tabel user
+//                return super.addUser(username, pass, level, idKaryawan);
+//            }
+//        } catch (SQLException | InValidUserDataException ex) {
+//            this.deleteKaryawan(idKaryawan);
+//            System.out.println("Error Message : " + ex.getMessage());
+//        }
+//        return false;
+//    }
 
     public boolean validateAddKaryawan(String idKaryawan, String namaKaryawan, String noTelp, String alamat) {
 
@@ -152,7 +152,7 @@ public class Karyawan extends Users {
 
     public boolean deleteKaryawan(String idKaryawan) {
         Log.addLog("Menghapus akun dengan ID Karyawan'" + idKaryawan + "'.");
-        return super.deleteData(DatabaseTables.KARYAWAN.name(), "id_karyawan", idKaryawan);
+        return super.deleteData(DatabaseTables.USERS.name(), "id_karyawan", idKaryawan);
     }
 
     private String getDataPetugas(String idKaryawan, UserData data) {
@@ -187,10 +187,10 @@ public class Karyawan extends Users {
         return this.setDataKaryawan(idKaryawan, UserData.ALAMAT, newAlamat);
     }
 
-    public static void main(String[] args) {
+//    public static void main(String[] args) {
 
-        Log.createLog();
-        Karyawan karyawan = new Karyawan();
+//        Log.createLog();
+//        Karyawan karyawan = new Karyawan();
 //        System.out.println(petugas.getNama("PG002"));
 //        System.out.println(petugas.getNoTelp("PG002"));
 //        System.out.println(petugas.getAlamat("PG002"));
@@ -198,5 +198,5 @@ public class Karyawan extends Users {
 //        System.out.println("");
 //        System.out.println(petugas.deletePetugas("PG005"));
 
-    }
+//    }
 }

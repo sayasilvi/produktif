@@ -3,7 +3,7 @@ package com.window.dialogs;
 import com.data.app.Log;
 import com.manage.Message;
 import com.media.Gambar;
-import com.users.Karyawan;
+//import com.users.Karyawan;
 import com.users.UserLevels;
 import com.users.Users;
 import java.awt.Color;
@@ -17,7 +17,7 @@ import javax.swing.ImageIcon;
  */
 public class InputKaryawan extends javax.swing.JDialog {
     private boolean tambah = false, edit = false;
-    private final Karyawan karyawan = new Karyawan();
+//    private final Karyawan user = new Karyawan();
     
     public int option;
     
@@ -45,7 +45,7 @@ public class InputKaryawan extends javax.swing.JDialog {
             this.tambah = true;
             // menyetting window untuk tambah data
             this.option = 1;
-            this.idKaryawan = this.karyawan.createID();
+            this.idKaryawan = this.user.karyawanCreateID();
             this.setTitle("Tambah Data Karyawan");
             ImageIcon icon1 = new ImageIcon("src\\resources\\image\\gambar\\app-window-tambahKaryawan-075.png");
             ImageIcon icon2 = new ImageIcon("src\\resources\\image\\gambar_icon\\btn-tambahK-075.png");
@@ -63,14 +63,14 @@ public class InputKaryawan extends javax.swing.JDialog {
             this.background.setIcon(icon1);
             this.btnSimpan.setIcon(icon2);
 
-            // mendapatkan data-data karyawan
-            this.username = this.karyawan.getUsername(this.idKaryawan);
-            this.nama = this.karyawan.getNama(this.idKaryawan);
-            this.alamat = this.karyawan.getAlamat(this.idKaryawan);
-            this.noTelp = this.karyawan.getNoTelp(this.idKaryawan);
-            this.level = this.karyawan.getLevel1(this.idKaryawan);
+            // mendapatkan data-data user
+            this.username = this.user.getUsernameKaryawan(this.idKaryawan);
+            this.nama = this.user.getNamaKaryawan(this.idKaryawan);
+            this.alamat = this.user.getAlamatKaryawan(this.idKaryawan);
+            this.noTelp = this.user.getNoTelpKaryawan(this.idKaryawan);
+            this.level = this.user.getLevel1(this.idKaryawan);
             
-            // menampilkan data-data karyawan ke input text
+            // menampilkan data-data user ke input text
             this.inpUsername.setEditable(false);
             this.inpUsername.setText(this.username);
             this.inpNama.setText(this.nama);
@@ -102,7 +102,7 @@ public class InputKaryawan extends javax.swing.JDialog {
     }
     
     /**
-     * Digunakan untuk menambahkan data karyawan ke Database.
+     * Digunakan untuk menambahkan data user ke Database.
      * 
      */
     private void addData(){
@@ -145,15 +145,15 @@ public class InputKaryawan extends javax.swing.JDialog {
             Message.showWarning(this, "Level harus Di isi !");
         }
         if(!error){
-            // menambahkan data karyawan ke database
-            boolean save = this.karyawan.addKaryawan(nama, noTelp, alamat, pass, level,this.username);
+            // menambahkan data user ke database
+            boolean save = this.user.addKaryawan(nama, noTelp, alamat, pass, level,this.username);
 
             // mengecek data berhasil disimpan atau belum
             if(save){
                 // menutup pop up
                 Message.showInformation(this, "Data berhasil disimpan!");
                 this.isUpdated = true;
-                this.karyawan.closeConnection();
+                this.user.closeConnection();
                 this.dispose();
             }
         }else{
@@ -163,7 +163,7 @@ public class InputKaryawan extends javax.swing.JDialog {
 }
     
     /**
-     * Digunakan untuk mengedit data dari karyawan
+     * Digunakan untuk mengedit data dari user
      * 
      */
     private void editData(){
@@ -203,20 +203,20 @@ public class InputKaryawan extends javax.swing.JDialog {
         // cek apakah user sudah memilih level atau belum
         if (this.newLevel != null) {
             // validasi data
-            if (this.karyawan.validateDataKaryawan(this.idKaryawan, this.newNama, this.newNoTelp, this.newAlamat, this.newPass, this.newLevel, this.newUsername)) {
+            if (this.user.validateDataKaryawan(this.idKaryawan, this.newNama, this.newNoTelp, this.newAlamat, this.newPass, this.newLevel, this.newUsername)) {
                 // mengedit data
-                eNama = this.karyawan.setNama(this.idKaryawan, this.newNama);
-                eNoTelp = this.karyawan.setNoTelp(this.idKaryawan, this.newNoTelp);
-                eAlamat = this.karyawan.setAlamat(this.idKaryawan, this.newAlamat);
-                ePass = this.karyawan.setPassword(this.karyawan.getUsername(this.idKaryawan), this.newPass);
-                eLevel = this.karyawan.setLevel(this.karyawan.getUsername(this.idKaryawan), this.newLevel);
+                eNama = this.user.setNamaKaryawan(this.idKaryawan, this.newNama);
+                eNoTelp = this.user.setNoTelpKaryawan(this.idKaryawan, this.newNoTelp);
+                eAlamat = this.user.setAlamatKaryawan(this.idKaryawan, this.newAlamat);
+                ePass = this.user.setPassword(this.user.getUsernameKaryawan(this.idKaryawan), this.newPass);
+                eLevel = this.user.setLevel(this.user.getUsernameKaryawan(this.idKaryawan), this.newLevel);
 
                 // mengecek apa data berhasil disave atau tidak
                 if (eNama && eNoTelp && eAlamat && ePass && eLevel) {
                     // menutup pop up
                     Message.showInformation(this, "Data berhasil diedit!");
                     this.isUpdated = true;
-                    this.karyawan.closeConnection();
+                    this.user.closeConnection();
                     this.dispose();
                 }
             }
@@ -422,7 +422,7 @@ public class InputKaryawan extends javax.swing.JDialog {
     }//GEN-LAST:event_btnCancelMouseExited
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
-        karyawan.closeConnection();
+        user.closeConnection();
         this.dispose();
     }//GEN-LAST:event_btnCancelActionPerformed
 

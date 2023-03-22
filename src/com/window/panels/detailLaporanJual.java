@@ -10,7 +10,7 @@ import com.manage.Barang;
 import com.manage.ManageTransaksiJual;
 import com.manage.Text;
 import com.media.Audio;
-import com.users.Karyawan;
+//import com.users.Karyawan;
 import com.users.Supplier;
 import java.awt.Color;
 import java.awt.Cursor;
@@ -42,7 +42,7 @@ public class detailLaporanJual extends javax.swing.JDialog {
     private final Database db = new Database();
     private final Barang barang = new Barang();
     private final String namadb = Database.DB_NAME;
-    private final Karyawan karyawan = new Karyawan();
+//    private final Karyawan karyawan = new Karyawan();
     private final ManageTransaksiJual trj = new ManageTransaksiJual();
     public int option;
 

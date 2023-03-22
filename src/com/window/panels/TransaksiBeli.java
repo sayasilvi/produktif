@@ -9,7 +9,7 @@ import com.manage.Waktu;
 import com.media.Audio;
 import com.media.Gambar;
 import com.sun.glass.events.KeyEvent;
-import com.users.Karyawan;
+//import com.users.Karyawan;
 import com.users.Supplier;
 import com.users.Users;
 import java.awt.Color;
@@ -35,7 +35,7 @@ public class TransaksiBeli extends javax.swing.JPanel {
     private final Database db = new Database();
     private final String namadb = Database.DB_NAME;
     private final Users user = new Users();
-    private final Karyawan karyawan = new Karyawan();
+//    private final Karyawan karyawan = new Karyawan();
     private final Supplier supplier = new Supplier();
 
     private final Barang barang = new Barang();
@@ -56,7 +56,7 @@ public class TransaksiBeli extends javax.swing.JPanel {
         initComponents();
         db.startConnection();
         this.idTr = this.trb.createIDTransaksi();
-        this.idKaryawan = this.karyawan.getIdKaryawan(this.user.getCurrentLogin());
+        this.idKaryawan = this.user.getIdKaryawan(this.user.getCurrentLogin());
         this.txtTotal.setText(text.toMoneyCase("0"));
         this.inpJumlah.setText("0");
         this.inpTotalHarga.setText(text.toMoneyCase("0"));
@@ -105,7 +105,6 @@ public class TransaksiBeli extends javax.swing.JPanel {
     public void closeKoneksi() {
         db.closeConnection();
         user.closeConnection();
-        karyawan.closeConnection();
         supplier.closeConnection();
         barang.closeConnection();
         trb.closeConnection();
@@ -693,7 +692,7 @@ public class TransaksiBeli extends javax.swing.JPanel {
                         pst1 = db.conn.prepareStatement("INSERT INTO transaksi_beli VALUES (?, ?, ?, ?, ?)");
                         pst1.setString(1, idTr);
                         pst1.setString(2, idKaryawan);
-                        pst1.setString(3, this.karyawan.getNama(idKaryawan));
+                        pst1.setString(3, this.user.getNamaKaryawan(idKaryawan));
                         pst1.setInt(4, text.toIntCase(txtTotal.getText()));
                         pst1.setString(5, waktu.getCurrentDateTime());
                         if (pst1.executeUpdate() > 0) {
