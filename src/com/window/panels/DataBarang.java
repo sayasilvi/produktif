@@ -9,14 +9,19 @@ import com.media.Gambar;
 import com.sun.glass.events.KeyEvent;
 import com.manage.Barang;
 import com.manage.Waktu;
+import com.window.MainWindow;
 import com.window.dialogs.InputBarang;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.sql.SQLException;
 import java.awt.event.MouseEvent;
+import java.text.ParseException;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 /**
  *
@@ -31,10 +36,6 @@ public class DataBarang extends javax.swing.JPanel {
 
     private String idSelected = "", keyword = "", namaBarang, jenis, stok, hargaBeli, hargaJual, ttlPenjulan, penjMing, penghasilan;
     private Object[][] obj;
-
-    /**
-     * Creates new form Data Barang
-     */
     public DataBarang() {
         initComponents();
         this.bulan = waktu.getBulan() + 1;
@@ -43,6 +44,7 @@ public class DataBarang extends javax.swing.JPanel {
         this.btnAdd.setUI(new javax.swing.plaf.basic.BasicButtonUI());
         this.btnEdit.setUI(new javax.swing.plaf.basic.BasicButtonUI());
         this.btnDel.setUI(new javax.swing.plaf.basic.BasicButtonUI());
+        this.btnDiskon.setUI(new javax.swing.plaf.basic.BasicButtonUI());
 
         this.tabelData.setRowHeight(29);
         this.tabelData.getTableHeader().setBackground(new java.awt.Color(255, 255, 255));
@@ -50,7 +52,7 @@ public class DataBarang extends javax.swing.JPanel {
 
         JLabel[] values = {
             this.valIDBarang, this.valNamaBarang, this.valJenis, this.valStok,
-            this.valHargaBeli, this.valHargaJual, this.valPjln, this.valPjlnMinggu, this.valPenghasilan
+            this.valHargaBeli, this.valHargaJual, this.valPjln, this.valPjlnBulan, this.valPenghasilan
         };
 
         for (JLabel lbl : values) {
@@ -152,7 +154,7 @@ public class DataBarang extends javax.swing.JPanel {
         this.valHargaJual.setText("<html><p>:&nbsp;" + hargaJual + "</p></html>");
         this.valHargaBeli.setText("<html><p>:&nbsp;" + hargaBeli + "</p></html>");
         this.valPjln.setText("<html><p>:&nbsp;" + ttlPenjulan + " Penjualan</p></html>");
-        this.valPjlnMinggu.setText("<html><p>:&nbsp;" + gachaBulan() + " Penjualan</p></html>");
+        this.valPjlnBulan.setText("<html><p>:&nbsp;" + gachaBulan() + " Penjualan</p></html>");
         this.valPenghasilan.setText("<html><p>:&nbsp;" + penghasilan + "</p></html>");
     }
 
@@ -164,7 +166,7 @@ public class DataBarang extends javax.swing.JPanel {
         this.valHargaJual.setText("<html><p>:&nbsp;</p></html>");
         this.valHargaBeli.setText("<html><p>:&nbsp;</p></html>");
         this.valPjln.setText("<html><p>:&nbsp;</p></html>");
-        this.valPjlnMinggu.setText("<html><p>:&nbsp;</p></html>");
+        this.valPjlnBulan.setText("<html><p>:&nbsp;</p></html>");
         this.valPenghasilan.setText("<html><p>:&nbsp;</p></html>");
     }
 
@@ -218,17 +220,18 @@ public class DataBarang extends javax.swing.JPanel {
     private void initComponents() {
 
         valIDBarang = new javax.swing.JLabel();
+        valNamaBarang = new javax.swing.JLabel();
+        valJenis = new javax.swing.JLabel();
+        valStok = new javax.swing.JLabel();
+        valHargaJual = new javax.swing.JLabel();
         valPenghasilan = new javax.swing.JLabel();
         valPjln = new javax.swing.JLabel();
-        valJenis = new javax.swing.JLabel();
-        valPjlnMinggu = new javax.swing.JLabel();
-        valHargaJual = new javax.swing.JLabel();
+        valPjlnBulan = new javax.swing.JLabel();
         valHargaBeli = new javax.swing.JLabel();
-        valStok = new javax.swing.JLabel();
-        valNamaBarang = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tabelData = new javax.swing.JTable();
         btnAdd = new javax.swing.JButton();
+        btnDiskon = new javax.swing.JButton();
         btnEdit = new javax.swing.JToggleButton();
         btnDel = new javax.swing.JToggleButton();
         inpCari = new javax.swing.JTextField();
@@ -237,16 +240,19 @@ public class DataBarang extends javax.swing.JPanel {
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(957, 650));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        add(valIDBarang, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 117, 190, 37));
-        add(valPenghasilan, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 633, 190, 37));
-        add(valPjln, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 504, 190, 37));
-        add(valJenis, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 247, 190, 37));
-        add(valPjlnMinggu, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 569, 190, 37));
-        add(valHargaJual, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 440, 190, 37));
-        add(valHargaBeli, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 375, 190, 37));
-        add(valStok, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 311, 190, 37));
-        add(valNamaBarang, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 182, 190, 37));
+        add(valIDBarang, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 87, 190, 33));
+        add(valNamaBarang, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 145, 190, 33));
         valNamaBarang.getAccessibleContext().setAccessibleName(":");
+
+        add(valJenis, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 204, 190, 33));
+        add(valStok, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 261, 190, 33));
+        add(valHargaJual, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 378, 190, 33));
+        add(valPenghasilan, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 553, 190, 33));
+        add(valPjln, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 437, 190, 33));
+
+        valPjlnBulan.setName(""); // NOI18N
+        add(valPjlnBulan, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 495, 190, 33));
+        add(valHargaBeli, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 320, 190, 33));
 
         tabelData.setFont(new java.awt.Font("Ebrima", 1, 14)); // NOI18N
         tabelData.setForeground(new java.awt.Color(0, 0, 0));
@@ -274,7 +280,7 @@ public class DataBarang extends javax.swing.JPanel {
         });
         jScrollPane2.setViewportView(tabelData);
 
-        add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 100, 505, 580));
+        add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 100, 580, 490));
 
         btnAdd.setBackground(new java.awt.Color(41, 180, 50));
         btnAdd.setForeground(new java.awt.Color(255, 255, 255));
@@ -294,7 +300,27 @@ public class DataBarang extends javax.swing.JPanel {
                 btnAddActionPerformed(evt);
             }
         });
-        add(btnAdd, new org.netbeans.lib.awtextra.AbsoluteConstraints(24, 714, 155, 47));
+        add(btnAdd, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 630, -1, -1));
+
+        btnDiskon.setBackground(new java.awt.Color(41, 180, 50));
+        btnDiskon.setForeground(new java.awt.Color(255, 255, 255));
+        btnDiskon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/image/gambar_icon/btn-diskon-075.png"))); // NOI18N
+        btnDiskon.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        btnDiskon.setOpaque(false);
+        btnDiskon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnDiskonMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnDiskonMouseExited(evt);
+            }
+        });
+        btnDiskon.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDiskonActionPerformed(evt);
+            }
+        });
+        add(btnDiskon, new org.netbeans.lib.awtextra.AbsoluteConstraints(645, 630, -1, -1));
 
         btnEdit.setBackground(new java.awt.Color(34, 119, 237));
         btnEdit.setForeground(new java.awt.Color(255, 255, 255));
@@ -317,7 +343,7 @@ public class DataBarang extends javax.swing.JPanel {
                 btnEditActionPerformed(evt);
             }
         });
-        add(btnEdit, new org.netbeans.lib.awtextra.AbsoluteConstraints(209, 713, 150, 47));
+        add(btnEdit, new org.netbeans.lib.awtextra.AbsoluteConstraints(257, 630, 154, 50));
 
         btnDel.setBackground(new java.awt.Color(220, 41, 41));
         btnDel.setForeground(new java.awt.Color(255, 255, 255));
@@ -337,7 +363,7 @@ public class DataBarang extends javax.swing.JPanel {
                 btnDelActionPerformed(evt);
             }
         });
-        add(btnDel, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 712, -1, -1));
+        add(btnDel, new org.netbeans.lib.awtextra.AbsoluteConstraints(452, 630, 154, 50));
 
         inpCari.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         inpCari.addActionListener(new java.awt.event.ActionListener() {
@@ -353,9 +379,9 @@ public class DataBarang extends javax.swing.JPanel {
                 inpCariKeyTyped(evt);
             }
         });
-        add(inpCari, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 76, 185, 23));
+        add(inpCari, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 70, 190, 30));
 
-        background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/image/gambar/app-dataBarang-075.png"))); // NOI18N
+        background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/image/gambar/app-dataBarang.png"))); // NOI18N
         background.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
@@ -497,10 +523,45 @@ public class DataBarang extends javax.swing.JPanel {
         this.btnAdd.setIcon(Gambar.getAktiveIcon(this.btnAdd.getIcon().toString()));
     }//GEN-LAST:event_btnAddMouseEntered
 
+    private void btnDiskonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDiskonMouseEntered
+        this.btnDiskon.setIcon(Gambar.getAktiveIcon(this.btnDiskon.getIcon().toString()));
+    }//GEN-LAST:event_btnDiskonMouseEntered
+
+    private void btnDiskonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDiskonMouseExited
+        this.btnDiskon.setIcon(Gambar.getBiasaIcon(this.btnDiskon.getIcon().toString()));
+    }//GEN-LAST:event_btnDiskonMouseExited
+
+    private void dataDiskon(JPanel pnl){
+        System.out.println("data diskon");
+        //jika btn diskon di window barang di klik
+        this.setCursor(new Cursor(Cursor.WAIT_CURSOR));
+//        .setTitle("Data Diskon");
+        // menghapus panel lama
+        MainWindow.pnlMenu.removeAll();
+        MainWindow.pnlMenu.repaint();
+        MainWindow.pnlMenu.revalidate();
+        System.out.println("data diskon3");
+//        pnlMenu.revalidate();
+        this.closeKoneksi();
+        // menambahkan panel baru
+        MainWindow.pnlMenu.add(pnl);
+//        MainWindow.title("barang");
+        MainWindow.pnlMenu.validate();
+        System.out.println("data diskon5");
+        this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+    }
+    
+    private void btnDiskonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDiskonActionPerformed
+            DataDiskon pnl = new DataDiskon();
+            
+            this.dataDiskon(pnl);
+    }//GEN-LAST:event_btnDiskonActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel background;
     private javax.swing.JButton btnAdd;
     private javax.swing.JToggleButton btnDel;
+    private javax.swing.JButton btnDiskon;
     private javax.swing.JToggleButton btnEdit;
     private javax.swing.JTextField inpCari;
     private javax.swing.JScrollPane jScrollPane2;
@@ -512,7 +573,7 @@ public class DataBarang extends javax.swing.JPanel {
     private javax.swing.JLabel valNamaBarang;
     private javax.swing.JLabel valPenghasilan;
     private javax.swing.JLabel valPjln;
-    private javax.swing.JLabel valPjlnMinggu;
+    private javax.swing.JLabel valPjlnBulan;
     private javax.swing.JLabel valStok;
     // End of variables declaration//GEN-END:variables
 }

@@ -124,6 +124,17 @@ public class Validation {
         }
         return false;
     }
+    public static boolean isIdDiskon(String idDiskon){
+        if(Validation.isIdUser(idDiskon)){
+             if(idDiskon.substring(0, 1).equalsIgnoreCase("D")){
+                return true;
+            }else{
+                Audio.play(Audio.SOUND_WARNING);
+                JOptionPane.showMessageDialog(null, "'" + idDiskon + "' Kode ID Diskon tersebut tidak valid!", "Pesan", JOptionPane.WARNING_MESSAGE);
+            }
+        }
+        return false;
+    }
     
     /**
      *  - nama harus terdiri dari 6-50 karakter
@@ -448,7 +459,83 @@ public class Validation {
         }
         return false;
     }
-
+    public static boolean isNamaDiskon(String namaDiskon){
+        if(namaDiskon.length() >= 5 && namaDiskon.length() <= 50){
+            return true;
+        }else{
+            Audio.play(Audio.SOUND_WARNING);
+            JOptionPane.showMessageDialog(null, "Panjang dari Nama Diskon harus diantara 5-50 karakter!", "Pesan", JOptionPane.WARNING_MESSAGE);
+        }
+        return false;
+    }
+    
+    public static boolean isJumlahDiskon(String jumlah){
+        if(jumlah == null || jumlah.equals("")){
+            Audio.play(Audio.SOUND_WARNING);
+            JOptionPane.showMessageDialog(null, "Jumlah Diskon tidak boleh kosong!", "Pesan", JOptionPane.WARNING_MESSAGE);
+            return false;
+        }else{
+            if(isNumber(jumlah)){
+                if(Integer.parseInt(jumlah) >= 1000){
+                    return true;
+                }else{
+                    Audio.play(Audio.SOUND_WARNING);
+                    JOptionPane.showMessageDialog(null, "Jumlah Diskon harus minimal Rp 1.000", "Pesan", JOptionPane.WARNING_MESSAGE);
+                }            
+            }else{
+                Audio.play(Audio.SOUND_WARNING);
+                JOptionPane.showMessageDialog(null, "Jumlah Diskon harus berupa angka!", "Pesan", JOptionPane.WARNING_MESSAGE);
+            }
+        }
+        return false;
+    }
+    
+    public static boolean isMinimalPembelian(String minimal){
+        if(minimal == null || minimal.equals("")){
+            Audio.play(Audio.SOUND_WARNING);
+            JOptionPane.showMessageDialog(null, "Minimal Pembelian tidak boleh kosong!", "Pesan", JOptionPane.WARNING_MESSAGE);
+            return false;
+        }else{
+            if(isNumber(minimal)){
+                if(Integer.parseInt(minimal) >= 1000){
+                    return true;
+                }else{
+                    Audio.play(Audio.SOUND_WARNING);
+                    JOptionPane.showMessageDialog(null, "Minimal Pembelian harus minimal Rp 1.000", "Pesan", JOptionPane.WARNING_MESSAGE);
+                }            
+            }else{
+                Audio.play(Audio.SOUND_WARNING);
+                JOptionPane.showMessageDialog(null, "Minimal Pembelian harus berupa angka!", "Pesan", JOptionPane.WARNING_MESSAGE);
+            }
+        }
+        
+        return false;
+    }
+    
+    public static boolean isTanggalAwal(String tanggalAwal){
+        if(isTanggal(tanggalAwal)){
+            return true;
+        }else{
+            Audio.play(Audio.SOUND_WARNING);
+            JOptionPane.showMessageDialog(null, "Tanggal Awal tidak valid", "Pesan", JOptionPane.WARNING_MESSAGE);
+        }
+        return false;
+    }
+    public static boolean isTanggalAkhir(String tanggalAwal, String tanggalAkhir){
+        if(!isTanggal(tanggalAwal)){
+            Audio.play(Audio.SOUND_WARNING);
+            JOptionPane.showMessageDialog(null, "Tanggal Awal tidak valid", "Pesan", JOptionPane.WARNING_MESSAGE);
+        }else if(!isTanggal(tanggalAkhir)){
+            Audio.play(Audio.SOUND_WARNING);
+            JOptionPane.showMessageDialog(null, "Tanggal Akhir tidak valid", "Pesan", JOptionPane.WARNING_MESSAGE);
+        }else{
+//            if(tanggalAkhir >= tanggalAwal){
+//                return true;
+//            }
+            return true;
+        }
+        return false;
+    }
 //    public static boolean isMetodeBayar(String metode){
 //        switch(metode){
 //            case "CASH" : return true;
@@ -459,7 +546,6 @@ public class Validation {
 //                return false;
 //        }
 //    }
-    
     public static void main(String[] args) {
         System.out.println(Validation.isIdUser("KY001"));
     }

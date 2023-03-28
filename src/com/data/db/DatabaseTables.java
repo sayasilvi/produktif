@@ -13,6 +13,7 @@ public enum DatabaseTables {
 //    KARYAWAN,
     SUPPLIER,
     BARANG,
+    DISKON,
     TRANSAKSI_JUAL,
     TRANSAKSI_BELI,
     DETAIL_TRANSAKSI_JUAL,

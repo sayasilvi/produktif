@@ -459,25 +459,25 @@ public class LaporanBeli extends javax.swing.JPanel {
         tbHarian = new com.toedter.calendar.JDateChooser();
         tabPengeluaran = new javax.swing.JTabbedPane();
         LPSEMUA = new javax.swing.JPanel();
-        lpSemua = new javax.swing.JScrollPane();
-        tabelDataS = new javax.swing.JTable();
         valTotalS = new javax.swing.JLabel();
         pengeluaranS = new javax.swing.JLabel();
+        lpSemua = new javax.swing.JScrollPane();
+        tabelDataS = new javax.swing.JTable();
         LPHARIAN = new javax.swing.JPanel();
-        lpHarian = new javax.swing.JScrollPane();
-        tabelDataH = new javax.swing.JTable();
         valTotalH = new javax.swing.JLabel();
         pengeluaranH = new javax.swing.JLabel();
+        lpHarian = new javax.swing.JScrollPane();
+        tabelDataH = new javax.swing.JTable();
         LPBULANAN = new javax.swing.JPanel();
-        lpBulanan = new javax.swing.JScrollPane();
-        tabelDataB = new javax.swing.JTable();
         valTotalB = new javax.swing.JLabel();
         pengeluaranB = new javax.swing.JLabel();
+        lpBulanan = new javax.swing.JScrollPane();
+        tabelDataB = new javax.swing.JTable();
         LPRentang = new javax.swing.JPanel();
-        lpRentang = new javax.swing.JScrollPane();
-        tabelDataM = new javax.swing.JTable();
         valTotalM = new javax.swing.JLabel();
         pengeluaranM = new javax.swing.JLabel();
+        lpRentang = new javax.swing.JScrollPane();
+        tabelDataM = new javax.swing.JTable();
         background = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
@@ -487,33 +487,33 @@ public class LaporanBeli extends javax.swing.JPanel {
         valIDPengeluaran.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         valIDPengeluaran.setForeground(new java.awt.Color(0, 0, 0));
         valIDPengeluaran.setText(":");
-        add(valIDPengeluaran, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 65, 200, 32));
+        add(valIDPengeluaran, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 70, 300, 30));
 
         valIDTransaksi.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         valIDTransaksi.setForeground(new java.awt.Color(0, 0, 0));
         valIDTransaksi.setText(":");
-        add(valIDTransaksi, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 110, 200, 32));
+        add(valIDTransaksi, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 110, 310, 29));
 
         valIDKaryawan.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         valIDKaryawan.setForeground(new java.awt.Color(0, 0, 0));
         valIDKaryawan.setText(":");
-        add(valIDKaryawan, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 154, 200, 32));
+        add(valIDKaryawan, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 149, 310, 29));
 
         valNamaKaryawan.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         valNamaKaryawan.setForeground(new java.awt.Color(0, 0, 0));
         valNamaKaryawan.setText(":");
-        add(valNamaKaryawan, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 198, 200, 32));
+        add(valNamaKaryawan, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 187, 310, 29));
 
         valHarga.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         valHarga.setForeground(new java.awt.Color(0, 0, 0));
         valHarga.setText(":");
         valHarga.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        add(valHarga, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 242, 200, 32));
+        add(valHarga, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 227, 310, 29));
 
         valTanggal.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         valTanggal.setForeground(new java.awt.Color(0, 0, 0));
         valTanggal.setText(":");
-        add(valTanggal, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 287, 200, 32));
+        add(valTanggal, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 265, 310, 30));
 
         btnDetail.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/image/gambar_icon/btn-detail-075.png"))); // NOI18N
         btnDetail.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -527,7 +527,7 @@ public class LaporanBeli extends javax.swing.JPanel {
                 btnDetailMouseExited(evt);
             }
         });
-        add(btnDetail, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 710, -1, -1));
+        add(btnDetail, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 635, 155, 49));
 
         btnCetak.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/image/gambar_icon/btn-print-075.png"))); // NOI18N
         btnCetak.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -541,17 +541,17 @@ public class LaporanBeli extends javax.swing.JPanel {
                 btnCetakMouseExited(evt);
             }
         });
-        add(btnCetak, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 710, -1, -1));
+        add(btnCetak, new org.netbeans.lib.awtextra.AbsoluteConstraints(267, 635, 151, 49));
 
         txtAwal.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         txtAwal.setForeground(new java.awt.Color(255, 255, 255));
         txtAwal.setText("Awal :");
-        add(txtAwal, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, 100, 40));
+        add(txtAwal, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 320, 80, 40));
 
         txtAkhir.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         txtAkhir.setForeground(new java.awt.Color(255, 255, 255));
         txtAkhir.setText("Akhir :");
-        add(txtAkhir, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 350, -1, 40));
+        add(txtAkhir, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 320, -1, 40));
 
         inpCari.setBackground(new java.awt.Color(255, 255, 255));
         inpCari.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
@@ -569,19 +569,19 @@ public class LaporanBeli extends javax.swing.JPanel {
                 inpCariKeyTyped(evt);
             }
         });
-        add(inpCari, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 350, 220, -1));
+        add(inpCari, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 325, 250, 30));
 
         pnlPieChart.setBackground(new java.awt.Color(255, 255, 255));
         pnlPieChart.setForeground(new java.awt.Color(255, 255, 0));
         pnlPieChart.setLayout(new java.awt.BorderLayout());
-        add(pnlPieChart, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 60, 520, 260));
+        add(pnlPieChart, new org.netbeans.lib.awtextra.AbsoluteConstraints(595, 65, 550, 230));
 
         tbMinggu2.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
                 tbMinggu2PropertyChange(evt);
             }
         });
-        add(tbMinggu2, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 350, 130, 40));
+        add(tbMinggu2, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 320, 150, 40));
 
         tbMinggu1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -593,7 +593,7 @@ public class LaporanBeli extends javax.swing.JPanel {
                 tbMinggu1PropertyChange(evt);
             }
         });
-        add(tbMinggu1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 350, 120, 40));
+        add(tbMinggu1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 320, 150, 40));
 
         tbBulanan.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         tbBulanan.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -606,7 +606,7 @@ public class LaporanBeli extends javax.swing.JPanel {
                 tbBulananPropertyChange(evt);
             }
         });
-        add(tbBulanan, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 350, -1, 40));
+        add(tbBulanan, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 320, 150, 40));
 
         tbTahunan.setEnabled(false);
         tbTahunan.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
@@ -614,7 +614,7 @@ public class LaporanBeli extends javax.swing.JPanel {
                 tbTahunanPropertyChange(evt);
             }
         });
-        add(tbTahunan, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 350, 90, 40));
+        add(tbTahunan, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 320, 150, 40));
 
         tbHarian.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -626,9 +626,18 @@ public class LaporanBeli extends javax.swing.JPanel {
                 tbHarianPropertyChange(evt);
             }
         });
-        add(tbHarian, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 350, 120, 40));
+        add(tbHarian, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 320, 150, 40));
 
         LPSEMUA.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        valTotalS.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        valTotalS.setForeground(new java.awt.Color(0, 0, 0));
+        valTotalS.setText(":");
+        valTotalS.setInheritsPopupMenu(false);
+        LPSEMUA.add(valTotalS, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 190, 225, 25));
+
+        pengeluaranS.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/image/gambar_icon/laporan-pengeluaran.png"))); // NOI18N
+        LPSEMUA.add(pengeluaranS, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 190, 450, 25));
 
         tabelDataS.setBackground(new java.awt.Color(255, 255, 255));
         tabelDataS.setFont(new java.awt.Font("Ebrima", 1, 14)); // NOI18N
@@ -665,20 +674,20 @@ public class LaporanBeli extends javax.swing.JPanel {
         });
         lpSemua.setViewportView(tabelDataS);
 
-        LPSEMUA.add(lpSemua, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 925, 230));
-
-        valTotalS.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        valTotalS.setForeground(new java.awt.Color(0, 0, 0));
-        valTotalS.setText(":");
-        LPSEMUA.add(valTotalS, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 233, 290, 36));
-
-        pengeluaranS.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/image/gambar_icon/laporan-pengeluaran-075.png"))); // NOI18N
-        pengeluaranS.setText("lbll");
-        LPSEMUA.add(pengeluaranS, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 233, 490, -1));
+        LPSEMUA.add(lpSemua, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1140, 185));
 
         tabPengeluaran.addTab("Semua", LPSEMUA);
 
         LPHARIAN.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        valTotalH.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        valTotalH.setForeground(new java.awt.Color(0, 0, 0));
+        valTotalH.setText(":");
+        LPHARIAN.add(valTotalH, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 190, 225, 25));
+
+        pengeluaranH.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/image/gambar_icon/laporan-pengeluaran.png"))); // NOI18N
+        pengeluaranH.setText("lbll");
+        LPHARIAN.add(pengeluaranH, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 190, 450, 25));
 
         tabelDataH.setBackground(new java.awt.Color(255, 255, 255));
         tabelDataH.setFont(new java.awt.Font("Ebrima", 1, 14)); // NOI18N
@@ -715,20 +724,20 @@ public class LaporanBeli extends javax.swing.JPanel {
         });
         lpHarian.setViewportView(tabelDataH);
 
-        LPHARIAN.add(lpHarian, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 925, 230));
-
-        valTotalH.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        valTotalH.setForeground(new java.awt.Color(0, 0, 0));
-        valTotalH.setText(":");
-        LPHARIAN.add(valTotalH, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 233, 290, 36));
-
-        pengeluaranH.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/image/gambar_icon/laporan-pengeluaran-075.png"))); // NOI18N
-        pengeluaranH.setText("lbll");
-        LPHARIAN.add(pengeluaranH, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 233, 490, -1));
+        LPHARIAN.add(lpHarian, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1140, 185));
 
         tabPengeluaran.addTab("Harian", LPHARIAN);
 
         LPBULANAN.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        valTotalB.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        valTotalB.setForeground(new java.awt.Color(0, 0, 0));
+        valTotalB.setText(":");
+        LPBULANAN.add(valTotalB, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 190, 225, 25));
+
+        pengeluaranB.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/image/gambar_icon/laporan-pengeluaran.png"))); // NOI18N
+        pengeluaranB.setText("lbll");
+        LPBULANAN.add(pengeluaranB, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 190, 450, 25));
 
         tabelDataB.setBackground(new java.awt.Color(255, 255, 255));
         tabelDataB.setFont(new java.awt.Font("Ebrima", 1, 14)); // NOI18N
@@ -765,20 +774,20 @@ public class LaporanBeli extends javax.swing.JPanel {
         });
         lpBulanan.setViewportView(tabelDataB);
 
-        LPBULANAN.add(lpBulanan, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 925, 230));
-
-        valTotalB.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        valTotalB.setForeground(new java.awt.Color(0, 0, 0));
-        valTotalB.setText(":");
-        LPBULANAN.add(valTotalB, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 233, 290, 36));
-
-        pengeluaranB.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/image/gambar_icon/laporan-pengeluaran-075.png"))); // NOI18N
-        pengeluaranB.setText("lbll");
-        LPBULANAN.add(pengeluaranB, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 233, 490, -1));
+        LPBULANAN.add(lpBulanan, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1140, 185));
 
         tabPengeluaran.addTab("Bulanan", LPBULANAN);
 
         LPRentang.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        valTotalM.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        valTotalM.setForeground(new java.awt.Color(0, 0, 0));
+        valTotalM.setText(":");
+        LPRentang.add(valTotalM, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 190, 225, 25));
+
+        pengeluaranM.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/image/gambar_icon/laporan-pengeluaran.png"))); // NOI18N
+        pengeluaranM.setText("lbll");
+        LPRentang.add(pengeluaranM, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 190, 450, 25));
 
         tabelDataM.setBackground(new java.awt.Color(255, 255, 255));
         tabelDataM.setFont(new java.awt.Font("Ebrima", 1, 14)); // NOI18N
@@ -818,22 +827,13 @@ public class LaporanBeli extends javax.swing.JPanel {
         });
         lpRentang.setViewportView(tabelDataM);
 
-        LPRentang.add(lpRentang, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 925, 230));
-
-        valTotalM.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        valTotalM.setForeground(new java.awt.Color(0, 0, 0));
-        valTotalM.setText(":");
-        LPRentang.add(valTotalM, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 233, 290, 36));
-
-        pengeluaranM.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/image/gambar_icon/laporan-pengeluaran-075.png"))); // NOI18N
-        pengeluaranM.setText("lbll");
-        LPRentang.add(pengeluaranM, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 233, 490, -1));
+        LPRentang.add(lpRentang, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1140, 185));
 
         tabPengeluaran.addTab("Rentang Tanggal", LPRentang);
 
-        add(tabPengeluaran, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 390, 930, 300));
+        add(tabPengeluaran, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 365, 1140, 250));
 
-        background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/image/gambar/app-laporan-pengeluaran-075.png"))); // NOI18N
+        background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/image/gambar/app-laporan-pengeluaran.png"))); // NOI18N
         background.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
     }// </editor-fold>//GEN-END:initComponents

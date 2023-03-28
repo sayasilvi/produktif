@@ -87,7 +87,7 @@ public class Barang extends Database{
         
         boolean vIdPembeli, vNama, vJenis, vJumlah, vHargaBeli, vHargaJual;
         
-        // mengecek id pembeli valid atau tidak
+        // mengecek id barang valid atau tidak
         if(Validation.isIdBarang(idBarang)){
             vIdPembeli = true;
         }else{
@@ -98,7 +98,7 @@ public class Barang extends Database{
         if(Validation.isNamaBarang(namaBarang)){
             vNama = true;
         }else{
-            throw new InValidUserDataException("'" + namaBarang + "' Nama Pembeli tersebut tidak valid.");
+            throw new InValidUserDataException("'" + namaBarang + "' Nama Barang tersebut tidak valid.");
         }
                 
         // mengecek apakah jenis barang valid atau tidak
@@ -168,7 +168,7 @@ public class Barang extends Database{
     }
     
     private boolean setDataBarang(String idBarang, BRG data, String newValue){
-        Log.addLog("Mengedit data '" + data.name().toLowerCase() + "' dari barang dengan ID User '" + idBarang + "'.");
+        Log.addLog("Mengedit data '" + data.name().toLowerCase() + "' dari barang dengan ID Barang '" + idBarang + "'.");
         // mengecek apakah id barang exist atau tidak
         if(this.isExistBarang(idBarang)){
             // mengedit data dari barang

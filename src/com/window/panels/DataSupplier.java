@@ -203,8 +203,6 @@ public class DataSupplier extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane2 = new javax.swing.JScrollPane();
-        tabelHistori = new javax.swing.JTable();
         lblCari = new javax.swing.JLabel();
         btnAdd = new javax.swing.JButton();
         btnEdit = new javax.swing.JButton();
@@ -220,25 +218,6 @@ public class DataSupplier extends javax.swing.JPanel {
         jScrollPane3 = new javax.swing.JScrollPane();
         tabelData = new javax.swing.JTable();
         background = new javax.swing.JLabel();
-
-        tabelHistori.setFont(new java.awt.Font("Ebrima", 1, 14)); // NOI18N
-        tabelHistori.setForeground(new java.awt.Color(0, 0, 0));
-        tabelHistori.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {"PG0001", "Aqua 1 L", "5", "Rp. 15.000"},
-                {"PG0002", "Nabati Wafer", "7", "Rp. 17.500"},
-                {"PG0003", "Pulpen Snowman", "14", "Rp. 35.000"},
-                {null, null, null, null}
-            },
-            new String [] {
-                "ID Pengeluaran", "Nama Barang", "Jumlah", "Total Harga"
-            }
-        ));
-        tabelHistori.setGridColor(new java.awt.Color(0, 0, 0));
-        tabelHistori.setSelectionBackground(new java.awt.Color(26, 164, 250));
-        tabelHistori.setSelectionForeground(new java.awt.Color(250, 246, 246));
-        tabelHistori.getTableHeader().setReorderingAllowed(false);
-        jScrollPane2.setViewportView(tabelHistori);
 
         lblCari.setFont(new java.awt.Font("Dialog", 1, 15)); // NOI18N
         lblCari.setForeground(new java.awt.Color(237, 12, 12));
@@ -267,13 +246,14 @@ public class DataSupplier extends javax.swing.JPanel {
                 btnAddActionPerformed(evt);
             }
         });
-        add(btnAdd, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 712, 153, 49));
+        add(btnAdd, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 636, 154, 50));
 
         btnEdit.setBackground(new java.awt.Color(34, 119, 237));
         btnEdit.setForeground(new java.awt.Color(255, 255, 255));
         btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/image/gambar_icon/btn-edit-075.png"))); // NOI18N
         btnEdit.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         btnEdit.setOpaque(false);
+        btnEdit.setRolloverEnabled(true);
         btnEdit.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnEditMouseEntered(evt);
@@ -287,7 +267,7 @@ public class DataSupplier extends javax.swing.JPanel {
                 btnEditActionPerformed(evt);
             }
         });
-        add(btnEdit, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 712, 147, 48));
+        add(btnEdit, new org.netbeans.lib.awtextra.AbsoluteConstraints(255, 636, 154, 50));
 
         btnDel.setBackground(new java.awt.Color(220, 41, 41));
         btnDel.setForeground(new java.awt.Color(255, 255, 255));
@@ -307,7 +287,7 @@ public class DataSupplier extends javax.swing.JPanel {
                 btnDelActionPerformed(evt);
             }
         });
-        add(btnDel, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 712, 147, 47));
+        add(btnDel, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 636, 154, 50));
 
         inpCari.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         inpCari.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -318,21 +298,21 @@ public class DataSupplier extends javax.swing.JPanel {
                 inpCariKeyTyped(evt);
             }
         });
-        add(inpCari, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 73, 200, 35));
+        add(inpCari, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 80, 180, 23));
 
         valIDSupplier.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         valIDSupplier.setForeground(new java.awt.Color(0, 0, 0));
         valIDSupplier.setText(":");
-        add(valIDSupplier, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 116, 200, 47));
+        add(valIDSupplier, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 130, 310, 45));
 
         valNamaSupplier.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         valNamaSupplier.setForeground(new java.awt.Color(0, 0, 0));
         valNamaSupplier.setText(":");
-        add(valNamaSupplier, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 201, 200, 47));
+        add(valNamaSupplier, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 201, 310, 44));
 
         valNoTelp.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         valNoTelp.setForeground(new java.awt.Color(0, 0, 0));
-        valNoTelp.setText(":        -");
+        valNoTelp.setText(":");
         valNoTelp.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 valNoTelpMouseClicked(evt);
@@ -344,27 +324,27 @@ public class DataSupplier extends javax.swing.JPanel {
                 valNoTelpMouseExited(evt);
             }
         });
-        add(valNoTelp, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 286, 200, 47));
+        add(valNoTelp, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 270, 310, 45));
 
         valAlamat.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         valAlamat.setForeground(new java.awt.Color(0, 0, 0));
         valAlamat.setText(":");
-        add(valAlamat, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 370, 200, 47));
+        add(valAlamat, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 340, 310, 44));
 
         valBrgSupplier.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         valBrgSupplier.setForeground(new java.awt.Color(0, 0, 0));
         valBrgSupplier.setText(":");
-        add(valBrgSupplier, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 455, 200, 47));
+        add(valBrgSupplier, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 410, 310, 45));
 
         valUang.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         valUang.setForeground(new java.awt.Color(0, 0, 0));
         valUang.setText(":");
-        add(valUang, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 540, 200, 47));
+        add(valUang, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 480, 310, 44));
 
         valLast.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         valLast.setForeground(new java.awt.Color(0, 0, 0));
         valLast.setText(":");
-        add(valLast, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 625, 200, 47));
+        add(valLast, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 550, 310, 44));
 
         tabelData.setFont(new java.awt.Font("Ebrima", 1, 14)); // NOI18N
         tabelData.setForeground(new java.awt.Color(0, 0, 0));
@@ -395,9 +375,9 @@ public class DataSupplier extends javax.swing.JPanel {
         });
         jScrollPane3.setViewportView(tabelData);
 
-        add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 110, 500, 570));
+        add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 100, 550, 510));
 
-        background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/image/gambar/app-dataSupplier-075.png"))); // NOI18N
+        background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/image/gambar/app-dataSupplier.png"))); // NOI18N
         add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
@@ -568,11 +548,9 @@ public class DataSupplier extends javax.swing.JPanel {
     private javax.swing.JButton btnDel;
     private javax.swing.JButton btnEdit;
     private javax.swing.JTextField inpCari;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JLabel lblCari;
     private javax.swing.JTable tabelData;
-    private javax.swing.JTable tabelHistori;
     private javax.swing.JLabel valAlamat;
     private javax.swing.JLabel valBrgSupplier;
     private javax.swing.JLabel valIDSupplier;

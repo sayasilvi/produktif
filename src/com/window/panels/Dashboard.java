@@ -220,20 +220,25 @@ public class Dashboard extends javax.swing.JPanel {
         setPreferredSize(new java.awt.Dimension(957, 650));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        lblDate.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         lblDate.setText("-");
-        add(lblDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 147, 260, 20));
+        add(lblDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 125, 270, 30));
 
+        lblSaldo.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         lblSaldo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        add(lblSaldo, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, 160, 20));
+        add(lblSaldo, new org.netbeans.lib.awtextra.AbsoluteConstraints(65, 70, 200, 25));
 
+        lblPemasukan.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         lblPemasukan.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        add(lblPemasukan, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 90, 155, 20));
+        add(lblPemasukan, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 70, 200, 25));
 
+        lblPengeluaran.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         lblPengeluaran.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        add(lblPengeluaran, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 90, 170, 20));
+        add(lblPengeluaran, new org.netbeans.lib.awtextra.AbsoluteConstraints(625, 70, 200, 25));
 
+        lblPembeli.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         lblPembeli.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        add(lblPembeli, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 90, 160, 20));
+        add(lblPembeli, new org.netbeans.lib.awtextra.AbsoluteConstraints(905, 70, 200, 25));
 
         tabelData.setFont(new java.awt.Font("Ebrima", 1, 14)); // NOI18N
         tabelData.setForeground(new java.awt.Color(0, 0, 0));
@@ -281,20 +286,20 @@ public class Dashboard extends javax.swing.JPanel {
             tabelData.getColumnModel().getColumn(5).setMaxWidth(200);
         }
 
-        add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 480, 940, 260));
+        add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 445, 1100, 235));
 
         pnlLineChart.setBackground(new java.awt.Color(255, 255, 255));
         pnlLineChart.setForeground(new java.awt.Color(226, 226, 0));
         pnlLineChart.setLayout(new java.awt.BorderLayout());
-        add(pnlLineChart, new org.netbeans.lib.awtextra.AbsoluteConstraints(35, 205, 445, 210));
+        add(pnlLineChart, new org.netbeans.lib.awtextra.AbsoluteConstraints(35, 195, 530, 185));
 
         pnlPieChart.setBackground(new java.awt.Color(255, 255, 255));
         pnlPieChart.setForeground(new java.awt.Color(255, 255, 0));
         pnlPieChart.setLayout(new java.awt.BorderLayout());
-        add(pnlPieChart, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 205, 420, 210));
+        add(pnlPieChart, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 195, 520, 185));
 
-        background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/image/gambar/app-dashboard-075.png"))); // NOI18N
-        add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 973, 768));
+        background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/image/gambar/app-dashboard.png"))); // NOI18N
+        add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1158, 696));
     }// </editor-fold>//GEN-END:initComponents
 
     private void tabelDatatablDataKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tabelDatatablDataKeyPressed

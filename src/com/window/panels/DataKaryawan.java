@@ -162,9 +162,9 @@ public class DataKaryawan extends javax.swing.JPanel {
         valNoTelp = new javax.swing.JLabel();
         valAlamat = new javax.swing.JLabel();
         inpCari = new javax.swing.JTextField();
+        btnAdd = new javax.swing.JButton();
         btnEdit = new javax.swing.JButton();
         btnDel = new javax.swing.JButton();
-        btnAdd = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tabelData = new javax.swing.JTable();
         valLevel = new javax.swing.JLabel();
@@ -178,12 +178,12 @@ public class DataKaryawan extends javax.swing.JPanel {
         valIDKaryawan.setForeground(new java.awt.Color(0, 0, 0));
         valIDKaryawan.setText(":");
         valIDKaryawan.setName(""); // NOI18N
-        add(valIDKaryawan, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 116, 200, 44));
+        add(valIDKaryawan, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 130, 200, 60));
 
         valNamaKaryawan.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         valNamaKaryawan.setForeground(new java.awt.Color(0, 0, 0));
         valNamaKaryawan.setText(":");
-        add(valNamaKaryawan, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 190, 200, 44));
+        add(valNamaKaryawan, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 210, 200, 60));
 
         valNoTelp.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         valNoTelp.setForeground(new java.awt.Color(0, 0, 0));
@@ -199,14 +199,14 @@ public class DataKaryawan extends javax.swing.JPanel {
                 valNoTelpMouseExited(evt);
             }
         });
-        add(valNoTelp, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 263, 200, 44));
+        add(valNoTelp, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 290, 200, 60));
 
         valAlamat.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         valAlamat.setForeground(new java.awt.Color(0, 0, 0));
         valAlamat.setText(":");
-        add(valAlamat, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 336, 200, 44));
+        add(valAlamat, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 370, 200, 60));
 
-        inpCari.setBackground(new java.awt.Color(255, 255, 255));
+        inpCari.setBackground(new java.awt.Color(0, 0, 0));
         inpCari.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         inpCari.setForeground(new java.awt.Color(0, 0, 0));
         inpCari.addActionListener(new java.awt.event.ActionListener() {
@@ -222,47 +222,7 @@ public class DataKaryawan extends javax.swing.JPanel {
                 inpCariKeyTyped(evt);
             }
         });
-        add(inpCari, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 76, 185, 23));
-
-        btnEdit.setBackground(new java.awt.Color(34, 119, 237));
-        btnEdit.setForeground(new java.awt.Color(255, 255, 255));
-        btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/image/gambar_icon/btn-edit-075.png"))); // NOI18N
-        btnEdit.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        btnEdit.setOpaque(false);
-        btnEdit.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnEditMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnEditMouseExited(evt);
-            }
-        });
-        btnEdit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEditActionPerformed(evt);
-            }
-        });
-        add(btnEdit, new org.netbeans.lib.awtextra.AbsoluteConstraints(209, 713, 150, 47));
-
-        btnDel.setBackground(new java.awt.Color(220, 41, 41));
-        btnDel.setForeground(new java.awt.Color(255, 255, 255));
-        btnDel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/image/gambar_icon/btn-hapus-075.png"))); // NOI18N
-        btnDel.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        btnDel.setOpaque(false);
-        btnDel.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnDelMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnDelMouseExited(evt);
-            }
-        });
-        btnDel.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDelActionPerformed(evt);
-            }
-        });
-        add(btnDel, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 712, -1, -1));
+        add(inpCari, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 80, 180, 23));
 
         btnAdd.setBackground(new java.awt.Color(41, 180, 50));
         btnAdd.setForeground(new java.awt.Color(255, 255, 255));
@@ -283,7 +243,47 @@ public class DataKaryawan extends javax.swing.JPanel {
                 btnAddActionPerformed(evt);
             }
         });
-        add(btnAdd, new org.netbeans.lib.awtextra.AbsoluteConstraints(24, 714, 155, 47));
+        add(btnAdd, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 636, 154, 50));
+
+        btnEdit.setBackground(new java.awt.Color(34, 119, 237));
+        btnEdit.setForeground(new java.awt.Color(255, 255, 255));
+        btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/image/gambar_icon/btn-edit-075.png"))); // NOI18N
+        btnEdit.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        btnEdit.setOpaque(false);
+        btnEdit.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnEditMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnEditMouseExited(evt);
+            }
+        });
+        btnEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditActionPerformed(evt);
+            }
+        });
+        add(btnEdit, new org.netbeans.lib.awtextra.AbsoluteConstraints(255, 636, 154, 50));
+
+        btnDel.setBackground(new java.awt.Color(220, 41, 41));
+        btnDel.setForeground(new java.awt.Color(255, 255, 255));
+        btnDel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/image/gambar_icon/btn-hapus-075.png"))); // NOI18N
+        btnDel.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        btnDel.setOpaque(false);
+        btnDel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnDelMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnDelMouseExited(evt);
+            }
+        });
+        btnDel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDelActionPerformed(evt);
+            }
+        });
+        add(btnDel, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 636, 154, 50));
 
         tabelData.setBackground(new java.awt.Color(255, 255, 255));
         tabelData.setFont(new java.awt.Font("Ebrima", 1, 14)); // NOI18N
@@ -320,14 +320,14 @@ public class DataKaryawan extends javax.swing.JPanel {
         });
         jScrollPane2.setViewportView(tabelData);
 
-        add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 100, 505, 580));
+        add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 100, 550, 510));
 
         valLevel.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         valLevel.setForeground(new java.awt.Color(0, 0, 0));
         valLevel.setText(":");
-        add(valLevel, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 410, 200, 44));
+        add(valLevel, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 450, 200, 60));
 
-        background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/image/gambar/app-dataKaryawan-075.png"))); // NOI18N
+        background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/image/gambar/app-dataKaryawan.png"))); // NOI18N
         background.setName(""); // NOI18N
         add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
     }// </editor-fold>//GEN-END:initComponents

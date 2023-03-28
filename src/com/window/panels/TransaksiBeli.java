@@ -66,6 +66,9 @@ public class TransaksiBeli extends javax.swing.JPanel {
         this.inpID.setText("<html><p>:&nbsp;" + this.trb.createIDTransaksi() + "</p></html>");
         this.inpNamaKaryawan.setText("<html><p>:&nbsp;" + this.user.getCurrentLoginName() + "</p></html>");
 
+        this.btnSimpan.setUI(new javax.swing.plaf.basic.BasicButtonUI());
+        this.btnEdit.setUI(new javax.swing.plaf.basic.BasicButtonUI());
+        this.btnHapus.setUI(new javax.swing.plaf.basic.BasicButtonUI());
         this.btnBayar.setUI(new javax.swing.plaf.basic.BasicButtonUI());
         this.btnBatal.setUI(new javax.swing.plaf.basic.BasicButtonUI());
 
@@ -326,7 +329,7 @@ public class TransaksiBeli extends javax.swing.JPanel {
 
         inpSaldo.setBackground(new java.awt.Color(222, 222, 222));
         inpSaldo.setForeground(new java.awt.Color(255, 255, 255));
-        add(inpSaldo, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 11, 190, 36));
+        add(inpSaldo, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 10, 300, 33));
 
         inpCariBarang.setBackground(new java.awt.Color(255, 255, 255));
         inpCariBarang.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
@@ -339,7 +342,7 @@ public class TransaksiBeli extends javax.swing.JPanel {
                 inpCariBarangKeyTyped(evt);
             }
         });
-        add(inpCariBarang, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 53, 345, 26));
+        add(inpCariBarang, new org.netbeans.lib.awtextra.AbsoluteConstraints(875, 60, 250, 30));
 
         inpCariSupplier.setBackground(new java.awt.Color(255, 255, 255));
         inpCariSupplier.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
@@ -357,11 +360,11 @@ public class TransaksiBeli extends javax.swing.JPanel {
                 inpCariSupplierKeyTyped(evt);
             }
         });
-        add(inpCariSupplier, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 252, 345, 26));
+        add(inpCariSupplier, new org.netbeans.lib.awtextra.AbsoluteConstraints(875, 240, 250, 30));
 
         btnSimpan.setBackground(new java.awt.Color(34, 119, 237));
         btnSimpan.setForeground(new java.awt.Color(255, 255, 255));
-        btnSimpan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/image/gambar_icon/btn-tambah-075.png"))); // NOI18N
+        btnSimpan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/image/gambar_icon/btn-tambah.png"))); // NOI18N
         btnSimpan.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         btnSimpan.setOpaque(false);
         btnSimpan.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -380,11 +383,11 @@ public class TransaksiBeli extends javax.swing.JPanel {
                 btnSimpanActionPerformed(evt);
             }
         });
-        add(btnSimpan, new org.netbeans.lib.awtextra.AbsoluteConstraints(17, 712, 150, 48));
+        add(btnSimpan, new org.netbeans.lib.awtextra.AbsoluteConstraints(37, 424, -1, -1));
 
         btnEdit.setBackground(new java.awt.Color(34, 119, 237));
         btnEdit.setForeground(new java.awt.Color(255, 255, 255));
-        btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/image/gambar_icon/btn-edit-075.png"))); // NOI18N
+        btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/image/gambar_icon/btn-edit.png"))); // NOI18N
         btnEdit.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         btnEdit.setOpaque(false);
         btnEdit.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -403,11 +406,11 @@ public class TransaksiBeli extends javax.swing.JPanel {
                 btnEditActionPerformed(evt);
             }
         });
-        add(btnEdit, new org.netbeans.lib.awtextra.AbsoluteConstraints(197, 712, 150, 48));
+        add(btnEdit, new org.netbeans.lib.awtextra.AbsoluteConstraints(255, 424, -1, -1));
 
         btnHapus.setBackground(new java.awt.Color(34, 119, 237));
         btnHapus.setForeground(new java.awt.Color(255, 255, 255));
-        btnHapus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/image/gambar_icon/btn-hapus-075.png"))); // NOI18N
+        btnHapus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/image/gambar_icon/btn-hapus.png"))); // NOI18N
         btnHapus.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         btnHapus.setOpaque(false);
         btnHapus.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -426,11 +429,11 @@ public class TransaksiBeli extends javax.swing.JPanel {
                 btnHapusActionPerformed(evt);
             }
         });
-        add(btnHapus, new org.netbeans.lib.awtextra.AbsoluteConstraints(378, 712, 150, 48));
+        add(btnHapus, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 424, -1, -1));
 
         btnBayar.setBackground(new java.awt.Color(34, 119, 237));
         btnBayar.setForeground(new java.awt.Color(255, 255, 255));
-        btnBayar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/image/gambar_icon/btn-bayar-075.png"))); // NOI18N
+        btnBayar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/image/gambar_icon/btn-bayar.png"))); // NOI18N
         btnBayar.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         btnBayar.setOpaque(false);
         btnBayar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -446,11 +449,11 @@ public class TransaksiBeli extends javax.swing.JPanel {
                 btnBayarActionPerformed(evt);
             }
         });
-        add(btnBayar, new org.netbeans.lib.awtextra.AbsoluteConstraints(558, 712, 150, 48));
+        add(btnBayar, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 423, -1, -1));
 
         btnBatal.setBackground(new java.awt.Color(220, 41, 41));
         btnBatal.setForeground(new java.awt.Color(255, 255, 255));
-        btnBatal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/image/gambar_icon/btn-batal-075.png"))); // NOI18N
+        btnBatal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/image/gambar_icon/btn-batal.png"))); // NOI18N
         btnBatal.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         btnBatal.setOpaque(false);
         btnBatal.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -469,33 +472,33 @@ public class TransaksiBeli extends javax.swing.JPanel {
                 btnBatalActionPerformed(evt);
             }
         });
-        add(btnBatal, new org.netbeans.lib.awtextra.AbsoluteConstraints(737, 712, 150, 48));
-        add(txtTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 666, 160, 22));
+        add(btnBatal, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 423, -1, -1));
+        add(txtTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 653, 200, 26));
 
         inpID.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
         inpID.setForeground(new java.awt.Color(0, 0, 0));
         inpID.setText(": ");
-        add(inpID, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 68, 200, 28));
+        add(inpID, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 64, 285, 27));
 
         inpNamaKaryawan.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         inpNamaKaryawan.setForeground(new java.awt.Color(0, 0, 0));
         inpNamaKaryawan.setText(": ");
-        add(inpNamaKaryawan, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 110, 200, 28));
+        add(inpNamaKaryawan, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 104, 285, 26));
 
         inpIDBarang.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
         inpIDBarang.setForeground(new java.awt.Color(0, 0, 0));
         inpIDBarang.setText(": ");
-        add(inpIDBarang, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 192, 200, 28));
+        add(inpIDBarang, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 182, 285, 26));
 
         inpNamaSupplier.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         inpNamaSupplier.setForeground(new java.awt.Color(0, 0, 0));
         inpNamaSupplier.setText(":");
-        add(inpNamaSupplier, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 151, 200, 28));
+        add(inpNamaSupplier, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 142, 285, 27));
 
         inpNamaBarang.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         inpNamaBarang.setForeground(new java.awt.Color(0, 0, 0));
         inpNamaBarang.setText(":");
-        add(inpNamaBarang, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 233, 200, 28));
+        add(inpNamaBarang, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 220, 285, 26));
 
         inpJumlah.setBackground(new java.awt.Color(255, 255, 255));
         inpJumlah.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
@@ -517,22 +520,22 @@ public class TransaksiBeli extends javax.swing.JPanel {
                 inpJumlahKeyTyped(evt);
             }
         });
-        add(inpJumlah, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 315, 50, 30));
+        add(inpJumlah, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 298, 50, 27));
 
         inpTotalHarga.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
         inpTotalHarga.setForeground(new java.awt.Color(0, 0, 0));
         inpTotalHarga.setText(":");
-        add(inpTotalHarga, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 357, 200, 28));
+        add(inpTotalHarga, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 337, 285, 27));
 
         inpHarga.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
         inpHarga.setForeground(new java.awt.Color(0, 0, 0));
         inpHarga.setText(":");
-        add(inpHarga, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 275, 200, 28));
+        add(inpHarga, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 260, 285, 26));
 
         inpTanggal.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         inpTanggal.setForeground(new java.awt.Color(0, 0, 0));
         inpTanggal.setText(": 15 Oktober 2022 | 17:55");
-        add(inpTanggal, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 398, 200, 28));
+        add(inpTanggal, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 377, 285, 26));
 
         tabelDataBarang.setBackground(new java.awt.Color(255, 255, 255));
         tabelDataBarang.setFont(new java.awt.Font("Ebrima", 1, 14)); // NOI18N
@@ -569,7 +572,7 @@ public class TransaksiBeli extends javax.swing.JPanel {
         });
         jScrollPane2.setViewportView(tabelDataBarang);
 
-        add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(435, 80, 500, 155));
+        add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 90, 605, 135));
 
         tabelData.setBackground(new java.awt.Color(255, 255, 255));
         tabelData.setFont(new java.awt.Font("Ebrima", 1, 14)); // NOI18N
@@ -606,7 +609,7 @@ public class TransaksiBeli extends javax.swing.JPanel {
         });
         jScrollPane3.setViewportView(tabelData);
 
-        add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 460, 930, 200));
+        add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 475, 1090, 175));
 
         tabelDataSupplier.setBackground(new java.awt.Color(255, 255, 255));
         tabelDataSupplier.setFont(new java.awt.Font("Ebrima", 1, 14)); // NOI18N
@@ -643,9 +646,9 @@ public class TransaksiBeli extends javax.swing.JPanel {
         });
         jScrollPane4.setViewportView(tabelDataSupplier);
 
-        add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(435, 280, 500, 155));
+        add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 270, 605, 135));
 
-        background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/image/gambar/app-transaksi-beli-new-075.png"))); // NOI18N
+        background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/image/gambar/app-transaksi-beli.png"))); // NOI18N
         add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
@@ -736,6 +739,7 @@ public class TransaksiBeli extends javax.swing.JPanel {
                 }
             } else {
                 Message.showWarning(this, "Tabel Data Transaksi Tidak Boleh Kosong !");
+                this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
             }
         } catch (SQLException | InValidUserDataException ex) {
             ex.printStackTrace();
@@ -744,19 +748,19 @@ public class TransaksiBeli extends javax.swing.JPanel {
     }//GEN-LAST:event_btnBayarActionPerformed
 
     private void btnBayarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBayarMouseEntered
-        this.btnBayar.setIcon(Gambar.getAktiveIcon(this.btnBayar.getIcon().toString()));
+        this.btnBayar.setIcon(Gambar.getNoAktiveIcon(this.btnBayar.getIcon().toString()));
     }//GEN-LAST:event_btnBayarMouseEntered
 
     private void btnBayarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBayarMouseExited
-        this.btnBayar.setIcon(Gambar.getBiasaIcon(this.btnBayar.getIcon().toString()));
+        this.btnBayar.setIcon(Gambar.getNoBiasaIcon(this.btnBayar.getIcon().toString()));
     }//GEN-LAST:event_btnBayarMouseExited
 
     private void btnBatalMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBatalMouseEntered
-        this.btnBatal.setIcon(Gambar.getAktiveIcon(this.btnBatal.getIcon().toString()));
+        this.btnBatal.setIcon(Gambar.getNoAktiveIcon(this.btnBatal.getIcon().toString()));
     }//GEN-LAST:event_btnBatalMouseEntered
 
     private void btnBatalMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBatalMouseExited
-        this.btnBatal.setIcon(Gambar.getBiasaIcon(this.btnBatal.getIcon().toString()));
+        this.btnBatal.setIcon(Gambar.getNoBiasaIcon(this.btnBatal.getIcon().toString()));
     }//GEN-LAST:event_btnBatalMouseExited
 
     private void tabelDataBarangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelDataBarangMouseClicked
@@ -907,12 +911,12 @@ public class TransaksiBeli extends javax.swing.JPanel {
     }//GEN-LAST:event_tabelDataSupplierSupplier1KeyPressed
 
     private void btnHapusMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHapusMouseEntered
-        this.btnHapus.setIcon(Gambar.getAktiveIcon(this.btnHapus.getIcon().toString()));
+        this.btnHapus.setIcon(Gambar.getNoAktiveIcon(this.btnHapus.getIcon().toString()));
     }//GEN-LAST:event_btnHapusMouseEntered
 
     private void btnHapusMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHapusMouseExited
         // TODO add your handling code here:
-        this.btnHapus.setIcon(Gambar.getBiasaIcon(this.btnHapus.getIcon().toString()));
+        this.btnHapus.setIcon(Gambar.getNoBiasaIcon(this.btnHapus.getIcon().toString()));
     }//GEN-LAST:event_btnHapusMouseExited
 
     private void btnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusActionPerformed
@@ -1313,11 +1317,11 @@ public class TransaksiBeli extends javax.swing.JPanel {
     }//GEN-LAST:event_btnEditMouseClicked
 
     private void btnEditMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMouseEntered
-        this.btnEdit.setIcon(Gambar.getAktiveIcon(this.btnEdit.getIcon().toString()));
+        this.btnEdit.setIcon(Gambar.getNoAktiveIcon(this.btnEdit.getIcon().toString()));
     }//GEN-LAST:event_btnEditMouseEntered
 
     private void btnEditMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMouseExited
-        this.btnEdit.setIcon(Gambar.getBiasaIcon(this.btnEdit.getIcon().toString()));
+        this.btnEdit.setIcon(Gambar.getNoBiasaIcon(this.btnEdit.getIcon().toString()));
     }//GEN-LAST:event_btnEditMouseExited
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
@@ -1330,11 +1334,11 @@ public class TransaksiBeli extends javax.swing.JPanel {
 
     private void btnSimpanMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSimpanMouseExited
         // TODO add your handling code here:
-        this.btnSimpan.setIcon(Gambar.getBiasaIcon(this.btnSimpan.getIcon().toString()));
+        this.btnSimpan.setIcon(Gambar.getNoBiasaIcon(this.btnSimpan.getIcon().toString()));
     }//GEN-LAST:event_btnSimpanMouseExited
 
     private void btnSimpanMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSimpanMouseEntered
-        this.btnSimpan.setIcon(Gambar.getAktiveIcon(this.btnSimpan.getIcon().toString()));
+        this.btnSimpan.setIcon(Gambar.getNoAktiveIcon(this.btnSimpan.getIcon().toString()));
     }//GEN-LAST:event_btnSimpanMouseEntered
 
     private void btnSimpanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSimpanMouseClicked

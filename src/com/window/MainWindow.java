@@ -15,47 +15,43 @@ import com.window.panels.LaporanJual;
 import com.window.panels.TransaksiBeli;
 import com.window.panels.TransaksiJual;
 import com.window.panels.Dashboard;
+import com.window.panels.DataDiskon;
 import com.window.panels.DataKaryawan;
 import java.awt.Cursor;
 import java.awt.event.MouseEvent;
 import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 /**
  *
- * @author Achmad Baihaqi
+ * @author Amirzan Fikri Prasetyo
  */
 public class MainWindow extends javax.swing.JFrame {
-
     private final Dashboard dashboardP = new Dashboard();
-//    private final Karyawan karyawan = new Karyawan();
-//    private final DataKaryawan karyawanP = new DataKaryawan();
     private final DataSupplier supplierP = new DataSupplier();
     private final DataBarang barangP = new DataBarang();
     private final LaporanBeli laporanBp = new LaporanBeli();
     private final LaporanJual laporanJp = new LaporanJual();
     private final TransaksiBeli trBp = new TransaksiBeli();
     private final TransaksiJual trJp = new TransaksiJual();
-
     private final Users user = new Users();
     private final Database db = new Database();
     private JLabel activated;
     private boolean selected[] = new boolean[8];
     private JLabel[] btns;
 
-   public MainWindow() throws ParseException {
-        //close connection
+    public MainWindow() throws ParseException {
         dashboardP.closeKoneksi();
-//        karyawanP.closeKoneksi();
         supplierP.closeKoneksi();
         barangP.closeKoneksi();
         laporanBp.closeKoneksi();
         laporanJp.closeKoneksi();
         trBp.closeKoneksi();
         trJp.closeKoneksi();
-        //
         initComponents();
         this.setTitle("Dashboard");
         this.setIconImage(Gambar.getWindowIcon());
@@ -67,7 +63,6 @@ public class MainWindow extends javax.swing.JFrame {
             this.btnTrJual, this.btnTrBeli, this.btnLpJual, this.btnLpBeli, this.btnLogout
         };
         this.activated = this.btnDashboard;
-
         // reset window
         this.pnlMenu.removeAll();
         this.pnlMenu.repaint();
@@ -76,7 +71,6 @@ public class MainWindow extends javax.swing.JFrame {
         this.pnlMenu.add(new com.window.panels.Dashboard());
         this.pnlMenu.repaint();
         this.pnlMenu.revalidate();
-
         this.setActivatedButton(btnDashboard);
         this.hoverButton(btns);
         this.setResizable(false);
@@ -162,7 +156,9 @@ public class MainWindow extends javax.swing.JFrame {
             });
         }
     }
-
+    public void title(JFrame frame, String judul){
+        frame.setTitle(judul);
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -192,7 +188,7 @@ public class MainWindow extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnlMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 1178, Short.MAX_VALUE)
+            .addComponent(pnlMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 1188, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -201,7 +197,7 @@ public class MainWindow extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        pnlMain.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 0, 1178, 696));
+        pnlMain.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 0, 1188, 696));
 
         lblNamaUser.setForeground(new java.awt.Color(0, 0, 0));
         lblNamaUser.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -213,7 +209,7 @@ public class MainWindow extends javax.swing.JFrame {
                 btnDashboardMouseClicked(evt);
             }
         });
-        pnlMain.add(btnDashboard, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 105, -1, -1));
+        pnlMain.add(btnDashboard, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 100, -1, -1));
 
         btnBarang.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/image/gambar_icon/sidebar-dataBarang.png"))); // NOI18N
         btnBarang.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -224,7 +220,7 @@ public class MainWindow extends javax.swing.JFrame {
                 btnBarangMouseEntered(evt);
             }
         });
-        pnlMain.add(btnBarang, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 170, -1, -1));
+        pnlMain.add(btnBarang, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 168, -1, -1));
 
         btnKaryawan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/image/gambar_icon/sidebar-dataKaryawan.png"))); // NOI18N
         btnKaryawan.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -232,7 +228,7 @@ public class MainWindow extends javax.swing.JFrame {
                 btnKaryawanMouseClicked(evt);
             }
         });
-        pnlMain.add(btnKaryawan, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 235, -1, -1));
+        pnlMain.add(btnKaryawan, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 234, -1, -1));
 
         btnSupplier.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/image/gambar_icon/sidebar-dataSupplier.png"))); // NOI18N
         btnSupplier.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -248,7 +244,7 @@ public class MainWindow extends javax.swing.JFrame {
                 btnTrBeliMouseClicked(evt);
             }
         });
-        pnlMain.add(btnTrBeli, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 365, -1, -1));
+        pnlMain.add(btnTrBeli, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 368, -1, -1));
 
         btnTrJual.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/image/gambar_icon/sidebar-Transaksi-jual.png"))); // NOI18N
         btnTrJual.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -256,7 +252,7 @@ public class MainWindow extends javax.swing.JFrame {
                 btnTrJualMouseClicked(evt);
             }
         });
-        pnlMain.add(btnTrJual, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 430, -1, -1));
+        pnlMain.add(btnTrJual, new org.netbeans.lib.awtextra.AbsoluteConstraints(17, 437, -1, -1));
 
         btnLpJual.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/image/gambar_icon/sidebar-Laporan-pemasukan.png"))); // NOI18N
         btnLpJual.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -264,7 +260,7 @@ public class MainWindow extends javax.swing.JFrame {
                 btnLpJualMouseClicked(evt);
             }
         });
-        pnlMain.add(btnLpJual, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 495, -1, -1));
+        pnlMain.add(btnLpJual, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 507, -1, -1));
 
         btnLpBeli.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/image/gambar_icon/sidebar-Laporan-pengeluaran.png"))); // NOI18N
         btnLpBeli.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -272,7 +268,7 @@ public class MainWindow extends javax.swing.JFrame {
                 btnLpBeliMouseClicked(evt);
             }
         });
-        pnlMain.add(btnLpBeli, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 570, -1, -1));
+        pnlMain.add(btnLpBeli, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 571, -1, -1));
 
         btnLogout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/image/gambar_icon/sidebar-logout.png"))); // NOI18N
         btnLogout.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -280,10 +276,10 @@ public class MainWindow extends javax.swing.JFrame {
                 btnLogoutMouseClicked(evt);
             }
         });
-        pnlMain.add(btnLogout, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 640, -1, -1));
+        pnlMain.add(btnLogout, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 640, -1, -1));
 
         background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/image/gambar/app-mainWindow.png"))); // NOI18N
-        pnlMain.add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1388, 696));
+        pnlMain.add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1396, 696));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -434,7 +430,6 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_btnTrBeliMouseClicked
 
     private void btnTrJualMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTrJualMouseClicked
-        //        this.lblMenuName.setText("Transaksi Jual");
         this.setCursor(new Cursor(Cursor.WAIT_CURSOR));
         this.setTitle("Transaksi Jual");
         this.setActivatedButton(this.btnTrJual);
@@ -456,17 +451,14 @@ public class MainWindow extends javax.swing.JFrame {
         pnlMenu.repaint();
         pnlMenu.revalidate();
         this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-        // TODO add your handling code here:
     }//GEN-LAST:event_btnTrJualMouseClicked
 
     private void btnLpJualMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLpJualMouseClicked
         try {
             if (this.user.isAdmin()) {
-
                 this.setCursor(new Cursor(Cursor.WAIT_CURSOR));
                 this.setTitle("Laporan Jual");
                 this.setActivatedButton(this.btnLpJual);
-
                 // menghapus panel lama
                 pnlMenu.removeAll();
                 pnlMenu.repaint();
@@ -582,6 +574,6 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblNamaUser;
     private javax.swing.JPanel pnlMain;
-    private javax.swing.JPanel pnlMenu;
+    public static javax.swing.JPanel pnlMenu;
     // End of variables declaration//GEN-END:variables
 }
