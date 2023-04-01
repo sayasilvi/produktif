@@ -132,56 +132,31 @@ public class Users extends Database{
      * @throws SQLException jika terjadi kegagalan saat menambahkan data kedalam <b>Database</b>.
      * @throws InValidUserDataException jika data dari karyawan tidak valid.
      */
-    public final boolean addUsernew(String username, String pass1, String level, String idKaryawan) throws SQLException, InValidUserDataException{
-        Log.addLog("Menambahkan user baru dengan ID User '" + username + "' dengan level " + level);
-//        String pass = hash.getHashSalt(pass1);
-        PreparedStatement pst;
-        // mengecek apakah data yang akan ditambahkan valid atau tidak
-        if(this.validateAddUsernew(username, pass1, level)){
-            try {
-                Log.addLog("Data dari '" + username + "' dinyatakan valid.");
-                String hashing = hash.hash(pass1, 15);
-                // menambahkan data kedalam Database
-                pst = this.conn.prepareStatement("INSERT INTO users VALUES (?, ?, ?, ?)");
-                pst.setString(1, username);
-                pst.setString(2, hashing);
-                pst.setString(3, level );
-                pst.setString(4, idKaryawan);
-                
-                // mengekusi query
-                return pst.executeUpdate() > 0;
-            } catch (Exception ex) {
-                Logger.getLogger(Users.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
-        }
-        return false;
-    }
-    //digunakan untuk menambahkan karyawan dan user ke database
-    public final boolean addUser(String username, String password, UserLevels level,String idKaryawan) throws SQLException, InValidUserDataException{
-        Log.addLog("Menambahkan user baru dengan username '" + username + "' dengan level " + level.name());
-        PreparedStatement pst;
-        // mengecek apakah data yang akan ditambahkan valid atau tidak
-        if(this.validateAddUser(username, password, level)){
-            try {
-                Log.addLog("Data dari '" + username + "' dinyatakan valid.");
-                String hashing = hash.hash(password, 15);
-                // menambahkan data kedalam Database
-                pst = this.conn.prepareStatement("INSERT INTO users VALUES (?, ?, ?, ?)");
-                pst.setString(1, username);
-                pst.setString(2, hashing);
-                pst.setString(3, level.name());
-                pst.setString(4, idKaryawan);
-                
-                // mengekusi query
-                return pst.executeUpdate() > 0;
-            } catch (Exception ex) {
-                Logger.getLogger(Users.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
-        }
-        return false;
-    }
+//    //digunakan untuk menambahkan karyawan dan user ke database
+//    public final boolean addUser(String username, String password, UserLevels level,String idKaryawan) throws SQLException, InValidUserDataException{
+//        Log.addLog("Menambahkan user baru dengan username '" + username + "' dengan level " + level.name());
+//        PreparedStatement pst;
+//        // mengecek apakah data yang akan ditambahkan valid atau tidak
+//        if(this.validateAddUser(username, password, level)){
+//            try {
+//                Log.addLog("Data dari '" + username + "' dinyatakan valid.");
+//                String hashing = hash.hash(password, 15);
+//                // menambahkan data kedalam Database
+//                pst = this.conn.prepareStatement("INSERT INTO users VALUES (?, ?, ?, ?)");
+//                pst.setString(1, username);
+//                pst.setString(2, hashing);
+//                pst.setString(3, level.name());
+//                pst.setString(4, idKaryawan);
+//                
+//                // mengekusi query
+//                return pst.executeUpdate() > 0;
+//            } catch (Exception ex) {
+//                Logger.getLogger(Users.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//            
+//        }
+//        return false;
+//    }
     
     /**
      * Method ini digunakan untuk mengecek apakah semua data dari user yang diinputkan valid atau tidak.
@@ -197,38 +172,6 @@ public class Users extends Database{
      * @return <strong>True</strong> jika semua data dari user valid. <br>
      *         <strong>False</strong> jika ada salah satu data dari user yang tidak valid.
      */
-    private boolean validateAddUsernew(String idUser, String pass,String level){
-
-        boolean vIdUser, vPassword, vLevel;
-
-        // mengecek apakah id user valid atau tidak
-        if(Validation.isIdUser(idUser)){
-            if(!this.isExistUser(idUser)){
-                vIdUser = true;
-            }else{
-                throw new InValidUserDataException("'" + idUser + "' ID User tersebut sudah terpakai.");
-            }
-        }else{
-            throw new InValidUserDataException("'" + idUser + "' ID User tersebut tidak valid.");
-        }
-
-        // mengecek apakah password valid atau tidak
-        if(Validation.isPassword(pass)){
-            vPassword = true;
-        }else{
-            throw new InValidUserDataException("'" + pass + "' Password tersebut tidak valid.");
-        }
-
-        // mengecek apakah user level valid atau tidak
-        if(Validation.isLevelnew(level)){
-            vLevel = true;
-        }else{
-            throw new InValidUserDataException("'" + level + "' level tersebut tidak valid.");
-        }
-        
-        return vIdUser && vPassword && vLevel;
-    }
-    
     private boolean validateAddUser(String username, String pass, UserLevels level){
 
         boolean vIdUser, vPassword, vLevel;
@@ -238,10 +181,10 @@ public class Users extends Database{
             if(!this.isExistUser(username)){
                 vIdUser = true;
             }else{
-                throw new InValidUserDataException("'" + username + "' ID User tersebut sudah terpakai.");
+                throw new InValidUserDataException("'" + username + "' Username tersebut sudah terpakai.");
             }
         }else{
-            throw new InValidUserDataException("'" + username + "' ID User tersebut tidak valid.");
+            throw new InValidUserDataException("'" + username + "' Username tersebut tidak valid.");
         }
 
         // mengecek apakah password valid atau tidak
@@ -559,7 +502,7 @@ public class Users extends Database{
         if(txt.isNumber(nomor)){
             // jika id user belum exist maka id akan 
             switch(level.name()){
-                case "KARYAWAN" : return String.format("KY%03d", Integer.parseInt(nomor)+1); // level admin dan karyawan
+                case "USERS" : return String.format("KY%03d", Integer.parseInt(nomor)+1); // level admin dan karyawan
 //                case "SUPPLIER" : return String.format("SP%03d", Integer.parseInt(nomor)+1);
 //                case "PEMBELI" : return String.format("PB%03d", Integer.parseInt(nomor)+1);
                 default : System.out.println("Error!");
@@ -877,22 +820,28 @@ public class Users extends Database{
         try {
             // validasi data sebelum ditambahkan
             if (this.validateAddKaryawan(idKaryawan, namaKaryawan, noTelp, alamat)) {
-                Log.addLog("Menambahkan data karyawan dengan nama '" + namaKaryawan + "'");
-                // menambahkan data kedalam Database
-                pst = this.conn.prepareStatement("INSERT INTO karyawan VALUES (?, ?, ?, ?)");
-                pst.setString(1, idKaryawan);
-                pst.setString(2, text.toCapitalize(namaKaryawan));
-                pst.setString(3, noTelp);
-                pst.setString(4, text.toCapitalize(alamat));
-
-                // mengekusi query
-                isAdd = pst.executeUpdate() > 0;
+                if(this.validateAddUser(username, pass, level)){
+                    Log.addLog("Menambahkan data karyawan dengan nama '" + namaKaryawan + "'");
+                    String hashing = hash.hash(pass, 15);
+                    // menambahkan data kedalam Database
+                    pst = this.conn.prepareStatement("INSERT INTO users VALUES (?, ?, ?, ?, ?, ?, ?)");
+                    pst.setString(1, idKaryawan);
+                    pst.setString(2, text.toCapitalize(namaKaryawan));
+                    pst.setString(3, noTelp);
+                    pst.setString(4, text.toCapitalize(alamat));
+                    pst.setString(5, username);
+                    pst.setString(6, hashing);
+                    pst.setString(7, level.name());
+                    // mengekusi query
+                    isAdd = pst.executeUpdate() > 0;
+                }
             }
+            return isAdd;
             // mengecek apakah karyawan sudah ditambahkan ke tabel user
-            if (isAdd) {
-                // menambahkan data user ke tabel user
-                return this.addUser(username, pass, level, idKaryawan);
-            }
+//            if (isAdd) {
+//                // menambahkan data user ke tabel user
+//                return this.addUser(username, pass, level, idKaryawan);
+//            }
         } catch (SQLException | InValidUserDataException ex) {
             this.deleteKaryawan(idKaryawan);
             System.out.println("Error Message : " + ex.getMessage());

@@ -121,8 +121,6 @@ public class InputKaryawan extends javax.swing.JDialog {
             case 1 : level = UserLevels.ADMIN; break;
             case 2 : level = UserLevels.KARYAWAN; break;
         }
-        System.out.println("level "+this.inpLevel.getSelectedIndex());
-        System.out.println("level "+level);
         // cek apakah user sudah memilih level atau belum
         if (this.username.equals("")) {
             error = true;
@@ -252,7 +250,6 @@ public class InputKaryawan extends javax.swing.JDialog {
         inpId.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         inpId.setForeground(new java.awt.Color(0, 0, 0));
         inpId.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        inpId.setText("PG002");
         inpId.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         inpId.setCaretColor(new java.awt.Color(230, 11, 11));
         inpId.setDisabledTextColor(new java.awt.Color(0, 0, 0));

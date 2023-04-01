@@ -1,24 +1,11 @@
 package com.window.panels;
 
-import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.scene.chart.BarChart;
-import javafx.scene.chart.CategoryAxis;
-import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.XYChart;
-import javafx.stage.Stage;
 import java.util.Date;
 import com.manage.Chart;
 import com.manage.Message;
 import com.manage.Waktu;
 import com.data.db.Database;
-import com.manage.Barang;
-import com.manage.ManageTransaksiBeli;
-import com.manage.ManageTransaksiJual;
 import com.manage.Text;
-import java.awt.BorderLayout;
-import java.awt.Color;
-//import static java.awt.SystemColor.text;
 import java.sql.*;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -35,16 +22,14 @@ import javax.swing.table.TableModel;
 public class Dashboard extends javax.swing.JPanel {
 
     private final Database db = new Database();
-
-
     private final Chart chart = new Chart();
 
     private final Waktu waktu = new Waktu();
 
     private final Text text = new Text();
 
-    private int hari, bulan, tahun, pMakanan, pMinuman, pSnack, pAtk;
-
+    private int hari, bulan, tahun, pMakanan, pMinuman, pSnack, pAtk, Saldo = 0;
+    private String keywordSaldo = "";
     DateFormat tanggalMilis = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
     private final DateFormat tanggalFull = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss ");
     private final DateFormat date = new SimpleDateFormat("dd-MM-yyyy");
@@ -58,7 +43,7 @@ public class Dashboard extends javax.swing.JPanel {
         db.startConnection();
 //        System.out.println("dahsboard");
         updateTabel();
-        
+        this.updateSaldo();
         this.hari = waktu.getTanggal();
         this.bulan = waktu.getBulan() + 1;
         this.tahun = waktu.getTahun();
@@ -96,6 +81,18 @@ public class Dashboard extends javax.swing.JPanel {
         this.chart.closeKoneksi();
         db.closeConnection();
     }
+    private void updateSaldo() {
+        try {
+            String sql = "SELECT jumlah_saldo FROM saldo ORDER BY id_saldo DESC LIMIT 0,1" + keywordSaldo;
+            db.res = db.stat.executeQuery(sql);
+            while (db.res.next()) {
+                this.Saldo = db.res.getInt("jumlah_saldo");
+            }
+            db.closeConnection();
+        } catch (SQLException ex) {
+            Message.showException(this, "Terjadi kesalahan saat mengambil data dari database\n" + ex.getMessage(), ex, true);
+        }
+    }
     private int getJenis(String field) {
         try {
             int data = 0;
@@ -118,6 +115,7 @@ public class Dashboard extends javax.swing.JPanel {
 
     private int getTotal(String table, String kolom, String kondisi) {
         try {
+            db.startConnection();
             int data = 0;
             String sql = "SELECT SUM(" + kolom + ") AS total FROM " + table + " " + kondisi;
             db.res = db.stat.executeQuery(sql);
@@ -153,7 +151,7 @@ public class Dashboard extends javax.swing.JPanel {
     }
     private void showMain() {
         String tanggal = waktu.getCurrentDate();
-        String tSaldo = text.toMoneyCase(Integer.toString(getTotal("saldo", "jumlah_saldo", "WHERE id_saldo = 'S001'")));
+        String tSaldo = text.toMoneyCase(Integer.toString(this.Saldo));
         String tPemasukan = text.toMoneyCase(Integer.toString(getTotal("transaksi_jual", "keuntungan", "WHERE YEAR(tanggal) = '" + tahun + "' AND MONTH(tanggal) = '" + bulan + "'")));
         String tPengeluaran = text.toMoneyCase(Integer.toString(getTotal("transaksi_beli", "total_hrg", "WHERE YEAR(tanggal) = '" + tahun + "' AND MONTH(tanggal) = '" + bulan + "'")));
         String tPembeli = Integer.toString(getJumlahData("transaksi_jual", "WHERE YEAR(tanggal) = '" + tahun + "' AND MONTH(tanggal) = '" + bulan + "'"));

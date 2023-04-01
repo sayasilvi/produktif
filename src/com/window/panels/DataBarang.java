@@ -532,7 +532,6 @@ public class DataBarang extends javax.swing.JPanel {
     }//GEN-LAST:event_btnDiskonMouseExited
 
     private void dataDiskon(JPanel pnl){
-        System.out.println("data diskon");
         //jika btn diskon di window barang di klik
         this.setCursor(new Cursor(Cursor.WAIT_CURSOR));
 //        .setTitle("Data Diskon");
@@ -540,14 +539,10 @@ public class DataBarang extends javax.swing.JPanel {
         MainWindow.pnlMenu.removeAll();
         MainWindow.pnlMenu.repaint();
         MainWindow.pnlMenu.revalidate();
-        System.out.println("data diskon3");
-//        pnlMenu.revalidate();
         this.closeKoneksi();
         // menambahkan panel baru
         MainWindow.pnlMenu.add(pnl);
-//        MainWindow.title("barang");
         MainWindow.pnlMenu.validate();
-        System.out.println("data diskon5");
         this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     }
     

@@ -45,6 +45,7 @@ public class MainWindow extends javax.swing.JFrame {
     private JLabel[] btns;
 
     public MainWindow() throws ParseException {
+        initComponents();
         dashboardP.closeKoneksi();
         supplierP.closeKoneksi();
         barangP.closeKoneksi();
@@ -52,7 +53,6 @@ public class MainWindow extends javax.swing.JFrame {
         laporanJp.closeKoneksi();
         trBp.closeKoneksi();
         trJp.closeKoneksi();
-        initComponents();
         this.setTitle("Dashboard");
         this.setIconImage(Gambar.getWindowIcon());
 //        this.setExtendedState(this.getExtendedState() | javax.swing.JFrame.MAXIMIZED_BOTH);
