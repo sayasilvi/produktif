@@ -92,13 +92,13 @@ public class TransaksiJual extends javax.swing.JPanel {
         if(lastID != null){
             nomor = lastID.substring(1);
         }else{
-            nomor = "00000000";
+            nomor = "000000000";
         }
         
         // mengecek nilai dari nomor adalah number atau tidak
         if(text.isNumber(nomor)){
             // jika id saldo belum exist maka id akan 
-            return String.format("S%08d", Integer.parseInt(nomor)+1);
+            return String.format("S%09d", Integer.parseInt(nomor)+1);
         }
         return null;
     }
@@ -1524,6 +1524,8 @@ public class TransaksiJual extends javax.swing.JPanel {
                         this.updateTabelData();
                         // mereset input
                         this.resetInput();
+                        txtSebelum.setText(text.toMoneyCase("0"));
+                        txtDiskon.setText(text.toMoneyCase("0"));
                         txtTotal.setText(text.toMoneyCase("0"));
                         //update id transaksi
                         this.idTr = this.trj.createIDTransaksi();
@@ -1582,6 +1584,8 @@ public class TransaksiJual extends javax.swing.JPanel {
                 this.updateTabelData();
                 // mereset input
                 this.resetInput();
+                txtSebelum.setText(text.toMoneyCase("0"));
+                txtDiskon.setText(text.toMoneyCase("0"));
                 txtTotal.setText(text.toMoneyCase("0"));
                 //ubah saldo 
                 this.txtSaldo.setText(text.toMoneyCase(Integer.toString(this.Saldo)));
