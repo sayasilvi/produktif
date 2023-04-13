@@ -125,8 +125,8 @@ public class InputDiskon extends javax.swing.JDialog {
             this.nama = this.inpNama.getText();
             this.jumlah = this.inpJumlah.getText();
             this.minimal = this.inpMinimal.getText();
-            this.tanggalAwal = date1.format(this.inpTanggalAkhir.getDate());
-            this.tanggalAkhir = date1.format(this.inpTanggalAwal.getDate());
+            this.tanggalAwal = date1.format(this.inpTanggalAwal.getDate());
+            this.tanggalAkhir = date1.format(this.inpTanggalAkhir.getDate());
             // cek apakah user sudah memilih level atau belum
             if (this.nama.equals("")) {
                 error = true;

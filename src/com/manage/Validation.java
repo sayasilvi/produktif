@@ -135,6 +135,17 @@ public class Validation {
         }
         return false;
     }
+    public static boolean isIdBarcode(String idDiskon){
+        if(Validation.isIdUser(idDiskon)){
+             if(idDiskon.substring(0, 3).equalsIgnoreCase("BAR")){
+                return true;
+            }else{
+                Audio.play(Audio.SOUND_WARNING);
+                JOptionPane.showMessageDialog(null, "'" + idDiskon + "' Kode ID Diskon tersebut tidak valid!", "Pesan", JOptionPane.WARNING_MESSAGE);
+            }
+        }
+        return false;
+    }
     
     /**
      *  - nama harus terdiri dari 6-50 karakter
@@ -333,7 +344,20 @@ public class Validation {
             default : return false;
         }
     }
-    
+    public static boolean isRfid(String rfid){
+        if(rfid.length() >= 8 && rfid.length() <=10){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    public static boolean isBarcode(String barcode){
+        if(barcode.length() >= 8 && barcode.length() <=10){
+            return true;
+        }else{
+            return false;
+        }
+    }
     /**
      * - panjangnya harus diantara 5-50 karakter
      * 
@@ -529,9 +553,6 @@ public class Validation {
             Audio.play(Audio.SOUND_WARNING);
             JOptionPane.showMessageDialog(null, "Tanggal Akhir tidak valid", "Pesan", JOptionPane.WARNING_MESSAGE);
         }else{
-//            if(tanggalAkhir >= tanggalAwal){
-//                return true;
-//            }
             return true;
         }
         return false;

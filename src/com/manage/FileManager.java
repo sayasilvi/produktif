@@ -504,7 +504,6 @@ public class FileManager {
      */
     public boolean deleteFile(String file) {
 //        Log.addLog("Menghapus file '" + file + "'");
-        System.out.println("Menghapus file '" + file + "'");
         return new File(file).delete();
     }
 

@@ -23,7 +23,7 @@ public final class Application {
      */
     private static final String VERSION = "1.0.0",
                                 APP_NAME = "Nano app",
-                                AUTHOR = "Kelompok A3",
+                                AUTHOR = "Kelompok A2",
                                 COMPANY = "Politeknik Negeri Jember",
                                 APP_ICON_old = "src\\resources\\image\\icons\\app-logo.png",
                                 APP_ICON = "src\\resources\\image\\icons\\app-icon.png";

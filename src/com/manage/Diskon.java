@@ -34,6 +34,7 @@ public class Diskon extends Database {
         if(lastID != null){
             nomor = lastID.substring(1);
         }else{
+            System.out.println("diskon kosong "+ lastID);
             nomor = "000";
         }
         
@@ -59,6 +60,7 @@ public class Diskon extends Database {
             String query = String.format("SELECT * FROM %s ORDER BY %s DESC LIMIT 0,1", DatabaseTables.DISKON.name(), DKN.ID_DISKON.name());
             res = stat.executeQuery(query);
             if (res.next()) {
+                System.out.println("kode diskon "+res.getString(DKN.ID_DISKON.name()));
                 return res.getString(DKN.ID_DISKON.name());
             }
         } catch (SQLException ex) {
@@ -134,7 +136,9 @@ public class Diskon extends Database {
             if (Validation.isTanggalAkhir(tanggalAwal, tanggalAkhir)) {
                 TanggalAwal = date1.parse(tanggalAwal);
                 TanggalAkhir = date1.parse(tanggalAkhir);
+                System.out.println("mengecek tanggal diskon");
                 if(TanggalAwal.compareTo(TanggalAkhir) <= 0){
+                    System.out.println("tanggal benar");
                     vTanggalAkhir = true;
                 }else{
                     vTanggalAkhir = false;

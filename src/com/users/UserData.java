@@ -17,4 +17,5 @@ public enum UserData {
     NAMA_SUPPLIER,
     NO_TELP,
     ALAMAT,
+    RFID,
 }

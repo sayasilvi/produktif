@@ -30,7 +30,7 @@ public class DataKaryawan extends javax.swing.JPanel {
 
     private final Text text = new Text();
 
-    private String idSelected = "", keyword = "", namaPetugas, noTelp, alamat, level;
+    private String idSelected = "", keyword = "", namaPetugas, noTelp, alamat, level, rfid;
 
     public DataKaryawan() {
         initComponents();
@@ -45,7 +45,7 @@ public class DataKaryawan extends javax.swing.JPanel {
 
         JLabel[] values = {
             this.valIDKaryawan, this.valNamaKaryawan, this.valNoTelp, this.valAlamat,
-            this.valLevel
+            this.valLevel,this.valRFID
         };
 
         for (JLabel lbl : values) {
@@ -136,13 +136,14 @@ public class DataKaryawan extends javax.swing.JPanel {
         this.noTelp = text.toTelephoneCase(user.getNoTelpKaryawan(this.idSelected));
         this.alamat = user.getAlamatKaryawan(this.idSelected);
         this.level = text.toCapitalize(user.getLevel1(this.idSelected).name());
-
+        this.rfid = user.getRfid(this.idSelected);
         // menampilkan data
-        this.valIDKaryawan.setText("<html><p>:&nbsp;" + idSelected + "</p></html>");
-        this.valNamaKaryawan.setText("<html><p>:&nbsp;" + namaPetugas + "</p></html>");
-        this.valNoTelp.setText("<html><p style=\"text-decoration:underline; color:rgb(0,0,0);\">:&nbsp;" + noTelp + "</p></html>");
-        this.valAlamat.setText("<html><p>:&nbsp;" + alamat + "</p></html>");
-        this.valLevel.setText("<html><p>:&nbsp;" + level + "</p></html>");
+        this.valIDKaryawan.setText("<html><p>:&nbsp;" + this.idSelected + "</p></html>");
+        this.valNamaKaryawan.setText("<html><p>:&nbsp;" + this.namaPetugas + "</p></html>");
+        this.valNoTelp.setText("<html><p style=\"text-decoration:underline; color:rgb(0,0,0);\">:&nbsp;" + this.noTelp + "</p></html>");
+        this.valAlamat.setText("<html><p>:&nbsp;" + this.alamat + "</p></html>");
+        this.valLevel.setText("<html><p>:&nbsp;" + this.level + "</p></html>");
+        this.valRFID.setText("<html><p>:&nbsp;" + this.rfid + "</p></html>");
     }
 
     private void resetData() {
@@ -151,6 +152,7 @@ public class DataKaryawan extends javax.swing.JPanel {
         this.valNamaKaryawan.setText("<html><p>:&nbsp;</p></html>");
         this.valAlamat.setText("<html><p>:&nbsp;</p></html>");
         this.valLevel.setText("<html><p>:&nbsp;</p></html>");
+        this.valRFID.setText("<html><p>:&nbsp;</p></html>");
     }
 
     @SuppressWarnings("unchecked")
@@ -168,6 +170,7 @@ public class DataKaryawan extends javax.swing.JPanel {
         jScrollPane2 = new javax.swing.JScrollPane();
         tabelData = new javax.swing.JTable();
         valLevel = new javax.swing.JLabel();
+        valRFID = new javax.swing.JLabel();
         background = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
@@ -178,12 +181,12 @@ public class DataKaryawan extends javax.swing.JPanel {
         valIDKaryawan.setForeground(new java.awt.Color(0, 0, 0));
         valIDKaryawan.setText(":");
         valIDKaryawan.setName(""); // NOI18N
-        add(valIDKaryawan, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 130, 200, 60));
+        add(valIDKaryawan, new org.netbeans.lib.awtextra.AbsoluteConstraints(215, 130, 320, 45));
 
         valNamaKaryawan.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         valNamaKaryawan.setForeground(new java.awt.Color(0, 0, 0));
         valNamaKaryawan.setText(":");
-        add(valNamaKaryawan, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 210, 200, 60));
+        add(valNamaKaryawan, new org.netbeans.lib.awtextra.AbsoluteConstraints(215, 200, 325, 45));
 
         valNoTelp.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         valNoTelp.setForeground(new java.awt.Color(0, 0, 0));
@@ -199,12 +202,12 @@ public class DataKaryawan extends javax.swing.JPanel {
                 valNoTelpMouseExited(evt);
             }
         });
-        add(valNoTelp, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 290, 200, 60));
+        add(valNoTelp, new org.netbeans.lib.awtextra.AbsoluteConstraints(215, 270, 325, 45));
 
         valAlamat.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         valAlamat.setForeground(new java.awt.Color(0, 0, 0));
         valAlamat.setText(":");
-        add(valAlamat, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 370, 200, 60));
+        add(valAlamat, new org.netbeans.lib.awtextra.AbsoluteConstraints(215, 340, 325, 45));
 
         inpCari.setBackground(new java.awt.Color(0, 0, 0));
         inpCari.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
@@ -325,7 +328,12 @@ public class DataKaryawan extends javax.swing.JPanel {
         valLevel.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         valLevel.setForeground(new java.awt.Color(0, 0, 0));
         valLevel.setText(":");
-        add(valLevel, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 450, 200, 60));
+        add(valLevel, new org.netbeans.lib.awtextra.AbsoluteConstraints(215, 410, 325, 45));
+
+        valRFID.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        valRFID.setForeground(new java.awt.Color(0, 0, 0));
+        valRFID.setText(":");
+        add(valRFID, new org.netbeans.lib.awtextra.AbsoluteConstraints(215, 480, 325, 45));
 
         background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/image/gambar/app-dataKaryawan.png"))); // NOI18N
         background.setName(""); // NOI18N
@@ -516,5 +524,6 @@ public class DataKaryawan extends javax.swing.JPanel {
     private javax.swing.JLabel valLevel;
     private javax.swing.JLabel valNamaKaryawan;
     private javax.swing.JLabel valNoTelp;
+    private javax.swing.JLabel valRFID;
     // End of variables declaration//GEN-END:variables
 }

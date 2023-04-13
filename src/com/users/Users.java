@@ -633,7 +633,7 @@ public class Users extends Database{
         // mengecek apakah id user exist atau tidak
         if(this.isExistUser(username)){
             // mengedit data dari user
-            return this.setData(DatabaseTables.USERS.name(), data.name(), UserData.USERNAME.name(), username, newValue);
+            return super.setData(DatabaseTables.USERS.name(), data.name(), UserData.USERNAME.name(), username, newValue);
         }
         // akan menghasilkan error jika id user tidak ditemukan
         throw new InValidUserDataException("'" +username + "' username tersebut tidak dapat ditemukan.");
@@ -787,8 +787,16 @@ public class Users extends Database{
     public int getTotalUser(){
         return super.getJumlahData(DatabaseTables.USERS.name());
     }
-    
-
+    public String getRfid(String idKaryawan){
+        return this.getUserData1(idKaryawan, UserData.RFID);
+    }
+    public boolean setRFID(String username, String rfid){
+        if(Validation.isRfid(rfid)){
+            return this.setUserData(username, UserData.RFID, rfid);
+        }
+        // akan menghasilkan error jika kode rfid tidak valid
+        throw new InValidUserDataException("'" + rfid + "' Kode RFID tersebut tidak valid.");
+    }
     
     public static void main(String[] args) {
         Log.createLog();
@@ -813,7 +821,7 @@ public class Users extends Database{
         return this.isExistID(idKaryawan, UserLevels.USERS, UserData.ID_KARYAWAN);
     }
     //digunakan utuk menambahkan karyawan dan user 
-    public final boolean addKaryawan(String namaKaryawan, String noTelp, String alamat, String pass, UserLevels level, String username) {
+    public final boolean addKaryawan(String namaKaryawan, String noTelp, String alamat, String pass, UserLevels level, String username, String rfid) {
         boolean isAdd = false;
         PreparedStatement pst;
         String idKaryawan = this.karyawanCreateID();
@@ -821,19 +829,24 @@ public class Users extends Database{
             // validasi data sebelum ditambahkan
             if (this.validateAddKaryawan(idKaryawan, namaKaryawan, noTelp, alamat)) {
                 if(this.validateAddUser(username, pass, level)){
-                    Log.addLog("Menambahkan data karyawan dengan nama '" + namaKaryawan + "'");
-                    String hashing = hash.hash(pass, 15);
-                    // menambahkan data kedalam Database
-                    pst = this.conn.prepareStatement("INSERT INTO users VALUES (?, ?, ?, ?, ?, ?, ?)");
-                    pst.setString(1, idKaryawan);
-                    pst.setString(2, text.toCapitalize(namaKaryawan));
-                    pst.setString(3, noTelp);
-                    pst.setString(4, text.toCapitalize(alamat));
-                    pst.setString(5, username);
-                    pst.setString(6, hashing);
-                    pst.setString(7, level.name());
-                    // mengekusi query
-                    isAdd = pst.executeUpdate() > 0;
+                        Log.addLog("Menambahkan data karyawan dengan nama '" + namaKaryawan + "'");
+                        String hashing = hash.hash(pass, 15);
+                        // menambahkan data kedalam Database
+                        pst = this.conn.prepareStatement("INSERT INTO users VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+                        pst.setString(1, idKaryawan);
+                        pst.setString(2, text.toCapitalize(namaKaryawan));
+                        pst.setString(3, noTelp);
+                        pst.setString(4, text.toCapitalize(alamat));
+                        pst.setString(5, username);
+                        pst.setString(6, hashing);
+                        pst.setString(7, level.name());
+                        if(rfid.length() < 10){
+                            pst.setString(8, null);
+                        }else{
+                            pst.setString(8, rfid);
+                        }
+                        // mengekusi query
+                        isAdd = pst.executeUpdate() > 0;
                 }
             }
             return isAdd;
@@ -957,6 +970,9 @@ public class Users extends Database{
     public String getNamaKaryawan(String idKaryawan) {
         return this.getDataKaryawan(idKaryawan, UserData.NAMA_KARYAWAN);
     }
+    public String getRfidKaryawan(String idKaryawan) {
+        return this.getDataKaryawan(idKaryawan, UserData.RFID);
+    }
 
     public String getNoTelpKaryawan(String idKaryawan) {
         return this.getDataKaryawan(idKaryawan, UserData.NO_TELP);
@@ -974,14 +990,34 @@ public class Users extends Database{
         return this.setDataKaryawan(idKaryawan, UserData.NAMA_KARYAWAN, newNama);
     }
 
-    public boolean setNoTelpKaryawan(String idKaryawan, String newNoTelp) {
+       public boolean setNoTelpKaryawan(String idKaryawan, String newNoTelp) {
         return this.setDataKaryawan(idKaryawan, UserData.NO_TELP, newNoTelp);
     }
 
     public boolean setAlamatKaryawan(String idKaryawan, String newAlamat) {
         return this.setDataKaryawan(idKaryawan, UserData.ALAMAT, newAlamat);
     }
-
+    public String rfid(String rfid){
+        try {
+            String query = "SELECT id_karyawan, username FROM users WHERE rfid = "+rfid, username = "", idKaryawan = "";
+            res = stat.executeQuery(query);
+            if(res.next()){
+                username = res.getString("username");
+                idKaryawan = res.getString("id_karyawan");
+                Log.addLog("Melakukan Login dengan username : '" + username + "' dan dengan ID karyawan : '"+ this.getIdKaryawan(idKaryawan) +"'");
+                // menyimpan login data kedalam file
+                BufferedWriter save = new BufferedWriter(new FileWriter(this.LOGIN_DATA_FILE));
+                save.write(username);
+                save.flush();
+                save.close();
+                return username;
+            }
+            return "";
+        } catch (SQLException | IOException ex) {
+            Logger.getLogger(Users.class.getName()).log(Level.SEVERE, null, ex);
+            return "";
+        }
+    }
 //    public static void main(String[] args) {
 
 //        Log.createLog();

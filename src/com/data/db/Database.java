@@ -219,7 +219,9 @@ public class Database {
         try {
             sql = "SELECT " + field + " FROM " + table + " " + kondisi;
             res = stat.executeQuery(sql);
+            System.out.print("query "+ sql + "\t");
             if (res.next()) {
+                System.out.println(" hasil "+res.getString(field));
                 return res.getString(field);
             }
         } catch (SQLException ex) {

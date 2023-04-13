@@ -25,7 +25,7 @@ public class InputKaryawan extends javax.swing.JDialog {
     
     private final String idKaryawan;
     
-    private String nama, noTelp, alamat, pass, newNama, newNoTelp, newAlamat, newPass,username,newUsername, Level = "", newlevel;
+    private String nama, noTelp, alamat, pass, newNama, newNoTelp, newAlamat, newPass, username, newUsername, rfid, newRfid, Level = "", newlevel;
     
     private UserLevels level, newLevel;
     
@@ -69,7 +69,7 @@ public class InputKaryawan extends javax.swing.JDialog {
             this.alamat = this.user.getAlamatKaryawan(this.idKaryawan);
             this.noTelp = this.user.getNoTelpKaryawan(this.idKaryawan);
             this.level = this.user.getLevel1(this.idKaryawan);
-            
+            this.rfid = this.user.getRfid(idKaryawan);
             // menampilkan data-data user ke input text
             this.inpUsername.setEditable(false);
             this.inpUsername.setText(this.username);
@@ -77,7 +77,7 @@ public class InputKaryawan extends javax.swing.JDialog {
             this.inpNoTelp.setText(this.noTelp);
             this.inpAlamat.setText(this.alamat);
             this.inpPassword.setText("");
-            
+            this.inpRFID.setText(this.rfid);
             switch(level.name().toUpperCase()){
                 case "ADMIN" : this.inpLevel.setSelectedIndex(1);  break;
                 case "KARYAWAN" : this.inpLevel.setSelectedIndex(2);  break;
@@ -114,7 +114,7 @@ public class InputKaryawan extends javax.swing.JDialog {
         this.noTelp = this.inpNoTelp.getText();
         this.alamat = this.inpAlamat.getText();
         this.pass = this.inpPassword.getText();
-        
+        this.rfid = this.inpRFID.getText();
         // mendapatkan data level
         switch(this.inpLevel.getSelectedIndex()){
             case 0 : level = null; break;
@@ -144,8 +144,7 @@ public class InputKaryawan extends javax.swing.JDialog {
         }
         if(!error){
             // menambahkan data user ke database
-            boolean save = this.user.addKaryawan(nama, noTelp, alamat, pass, level,this.username);
-
+            boolean save = this.user.addKaryawan(nama, noTelp, alamat, pass, level,this.username, this.rfid);
             // mengecek data berhasil disimpan atau belum
             if(save){
                 // menutup pop up
@@ -165,7 +164,7 @@ public class InputKaryawan extends javax.swing.JDialog {
      * 
      */
     private void editData(){
-        boolean eNama, eNoTelp, eAlamat, ePass, eLevel,error = false;
+        boolean eNama, eNoTelp, eAlamat, ePass, eLevel, eRfid,error = false;
         this.setCursor(new Cursor(Cursor.WAIT_CURSOR));
 
         // mendapakan data dari textfield
@@ -174,7 +173,7 @@ public class InputKaryawan extends javax.swing.JDialog {
         this.newNoTelp = this.inpNoTelp.getText();
         this.newAlamat = this.inpAlamat.getText();
         this.newPass = this.inpPassword.getText();
-
+        this.newRfid = this.inpRFID.getText();
         // mendapatkan data level
         switch (this.inpLevel.getSelectedIndex()) {
             case 0: newLevel = null; break;
@@ -208,9 +207,13 @@ public class InputKaryawan extends javax.swing.JDialog {
                 eAlamat = this.user.setAlamatKaryawan(this.idKaryawan, this.newAlamat);
                 ePass = this.user.setPassword(this.user.getUsernameKaryawan(this.idKaryawan), this.newPass);
                 eLevel = this.user.setLevel(this.user.getUsernameKaryawan(this.idKaryawan), this.newLevel);
-
+                if(this.newRfid.length() < 10){
+                    eRfid = this.user.setRFID(this.user.getUsernameKaryawan(this.idKaryawan), null);
+                }else{
+                    eRfid = this.user.setRFID(this.user.getUsernameKaryawan(this.idKaryawan), this.rfid);
+                }
                 // mengecek apa data berhasil disave atau tidak
-                if (eNama && eNoTelp && eAlamat && ePass && eLevel) {
+                if (eNama && eNoTelp && eAlamat && ePass && eLevel && eRfid) {
                     // menutup pop up
                     Message.showInformation(this, "Data berhasil diedit!");
                     this.isUpdated = true;
@@ -237,6 +240,7 @@ public class InputKaryawan extends javax.swing.JDialog {
         inpPassword = new javax.swing.JPasswordField();
         inpLevel = new javax.swing.JComboBox();
         lblEye = new javax.swing.JLabel();
+        inpRFID = new javax.swing.JTextField();
         btnSimpan = new javax.swing.JButton();
         btnCancel = new javax.swing.JButton();
         background = new javax.swing.JLabel();
@@ -335,6 +339,20 @@ public class InputKaryawan extends javax.swing.JDialog {
         });
         pnlMain.add(lblEye, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 260, -1, -1));
 
+        inpRFID.setBackground(new java.awt.Color(255, 255, 255));
+        inpRFID.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        inpRFID.setForeground(new java.awt.Color(0, 0, 0));
+        inpRFID.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        inpRFID.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        inpRFID.setCaretColor(new java.awt.Color(213, 8, 8));
+        inpRFID.setOpaque(false);
+        inpRFID.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                inpRFIDActionPerformed(evt);
+            }
+        });
+        pnlMain.add(inpRFID, new org.netbeans.lib.awtextra.AbsoluteConstraints(467, 326, 344, 29));
+
         btnSimpan.setBackground(new java.awt.Color(34, 119, 237));
         btnSimpan.setForeground(new java.awt.Color(255, 255, 255));
         btnSimpan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/image/gambar_icon/btn-tambahK-075.png"))); // NOI18N
@@ -424,7 +442,7 @@ public class InputKaryawan extends javax.swing.JDialog {
     }//GEN-LAST:event_btnCancelActionPerformed
 
     private void inpIdMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inpIdMouseClicked
-        Message.showWarning(this, "ID Petugas tidak bisa diedit!");
+        Message.showWarning(this, "ID Karyawan tidak bisa diedit!");
     }//GEN-LAST:event_inpIdMouseClicked
 
     private void lblEyeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEyeMouseClicked
@@ -446,9 +464,13 @@ public class InputKaryawan extends javax.swing.JDialog {
     private void inpUsernameMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inpUsernameMouseClicked
         // TODO add your handling code here:
         if(edit){
-            Message.showWarning(this, "ID Petugas tidak bisa diedit!");
+            Message.showWarning(this, "Username tidak bisa diedit!");
         }
     }//GEN-LAST:event_inpUsernameMouseClicked
+
+    private void inpRFIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inpRFIDActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_inpRFIDActionPerformed
 
     public static void main(String args[]) {
         Log.createLog();
@@ -488,6 +510,7 @@ public class InputKaryawan extends javax.swing.JDialog {
     private javax.swing.JTextField inpNama;
     private javax.swing.JTextField inpNoTelp;
     private javax.swing.JPasswordField inpPassword;
+    private javax.swing.JTextField inpRFID;
     private javax.swing.JTextField inpUsername;
     private javax.swing.JLabel lblEye;
     private javax.swing.JPanel pnlMain;

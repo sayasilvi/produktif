@@ -13,7 +13,7 @@ import java.sql.SQLException;
 //public class Barang {
 public class Barang extends Database{
     
-    private enum BRG{ID_BARANG, NAMA_BARANG, JENIS_BARANG, STOK, HARGA_BELI, HARGA_JUAL};
+    private enum BRG{ID_BARANG, NAMA_BARANG, JENIS_BARANG, STOK, HARGA_BELI, HARGA_JUAL, BARCODE};
     
     private final Text txt = new Text();
     
@@ -26,20 +26,55 @@ public class Barang extends Database{
         if(lastID != null){
             nomor = lastID.substring(2);
         }else{
+            nomor = "00000";
+        }
+        
+        // mengecek nilai dari nomor adalah number atau tidak
+        if(txt.isNumber(nomor)){
+            // jika id barang belum exist maka id akan 
+            return String.format("BG%05d", Integer.parseInt(nomor)+1);
+        }
+        return null;
+    }
+    public String createKBarcode(){
+        String lastID = this.getLastBarcode(), nomor;
+        if(lastID != null){
+            nomor = lastID.substring(3);
+        }else{
+            System.out.println("barcode kosong");
             nomor = "000";
         }
         
         // mengecek nilai dari nomor adalah number atau tidak
         if(txt.isNumber(nomor)){
             // jika id barang belum exist maka id akan 
-            return String.format("BG%03d", Integer.parseInt(nomor)+1);
+            return String.format("BAR%05d", Integer.parseInt(nomor)+1);
         }
         return null;
     }
-    
+    protected String getLastBarcode(){
+        try{
+            String query = "SELECT * FROM "+ DatabaseTables.BARANG.name() + " WHERE "+ BRG.BARCODE.name()+" LIKE '%BAR%' LIMIT 0,1";
+            res = stat.executeQuery(query);
+            if(res.next()){
+                return res.getString(BRG.BARCODE.name());
+            }
+        }catch(SQLException ex){
+            Message.showException(this, "Terjadi kesalahan\n" + ex.getMessage(), ex, true);
+        }
+        return null;
+    }
+    public boolean isExistBarcode(String idBarcode){
+        // mengecek apakah id barang yang diinputkan valid atau tidak
+        if(Validation.isIdBarcode(idBarcode)){
+            return super.isExistData(DatabaseTables.BARANG.name(), BRG.BARCODE.name(), idBarcode);
+        }else{
+            return false;
+        }
+    }
     public boolean isExistBarang(String idBarang){
         // mengecek apakah id barang yang diinputkan valid atau tidak
-        if(Validation.isIdUser(idBarang)){
+        if(Validation.isIdBarang(idBarang)){
             return super.isExistData(DatabaseTables.BARANG.name(), BRG.ID_BARANG.name(), idBarang);
         }
         // akan menghasilkan error jika id barang tidak valid
@@ -59,7 +94,7 @@ public class Barang extends Database{
         return null;
     }
     
-    public final boolean addBarang(String namaBarang, String jenis, String jumlah, String hargaBeli, String hargaJual){
+    public final boolean addBarang(String namaBarang, String jenis, String jumlah, String hargaBeli, String hargaJual, String barcode){
         PreparedStatement pst;
         String idBarang = this.createID();
         try {
@@ -67,13 +102,18 @@ public class Barang extends Database{
             if(this.validateAddBarang(idBarang, namaBarang, jenis, jumlah, hargaBeli, hargaJual)){
                 Log.addLog("Menambahkan data barang dengan nama '" + namaBarang + "'");
                 // menambahkan data kedalam Database
-                pst = this.conn.prepareStatement("INSERT INTO barang VALUES (?, ?, ?, ?, ?, ?)");
+                pst = this.conn.prepareStatement("INSERT INTO barang VALUES (?, ?, ?, ?, ?, ?, ?)");
                 pst.setString(1, idBarang);
                 pst.setString(2, txt.toCapitalize(namaBarang));
                 pst.setString(3, jenis.toUpperCase());
                 pst.setInt(4, Integer.parseInt(jumlah));
                 pst.setInt(5, Integer.parseInt(hargaBeli));
                 pst.setInt(6, Integer.parseInt(hargaJual));
+                if(barcode.length() < 10){
+                    pst.setString(7, null);
+                }else{
+                    pst.setString(7, barcode);
+                }
                 // mengekusi query
                 return pst.executeUpdate() > 0;
             }
@@ -166,6 +206,9 @@ public class Barang extends Database{
     public String getHargaJual(String idBarang) {
         return this.getDataBarang(idBarang, BRG.HARGA_JUAL);
     }
+    public String getBarcode(String idBarang) {
+        return this.getDataBarang(idBarang, BRG.BARCODE);
+    }
     
     private boolean setDataBarang(String idBarang, BRG data, String newValue){
         Log.addLog("Mengedit data '" + data.name().toLowerCase() + "' dari barang dengan ID Barang '" + idBarang + "'.");
@@ -195,6 +238,9 @@ public class Barang extends Database{
     }
     public boolean setHargaJual(String idBarang, String newHargaJual){
         return this.setDataBarang(idBarang, BRG.HARGA_JUAL, newHargaJual);
+    }
+    public boolean setBarcode(String idBarang, String newBarcode){
+        return this.setDataBarang(idBarang, BRG.BARCODE, newBarcode);
     }
     
     public static void main(String[] args) {

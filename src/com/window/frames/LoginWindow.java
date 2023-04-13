@@ -21,6 +21,9 @@ import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.*;
+import javax.swing.event.*;
+import java.awt.event.*;
 
 /**
  * Digunakan untuk login bagi admin, karyawan.
@@ -28,25 +31,80 @@ import javax.swing.JOptionPane;
  * @author Amirzan fikri
  * @since 2020-11-22
  */
-public class LoginWindow extends javax.swing.JFrame {
+public class LoginWindow extends javax.swing.JFrame implements DocumentListener, ActionListener{
 
     private final Users user = new Users();
-    private String username, password;
+    private String username = "", password;
     private int x, y;
-
+    private Timer timer;
     public LoginWindow() {
         initComponents();
-
         this.setLocationRelativeTo(null);
         this.setIconImage(Gambar.getWindowIcon());
+        this.timer = new Timer(1000, this);
+        this.timer.setRepeats(false);
+        this.inpRFID.getDocument().addDocumentListener(this);
+        this.inpRFID1.setVisible(false);
+//        this.inpRFID.setVisible(false);
     }
 
+    private void rfid(String rfid) {
+        this.setCursor(new Cursor(Cursor.WAIT_CURSOR));
+        try {
+            this.username = user.rfid(rfid);
+            if (this.username.equals("")) {
+                System.out.println("kosong");
+                this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+                // mereset textfield jika login gagal
+                this.inpRFID.setText("");
+                this.inpUsername.setText("");
+                this.inpPassword.setText("");
+            } else {
+                Audio.play(Audio.SOUND_INFO);
+                this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+                JOptionPane.showMessageDialog(this, "Login Berhasil!\n\nSelamat datang " + 
+                        user.getData(UserLevels.USERS.name(), "nama_karyawan", "WHERE id_karyawan = '" + 
+                                user.getData(UserLevels.USERS.name(), "id_karyawan", "WHERE username = '" + this.username + "'") + "'"));
+                // membuka window dashboard
+                java.awt.EventQueue.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        new SplashWindow().setVisible(true);
+                    }
+                });
+
+                // menutup koneksi dan window
+                user.closeConnection();
+                this.dispose();
+            }
+        } catch (InValidUserDataException ex) {
+            this.inpRFID.setText("");
+            this.inpUsername.setText("");
+            this.inpPassword.setText("");
+            this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+            // menampilkan pesan error
+            Message.showException(this, ex, true);
+        } catch (Exception ex) {
+            Logger.getLogger(LoginWindow.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+    }
+    protected void startTimer() {
+        if (timer.isRunning()) {
+            timer.restart();
+        } else {
+            timer.start();
+        }
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jToggleButton1 = new javax.swing.JToggleButton();
         pnlMain = new javax.swing.JPanel();
         lblEye = new javax.swing.JLabel();
+        inpRFID = new javax.swing.JTextField();
+        inpRFID1 = new javax.swing.JTextField();
         inpUsername = new javax.swing.JTextField();
         lblMinimaze = new javax.swing.JLabel();
         lblClose = new javax.swing.JLabel();
@@ -54,6 +112,8 @@ public class LoginWindow extends javax.swing.JFrame {
         btnLogin = new javax.swing.JLabel();
         btnGanti = new javax.swing.JLabel();
         background = new javax.swing.JLabel();
+
+        jToggleButton1.setText("jToggleButton1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("umkm\n");
@@ -87,7 +147,53 @@ public class LoginWindow extends javax.swing.JFrame {
                 lblEyeMouseExited(evt);
             }
         });
-        pnlMain.add(lblEye, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 307, -1, -1));
+        pnlMain.add(lblEye, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 317, -1, -1));
+
+        inpRFID.setBorder(javax.swing.BorderFactory.createCompoundBorder());
+        inpRFID.setOpaque(false);
+        inpRFID.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                inpRFIDActionPerformed(evt);
+            }
+        });
+        inpRFID.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                inpRFIDKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                inpRFIDKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                inpRFIDKeyTyped(evt);
+            }
+        });
+        pnlMain.add(inpRFID, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 225, 250, 28));
+
+        inpRFID1.setBorder(javax.swing.BorderFactory.createCompoundBorder());
+        inpRFID1.setEnabled(false);
+        inpRFID1.setOpaque(false);
+        inpRFID1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                inpRFID1MouseClicked(evt);
+            }
+        });
+        inpRFID1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                inpRFID1ActionPerformed(evt);
+            }
+        });
+        inpRFID1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                inpRFID1KeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                inpRFID1KeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                inpRFID1KeyTyped(evt);
+            }
+        });
+        pnlMain.add(inpRFID1, new org.netbeans.lib.awtextra.AbsoluteConstraints(295, 225, 280, 28));
 
         inpUsername.setBorder(javax.swing.BorderFactory.createCompoundBorder());
         inpUsername.setOpaque(false);
@@ -96,7 +202,7 @@ public class LoginWindow extends javax.swing.JFrame {
                 inpUsernameActionPerformed(evt);
             }
         });
-        pnlMain.add(inpUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 250, 250, 30));
+        pnlMain.add(inpUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 272, 250, 27));
 
         lblMinimaze.setBackground(new java.awt.Color(50, 50, 55));
         lblMinimaze.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
@@ -141,7 +247,7 @@ public class LoginWindow extends javax.swing.JFrame {
                 inpPasswordActionPerformed(evt);
             }
         });
-        pnlMain.add(inpPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 305, 250, 30));
+        pnlMain.add(inpPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 317, 250, 27));
 
         btnLogin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/image/gambar_icon/btn-login-075.png"))); // NOI18N
         btnLogin.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
@@ -156,7 +262,7 @@ public class LoginWindow extends javax.swing.JFrame {
                 btnLoginMouseExited(evt);
             }
         });
-        pnlMain.add(btnLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(335, 363, -1, -1));
+        pnlMain.add(btnLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(335, 365, -1, -1));
 
         btnGanti.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/image/gambar_icon/btn-gantiPassword-075.png"))); // NOI18N
         btnGanti.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -170,12 +276,12 @@ public class LoginWindow extends javax.swing.JFrame {
                 btnGantiMouseExited(evt);
             }
         });
-        pnlMain.add(btnGanti, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 340, -1, -1));
+        pnlMain.add(btnGanti, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 350, -1, -1));
 
         background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/image/gambar/app-login-050.png"))); // NOI18N
         pnlMain.add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
-        getContentPane().add(pnlMain, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 720, 510));
+        getContentPane().add(pnlMain, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 721, 513));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -192,6 +298,7 @@ public class LoginWindow extends javax.swing.JFrame {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         Log.addLog("Membuka Window " + getClass().getName());
+        this.inpRFID.requestFocus();
     }//GEN-LAST:event_formWindowOpened
 
     private void inpUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inpUsernameActionPerformed
@@ -303,13 +410,12 @@ public class LoginWindow extends javax.swing.JFrame {
         // TODO add your handling code here:
         user.closeConnection();
         this.dispose();
-        java.awt.EventQueue.invokeLater(new Runnable(){
-
-                @Override
-                public void run(){
-                    new com.window.frames.GantiWindow().setVisible(true);
-                }
-            });
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new com.window.frames.GantiWindow().setVisible(true);
+            }
+        });
     }//GEN-LAST:event_btnGantiMouseClicked
 
     private void lblEyeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEyeMouseClicked
@@ -319,7 +425,7 @@ public class LoginWindow extends javax.swing.JFrame {
     private void lblEyeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEyeMouseEntered
         this.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         this.lblEye.setIcon(Gambar.getIcon("ic-login-eye-open.png"));
-        this.inpPassword.setEchoChar((char)0);
+        this.inpPassword.setEchoChar((char) 0);
     }//GEN-LAST:event_lblEyeMouseEntered
 
     private void lblEyeMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEyeMouseExited
@@ -327,6 +433,42 @@ public class LoginWindow extends javax.swing.JFrame {
         this.lblEye.setIcon(Gambar.getIcon("ic-login-eye-close.png"));
         this.inpPassword.setEchoChar('•');
     }//GEN-LAST:event_lblEyeMouseExited
+
+    private void inpRFIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inpRFIDActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_inpRFIDActionPerformed
+
+    private void inpRFIDKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_inpRFIDKeyTyped
+
+    }//GEN-LAST:event_inpRFIDKeyTyped
+    private void inpRFIDKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_inpRFIDKeyReleased
+
+    }//GEN-LAST:event_inpRFIDKeyReleased
+
+    private void inpRFIDKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_inpRFIDKeyPressed
+
+    }//GEN-LAST:event_inpRFIDKeyPressed
+
+    private void inpRFID1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inpRFID1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_inpRFID1ActionPerformed
+
+    private void inpRFID1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_inpRFID1KeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_inpRFID1KeyPressed
+
+    private void inpRFID1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_inpRFID1KeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_inpRFID1KeyReleased
+
+    private void inpRFID1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_inpRFID1KeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_inpRFID1KeyTyped
+
+    private void inpRFID1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inpRFID1MouseClicked
+        // TODO add your handling code here:
+        this.inpRFID.requestFocus();
+    }//GEN-LAST:event_inpRFID1MouseClicked
 
     public static void main(String args[]) {
 
@@ -355,10 +497,36 @@ public class LoginWindow extends javax.swing.JFrame {
     private javax.swing.JLabel btnGanti;
     private javax.swing.JLabel btnLogin;
     private javax.swing.JPasswordField inpPassword;
+    private javax.swing.JTextField inpRFID;
+    private javax.swing.JTextField inpRFID1;
     private javax.swing.JTextField inpUsername;
+    private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JLabel lblClose;
     private javax.swing.JLabel lblEye;
     private javax.swing.JLabel lblMinimaze;
     private javax.swing.JPanel pnlMain;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void insertUpdate(DocumentEvent e) {
+        this.startTimer();
+    }
+
+    @Override
+    public void removeUpdate(DocumentEvent e) {
+        this.startTimer();
+    }
+
+    @Override
+    public void changedUpdate(DocumentEvent e) {
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        String rfid = this.inpRFID.getText();
+        if(rfid.length() >= 8 && rfid.length() <= 10){
+            this.rfid(rfid);
+        }
+    }
 }
+

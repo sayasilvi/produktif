@@ -10,6 +10,8 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -55,16 +57,7 @@ public class Gambar {
             return null;
         }
     }
-    public static ImageIcon getBarcode(String icon){
-        File file = new File(Gambar.BARCODE + icon);
-        // mengecek apakah file icon ada atau tidak
-        if(file.exists()){
-            return new ImageIcon(file.toString());
-        }else{
-            JOptionPane.showMessageDialog(null, "Tidak dapat menemukan file '" + icon + "'", "Warning", JOptionPane.WARNING_MESSAGE);
-            return null;
-        }
-    }
+    
     public static ImageIcon getQrcode(String icon){
         File file = new File(Gambar.QRCODE + icon);
         // mengecek apakah file icon ada atau tidak
@@ -261,5 +254,31 @@ public class Gambar {
 //        System.out.println(fm.getNamaFile(f.getName()));
         
     }
-    
+    public boolean ImageResize(String path, String file, String format, String newFormat, int Width, int Height){
+        try {
+            // Read the original image
+            File inputFile = new File(path + file + format);
+            BufferedImage inputImage = ImageIO.read(inputFile);
+            
+            // Define the new width and height for the image
+//            int newWidth = 800;
+//            int newHeight = 600;
+            
+            // Create a new BufferedImage object with the new width and height
+            BufferedImage outputImage = new BufferedImage(Width, Height, inputImage.getType());
+            
+            // Draw the original image onto the new image with the new dimensions
+            Graphics2D graphics2D = outputImage.createGraphics();
+            graphics2D.drawImage(inputImage, 0, 0, Width, Height, null);
+            graphics2D.dispose();
+            
+            // Save the new image to a file
+            File outputFile = new File(path + file + newFormat);
+            System.out.println("gambar diubah");
+            return ImageIO.write(outputImage, newFormat, outputFile);
+        } catch (IOException ex) {
+            Logger.getLogger(Gambar.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
 }

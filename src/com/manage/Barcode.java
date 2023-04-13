@@ -1,7 +1,6 @@
 package com.manage;
 
 import com.barcodelib.barcode.Linear;
-import com.barcodelib.barcode.Linear;
 import com.google.zxing.BinaryBitmap;
 import com.google.zxing.ChecksumException;
 import com.google.zxing.FormatException;
@@ -12,58 +11,68 @@ import com.google.zxing.Reader;
 import com.google.zxing.Result;
 import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
 import com.google.zxing.common.HybridBinarizer;
+import com.media.Gambar;
+//import com.onbarcode.barcode.EAN13;
+//import com.onbarcode.barcode.IBarcode;
+import java.awt.Font;
 import java.awt.image.BufferedImage;
-//import java.io.FileInputStream;
-//import java.io.InputStream;
 import javax.imageio.ImageIO;
-//import java.io.File;
-//import java.io.IOException;
-import java.nio.file.FileSystems;
-import java.nio.file.Path;
-import org.apache.commons.io.FilenameUtils;
 import java.io.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Amirzan Fikri P
  */
 public class Barcode {
-
+    private final Gambar gambar = new Gambar();
     private final FileManager fManage = new FileManager();
-
-    public String createBar(String data) {
+    private final String BARCODE = "\\src\\barcode\\";
+    private final String dir = System.getProperty("user.dir");
+    private final String format = ".png";
+    
+    public ImageIcon getBarcode(String kode) {
+        File file = new File(this.dir + this.BARCODE + kode + this.format);
+        return Gambar.scaleImage(file, 330, 72);
+    }
+    public boolean isExistBarcode(String kode){
+        File file = new File(this.dir + this.BARCODE + kode + this.format);
+        if (file.exists()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public boolean createBarcode(String kode) {
         try {
-            String path = System.getProperty("user.dir");
             Linear barcode = new Linear();
             barcode.setType(Linear.CODE128B);
-            barcode.setData(data);
-            barcode.setI(11.0f);
-            String fname = data;
-            if (barcode.renderBarcode(path + "\\src\\barcode\\" + data + ".png")) {
-                return data+".png";
+            barcode.setData(kode);
+            barcode.setI(0.1f);
+            barcode.setResolution(10);
+//            barcode.setX(2.1f);
+//            barcode.setY(1.0f);
+            if (barcode.renderBarcode(this.dir + this.BARCODE + kode + this.format)) {
+                return true;
             } else {
-                return "";
+                return false;
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        return "";
+        return false;
     }
 
-    public String scanBar(String data) throws Exception {
+    public String scanBarcode(String kode) throws Exception {
         try {
-            String dir = System.getProperty("user.dir");
-            File path = new File(dir + "\\src\\barcode\\");
-            File gambar = fManage.getImage(path, data);
-            InputStream barInputStream = new FileInputStream(gambar);
+            File path = new File(this.dir + this.BARCODE);
+            File barcode = fManage.getImage(path, kode);
+            InputStream barInputStream = new FileInputStream(barcode);
             BufferedImage barBufferedImage = ImageIO.read(barInputStream);
             barInputStream.close();
-            if(fManage.deleteFile(gambar.toString())){
-//                System.out.println("barcode dihapus");
-            }else{
-                System.out.println("barcode tidak bisa dihapus");
-                throw new Exception("Barcode tidak bisa dihapus");
-            }
             LuminanceSource source = new BufferedImageLuminanceSource(barBufferedImage);
             BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));
             Reader reader = new MultiFormatReader();
@@ -79,4 +88,41 @@ public class Barcode {
         }
         return "";
     }
+
+    public boolean deleteBarcode(String kode) {
+        try {
+            File path = new File(this.dir + this.BARCODE);
+            File gambar = fManage.getImage(path, kode);
+            if (fManage.deleteFile(gambar.toString())) {
+                return true;
+            } else {
+                throw new Exception("Barcode tidak bisa dihapus");
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(Barcode.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+//    public void generate(String kode) throws Exception{
+//        String path = System.getProperty("user.dir");
+//        EAN13 barcode = new EAN13();
+//        barcode.setData(kode);
+//        barcode.setUom(IBarcode.UOM_PIXEL);
+//        barcode.setX(3f);
+//        barcode.setY(75f);
+//        
+//        barcode.setLeftMargin(0f);
+//        barcode.setRightMargin(0f);
+//        barcode.setTopMargin(0f);
+//        barcode.setBottomMargin(0f);
+//        
+//        barcode.setResolution(72);
+//        
+//        barcode.setShowText(true);
+//        barcode.setTextFont(new Font("Arial", 0, 12));
+//        
+//        barcode.setTextMargin(6);
+//        barcode.setRotate(IBarcode.ROTATE_0);
+////        barcode.drawBarcode(this.dir + "\\src\\barcode\\" + kode + ".png");
+//    }
 }

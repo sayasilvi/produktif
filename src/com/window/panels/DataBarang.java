@@ -15,14 +15,10 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.sql.SQLException;
 import java.awt.event.MouseEvent;
-import java.text.ParseException;
-import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-
+import com.manage.Barcode;
 /**
  *
  * @author Amirzan Fikri
@@ -31,10 +27,11 @@ public class DataBarang extends javax.swing.JPanel {
     private final Waktu waktu = new Waktu();
     private final Database db = new Database();
     private final Barang barang = new Barang();
+    private final Barcode barcode = new Barcode();
     private int tahun, bulan;
     private final Text text = new Text();
 
-    private String idSelected = "", keyword = "", namaBarang, jenis, stok, hargaBeli, hargaJual, ttlPenjulan, penjMing, penghasilan;
+    private String idSelected = "", keyword = "", namaBarang, jenis, stok, hargaBeli, hargaJual, ttlPenjulan, penghasilan, bar;
     private Object[][] obj;
     public DataBarang() {
         initComponents();
@@ -52,7 +49,7 @@ public class DataBarang extends javax.swing.JPanel {
 
         JLabel[] values = {
             this.valIDBarang, this.valNamaBarang, this.valJenis, this.valStok,
-            this.valHargaBeli, this.valHargaJual, this.valPjln, this.valPjlnBulan, this.valPenghasilan
+            this.valHargaBeli, this.valHargaJual, this.valPjln, this.valPjlnBulan, this.valPenghasilan, this.valBarcode
         };
 
         for (JLabel lbl : values) {
@@ -94,27 +91,8 @@ public class DataBarang extends javax.swing.JPanel {
         barang.closeConnection();
         db.closeConnection();
     }
-    private int getJumlahData(String tabel, String kondisi) {
-        try {
-            String query = "SELECT COUNT(*) AS total FROM " + tabel + " " + kondisi;
-            db.res = db.stat.executeQuery(query);
-            if (db.res.next()) {
-                return db.res.getInt("total");
-            }
-        } catch (SQLException ex) {
-            Message.showException(this, "Terjadi Kesalahan!\n\nError message : " + ex.getMessage(), ex, true);
-        } catch (NullPointerException n) {
-//            n.printStackTrace();
-            System.out.println("errorr ");
-            return 0;
-        }
-        return -1;
-    }
     private String gachaBulan() {
         try{
-            
-        int max = barang.sumData(DatabaseTables.DETAIL_TRANSAKSI_JUAL.name(), "jumlah", String.format("where id_barang = '%s'", this.idSelected));
-//        System.out.println("jumlah barangg "+max);
         String query = "SELECT COUNT(*) AS total FROM detail_transaksi_jual INNER JOIN transaksi_jual ON transaksi_jual.id_tr_jual = detail_transaksi_jual.id_tr_jual WHERE id_barang = '"+this.idSelected+"' AND YEAR(tanggal) ='"+this.tahun+"' AND MONTH(tanggal) = '"+this.bulan+"'";
         db.res = db.stat.executeQuery(query);
         if (db.res.next()) {
@@ -146,16 +124,18 @@ public class DataBarang extends javax.swing.JPanel {
         this.ttlPenjulan = "" + this.db.getJumlahData(DatabaseTables.DETAIL_TRANSAKSI_JUAL.name(), "WHERE id_barang = '" + this.idSelected + "'");
 //        this.penghasilan = text.toMoneyCase(""+this.barang.sumData(DatabaseTables.TRANSAKSI_JUAL.name(), "total_hrg", String.format("where id_barang = '%s'", this.idSelected)));
         this.penghasilan = text.toMoneyCase("" + Integer.toString((text.toIntCase(this.obj[baris][5].toString()) - text.toIntCase(this.obj[baris][4].toString())) * this.barang.sumData(DatabaseTables.DETAIL_TRANSAKSI_JUAL.name(), "jumlah", String.format("where id_barang = '%s'", this.idSelected))));
+        this.bar = barang.getBarcode(this.idSelected);
         // menampilkan data
-        this.valIDBarang.setText("<html><p>:&nbsp;" + idSelected + "</p></html>");
-        this.valNamaBarang.setText("<html><p>:&nbsp;" + namaBarang + "</p></html>");
-        this.valJenis.setText("<html><p>:&nbsp;" + jenis + "</p></html>");
-        this.valStok.setText("<html><p>:&nbsp;" + stok + " Stok</p></html>");
-        this.valHargaJual.setText("<html><p>:&nbsp;" + hargaJual + "</p></html>");
-        this.valHargaBeli.setText("<html><p>:&nbsp;" + hargaBeli + "</p></html>");
-        this.valPjln.setText("<html><p>:&nbsp;" + ttlPenjulan + " Penjualan</p></html>");
+        this.valIDBarang.setText("<html><p>:&nbsp;" + this.idSelected + "</p></html>");
+        this.valNamaBarang.setText("<html><p>:&nbsp;" + this.namaBarang + "</p></html>");
+        this.valJenis.setText("<html><p>:&nbsp;" + this.jenis + "</p></html>");
+        this.valStok.setText("<html><p>:&nbsp;" + this.stok + " Stok</p></html>");
+        this.valHargaJual.setText("<html><p>:&nbsp;" + this.hargaJual + "</p></html>");
+        this.valHargaBeli.setText("<html><p>:&nbsp;" + this.hargaBeli + "</p></html>");
+        this.valPjln.setText("<html><p>:&nbsp;" + this.ttlPenjulan + " Penjualan</p></html>");
         this.valPjlnBulan.setText("<html><p>:&nbsp;" + gachaBulan() + " Penjualan</p></html>");
-        this.valPenghasilan.setText("<html><p>:&nbsp;" + penghasilan + "</p></html>");
+        this.valPenghasilan.setText("<html><p>:&nbsp;" + this.penghasilan + "</p></html>");
+        this.valBarcode.setText("<html><p>:&nbsp;" + this.bar + "</p></html>");
     }
 
     private void resetData() {
@@ -168,6 +148,7 @@ public class DataBarang extends javax.swing.JPanel {
         this.valPjln.setText("<html><p>:&nbsp;</p></html>");
         this.valPjlnBulan.setText("<html><p>:&nbsp;</p></html>");
         this.valPenghasilan.setText("<html><p>:&nbsp;</p></html>");
+        this.valBarcode.setText("<html><p>:&nbsp;</p></html>");
     }
 
     private Object[][] getData() {
@@ -228,6 +209,7 @@ public class DataBarang extends javax.swing.JPanel {
         valPjln = new javax.swing.JLabel();
         valPjlnBulan = new javax.swing.JLabel();
         valHargaBeli = new javax.swing.JLabel();
+        valBarcode = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tabelData = new javax.swing.JTable();
         btnAdd = new javax.swing.JButton();
@@ -240,19 +222,20 @@ public class DataBarang extends javax.swing.JPanel {
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(957, 650));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        add(valIDBarang, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 87, 190, 33));
-        add(valNamaBarang, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 145, 190, 33));
+        add(valIDBarang, new org.netbeans.lib.awtextra.AbsoluteConstraints(255, 87, 250, 33));
+        add(valNamaBarang, new org.netbeans.lib.awtextra.AbsoluteConstraints(255, 138, 250, 33));
         valNamaBarang.getAccessibleContext().setAccessibleName(":");
 
-        add(valJenis, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 204, 190, 33));
-        add(valStok, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 261, 190, 33));
-        add(valHargaJual, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 378, 190, 33));
-        add(valPenghasilan, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 553, 190, 33));
-        add(valPjln, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 437, 190, 33));
+        add(valJenis, new org.netbeans.lib.awtextra.AbsoluteConstraints(255, 190, 250, 33));
+        add(valStok, new org.netbeans.lib.awtextra.AbsoluteConstraints(255, 240, 250, 33));
+        add(valHargaJual, new org.netbeans.lib.awtextra.AbsoluteConstraints(255, 343, 250, 33));
+        add(valPenghasilan, new org.netbeans.lib.awtextra.AbsoluteConstraints(255, 497, 250, 33));
+        add(valPjln, new org.netbeans.lib.awtextra.AbsoluteConstraints(255, 394, 250, 33));
 
         valPjlnBulan.setName(""); // NOI18N
-        add(valPjlnBulan, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 495, 190, 33));
-        add(valHargaBeli, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 320, 190, 33));
+        add(valPjlnBulan, new org.netbeans.lib.awtextra.AbsoluteConstraints(255, 445, 250, 34));
+        add(valHargaBeli, new org.netbeans.lib.awtextra.AbsoluteConstraints(255, 292, 250, 33));
+        add(valBarcode, new org.netbeans.lib.awtextra.AbsoluteConstraints(255, 548, 250, 33));
 
         tabelData.setFont(new java.awt.Font("Ebrima", 1, 14)); // NOI18N
         tabelData.setForeground(new java.awt.Color(0, 0, 0));
@@ -474,6 +457,10 @@ public class DataBarang extends javax.swing.JPanel {
                         // mengupdate tabel
                         this.updateTabel();
                         this.resetData();
+                        //hapus file barcode
+                        if(this.barcode.isExistBarcode(this.bar)){
+                            this.barcode.deleteBarcode(this.bar);
+                        }
                     } else {
                         Message.showInformation(this, "Data gagal dihapus!");
                     }
@@ -561,6 +548,7 @@ public class DataBarang extends javax.swing.JPanel {
     private javax.swing.JTextField inpCari;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable tabelData;
+    private javax.swing.JLabel valBarcode;
     private javax.swing.JLabel valHargaBeli;
     private javax.swing.JLabel valHargaJual;
     private javax.swing.JLabel valIDBarang;
