@@ -1,5 +1,6 @@
 package com.window.panels;
 
+import Report.cetak;
 import com.data.app.Log;
 import com.data.db.Database;
 import static com.data.db.Database.DB_NAME;
@@ -26,12 +27,22 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -208,6 +219,22 @@ public class detailLaporanJual extends javax.swing.JDialog {
         this.valJenis.setText("<html><p>:&nbsp;" + this.jenisBarang + "</p></html>");
         this.valTotalHarga.setText("<html><p>:&nbsp;" + this.totalHrg + "</p></html>");
         this.valJumlah.setText("<html><p>:&nbsp;" + this.jumlahBarang + "</p></html>");
+    }
+
+    private void cetakNota(Map parameter) {
+        try {
+            JasperDesign jasperDesign = JRXmlLoader.load("src\\Report\\notaPenjualan.jrxml");
+            JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
+//            Map parameters = new HashMap();
+            parameter.put("id_tr_jual", this.idTr);
+            parameter.put("id_tr_jual", this.idTr);
+            parameter.put("id_tr_jual", this.idTr);
+            JasperPrint jPrint = JasperFillManager.fillReport(jasperReport, parameter, db.conn);
+            JasperViewer.viewReport(jPrint);
+//            JasperExportManager.exportReportToPdfFile(jPrint, "reports/simple_report.pdf");
+        } catch (JRException ex) {
+            Logger.getLogger(cetak.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -485,17 +512,26 @@ public class detailLaporanJual extends javax.swing.JDialog {
     }//GEN-LAST:event_tabelDataKeyPressed
 
     private void btnCetakMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCetakMouseClicked
-        try {
-            this.setCursor(new Cursor(Cursor.WAIT_CURSOR));
-            if (tabelData.getRowCount() > 0) {
-                tabelData.print();
-            } else {
-                this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-                Message.showWarning(this, "Tabel kosong !");
-            }
-        } catch (PrinterException ex) {
-            Logger.getLogger(LaporanJual.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        try {
+//            this.setCursor(new Cursor(Cursor.WAIT_CURSOR));
+//            if (tabelData.getRowCount() > 0) {
+//                //print struk penjualan 
+//                Map parameters = new HashMap();
+//                parameters.put("tanggal", waktu.getTanggalNow());
+//                parameters.put("id_tr_jual", this.idTr);
+//                parameters.put("totalBarang", totalBarang);
+//                parameters.put("totalHarga", txtTotal.getText());
+//                parameters.put("bayar", text.toMoneyCase(inpBayar.getText()));
+//                parameters.put("diskon", txtDiskon.getText());
+//                parameters.put("kembalian", txtKembalian.getText());
+//                this.cetakNota(parameters);
+//            } else {
+//                this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+//                Message.showWarning(this, "Tabel kosong !");
+//            }
+//        } catch (PrinterException ex) {
+//            Logger.getLogger(LaporanJual.class.getName()).log(Level.SEVERE, null, ex);
+//        }
     }//GEN-LAST:event_btnCetakMouseClicked
 
     private void btnCetakMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCetakMouseEntered

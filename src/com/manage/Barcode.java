@@ -33,7 +33,23 @@ public class Barcode {
     private final String BARCODE = "\\src\\barcode\\";
     private final String dir = System.getProperty("user.dir");
     private final String format = ".png";
-    
+    public boolean createBarcode(String kode) {
+        try {
+            Linear barcode = new Linear();
+            barcode.setType(Linear.CODE128B);
+            barcode.setData(kode);
+            barcode.setI(0.1f);
+            barcode.setResolution(10);
+            if (barcode.renderBarcode(this.dir + this.BARCODE + kode + this.format)) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return false;
+    }
     public ImageIcon getBarcode(String kode) {
         File file = new File(this.dir + this.BARCODE + kode + this.format);
         return Gambar.scaleImage(file, 330, 72);
@@ -45,25 +61,6 @@ public class Barcode {
         } else {
             return false;
         }
-    }
-    public boolean createBarcode(String kode) {
-        try {
-            Linear barcode = new Linear();
-            barcode.setType(Linear.CODE128B);
-            barcode.setData(kode);
-            barcode.setI(0.1f);
-            barcode.setResolution(10);
-//            barcode.setX(2.1f);
-//            barcode.setY(1.0f);
-            if (barcode.renderBarcode(this.dir + this.BARCODE + kode + this.format)) {
-                return true;
-            } else {
-                return false;
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-        return false;
     }
 
     public String scanBarcode(String kode) throws Exception {
@@ -103,26 +100,4 @@ public class Barcode {
         }
         return false;
     }
-//    public void generate(String kode) throws Exception{
-//        String path = System.getProperty("user.dir");
-//        EAN13 barcode = new EAN13();
-//        barcode.setData(kode);
-//        barcode.setUom(IBarcode.UOM_PIXEL);
-//        barcode.setX(3f);
-//        barcode.setY(75f);
-//        
-//        barcode.setLeftMargin(0f);
-//        barcode.setRightMargin(0f);
-//        barcode.setTopMargin(0f);
-//        barcode.setBottomMargin(0f);
-//        
-//        barcode.setResolution(72);
-//        
-//        barcode.setShowText(true);
-//        barcode.setTextFont(new Font("Arial", 0, 12));
-//        
-//        barcode.setTextMargin(6);
-//        barcode.setRotate(IBarcode.ROTATE_0);
-////        barcode.drawBarcode(this.dir + "\\src\\barcode\\" + kode + ".png");
-//    }
 }

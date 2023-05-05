@@ -54,7 +54,7 @@ public class Barang extends Database{
     }
     protected String getLastBarcode(){
         try{
-            String query = "SELECT * FROM "+ DatabaseTables.BARANG.name() + " WHERE "+ BRG.BARCODE.name()+" LIKE '%BAR%' LIMIT 0,1";
+            String query = "SELECT * FROM "+ DatabaseTables.BARANG.name() + " ORDER BY "+ BRG.BARCODE.name()+" DESC LIMIT 0,1";
             res = stat.executeQuery(query);
             if(res.next()){
                 return res.getString(BRG.BARCODE.name());
@@ -109,8 +109,8 @@ public class Barang extends Database{
                 pst.setInt(4, Integer.parseInt(jumlah));
                 pst.setInt(5, Integer.parseInt(hargaBeli));
                 pst.setInt(6, Integer.parseInt(hargaJual));
-                if(barcode.length() < 10){
-                    pst.setString(7, null);
+                if(barcode.isEmpty()){
+                    pst.setString(7, "");
                 }else{
                     pst.setString(7, barcode);
                 }
@@ -240,7 +240,11 @@ public class Barang extends Database{
         return this.setDataBarang(idBarang, BRG.HARGA_JUAL, newHargaJual);
     }
     public boolean setBarcode(String idBarang, String newBarcode){
-        return this.setDataBarang(idBarang, BRG.BARCODE, newBarcode);
+        if(newBarcode.isEmpty()){
+            return this.setDataBarang(idBarang, BRG.BARCODE, "");
+        }else{
+            return this.setDataBarang(idBarang, BRG.BARCODE, newBarcode);
+        }
     }
     
     public static void main(String[] args) {

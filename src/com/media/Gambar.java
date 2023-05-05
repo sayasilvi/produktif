@@ -209,7 +209,6 @@ public class Gambar {
         String file = fm.getNamaFile(icon),
                 format = fm.getFormatFile(icon);
         if(Gambar.isNoHoverIcon(icon)|| Gambar.isNoAktifIcon(icon)){
-            System.out.println("hover atau aktif");
             file = file.substring(0, file.lastIndexOf(".")-6) + "-aktif";
         }else{
             file = file.substring(0, file.lastIndexOf(".")) + "-aktif";

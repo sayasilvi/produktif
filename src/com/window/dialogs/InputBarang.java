@@ -57,7 +57,6 @@ public class InputBarang extends javax.swing.JDialog {
             this.background.setIcon(icon1);
             this.btnSimpan.setIcon(icon2);
             this.kBarcode = barang.createKBarcode();
-
             // mendapatkan data-data barang
             this.nama = this.barang.getNamaBarang(this.idBarang);
             this.jenis = this.barang.getJenis(this.idBarang);
@@ -71,6 +70,9 @@ public class InputBarang extends javax.swing.JDialog {
             this.inpHargaBeli.setText(this.hargaBeli);
             this.inpHargaJual.setText(this.hargaJual);
             this.inpBarcode.setText(this.bar);
+            if (this.barcode.isExistBarcode(this.bar)) {
+                this.txtBarcode.setIcon(this.barcode.getBarcode(this.bar));
+            }
             // menampilkan data jenis
             switch (jenis) {
                 case "MAKANAN":
@@ -120,6 +122,7 @@ public class InputBarang extends javax.swing.JDialog {
         this.stok = this.inpStok.getText();
         this.hargaBeli = this.inpHargaBeli.getText();
         this.hargaJual = this.inpHargaJual.getText();
+        this.bar = this.inpBarcode.getText();
         // mendapatkan data jenis
         switch (this.inpJenis.getSelectedIndex()) {
             case 0:
@@ -217,7 +220,7 @@ public class InputBarang extends javax.swing.JDialog {
      *
      */
     private void editData() {
-        boolean eNama, eJenis, eJumlah, eHargaBeli, eHargaJual, eBarcode;
+        boolean eNama, eJenis, eJumlah, eHargaBeli, eHargaJual, eBarcode = false;
         this.setCursor(new Cursor(Cursor.WAIT_CURSOR));
         boolean error = false;
         // mendapakan data dari textfield
@@ -304,6 +307,10 @@ public class InputBarang extends javax.swing.JDialog {
             error = true;
             this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
             Message.showWarning(this, "Harga Jual harus lebih dari Harga Beli !");
+        } else if (this.newBarcode.length() > 13) {
+            error = true;
+            this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+            Message.showWarning(this, "Kode Barcode terlalu panjang !");
         }
         if (!error) {
             // validasi data
@@ -314,9 +321,9 @@ public class InputBarang extends javax.swing.JDialog {
                 eJumlah = this.barang.setStok(this.idBarang, this.newStok);
                 eHargaBeli = this.barang.setHargaBeli(this.idBarang, this.newHargaBeli);
                 eHargaJual = this.barang.setHargaJual(this.idBarang, this.newHargaJual);
-                if (this.newBarcode.length() < 10) {
-                    eBarcode = this.barang.setBarcode(this.idBarang, null);
-                } else {
+                if (this.newBarcode.isEmpty()) {
+                    eBarcode = this.barang.setBarcode(this.idBarang, "");
+                } else if (this.newBarcode.length() <= 13) {
                     eBarcode = this.barang.setBarcode(this.idBarang, this.newBarcode);
                 }
                 // mengecek apa data berhasil disave atau tidak
@@ -586,7 +593,7 @@ public class InputBarang extends javax.swing.JDialog {
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
         barang.closeConnection();
-        if(this.barcode.isExistBarcode(this.kBarcode)){
+        if (this.barcode.isExistBarcode(this.kBarcode)) {
             this.barcode.deleteBarcode(this.kBarcode);
         }
         this.dispose();
@@ -634,19 +641,18 @@ public class InputBarang extends javax.swing.JDialog {
     }//GEN-LAST:event_btnBarcodeMouseExited
 
     private void btnBarcodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBarcodeActionPerformed
+        //jika user klik button buat kode barcode
         if (this.isBarcode == false) {
-            System.out.print("button hidup\t");
-            //jika button tambah
+            //jika window pop up tambah barang
             if (this.option == 1) {
-                if(this.barcode.createBarcode(this.kBarcode)){
+                if (this.barcode.createBarcode(this.kBarcode)) {
                     this.txtBarcode.setIcon(this.barcode.getBarcode(this.kBarcode));
                     this.inpBarcode.setText(this.kBarcode);
                     this.inpBarcode.setEditable(false);
                 }
-            //jika button edit
+                //jika window pop up tambah barang
             } else if (this.option == 2) {
-                System.out.println("button edit");
-                if(this.barcode.createBarcode(this.kBarcode)){
+                if (this.barcode.createBarcode(this.kBarcode)) {
                     this.txtBarcode.setIcon(this.barcode.getBarcode(this.kBarcode));
                     this.inpBarcode.setText(this.kBarcode);
                     this.inpBarcode.setEditable(false);
@@ -654,16 +660,18 @@ public class InputBarang extends javax.swing.JDialog {
             }
             this.btnBarcode.setIcon(Gambar.getNoAktiveIcon(this.btnBarcode.getIcon().toString()));
             this.isBarcode = true;
-        }else{
-            System.out.println("button mati");
-            if(this.option == 1){
+            //jika user klik button hapus kode barcode
+        } else {
+            //jika window pop up tambah barang
+            if (this.option == 1) {
                 if (this.barcode.isExistBarcode(this.kBarcode)) {
                     barcode.deleteBarcode(this.kBarcode);
                     this.txtBarcode.setIcon(null);
                     this.inpBarcode.setText(null);
                     this.inpBarcode.setEditable(true);
                 }
-            }else if(this.option == 2){
+                //jika window pop up edit barang
+            } else if (this.option == 2) {
                 if (this.barcode.isExistBarcode(this.kBarcode)) {
                     barcode.deleteBarcode(this.kBarcode);
                     this.txtBarcode.setIcon(null);

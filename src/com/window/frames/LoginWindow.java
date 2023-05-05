@@ -44,7 +44,7 @@ public class LoginWindow extends javax.swing.JFrame implements DocumentListener,
         this.timer = new Timer(1000, this);
         this.timer.setRepeats(false);
         this.inpRFID.getDocument().addDocumentListener(this);
-        this.inpRFID1.setVisible(false);
+        this.inpTutupRFID.setEditable(false);
 //        this.inpRFID.setVisible(false);
     }
 
@@ -89,7 +89,7 @@ public class LoginWindow extends javax.swing.JFrame implements DocumentListener,
         }
         this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     }
-    protected void startTimer() {
+    private void startTimer() {
         if (timer.isRunning()) {
             timer.restart();
         } else {
@@ -103,8 +103,8 @@ public class LoginWindow extends javax.swing.JFrame implements DocumentListener,
         jToggleButton1 = new javax.swing.JToggleButton();
         pnlMain = new javax.swing.JPanel();
         lblEye = new javax.swing.JLabel();
+        inpTutupRFID = new javax.swing.JTextField();
         inpRFID = new javax.swing.JTextField();
-        inpRFID1 = new javax.swing.JTextField();
         inpUsername = new javax.swing.JTextField();
         lblMinimaze = new javax.swing.JLabel();
         lblClose = new javax.swing.JLabel();
@@ -149,6 +149,32 @@ public class LoginWindow extends javax.swing.JFrame implements DocumentListener,
         });
         pnlMain.add(lblEye, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 317, -1, -1));
 
+        inpTutupRFID.setBorder(javax.swing.BorderFactory.createCompoundBorder());
+        inpTutupRFID.setEnabled(false);
+        inpTutupRFID.setOpaque(false);
+        inpTutupRFID.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                inpTutupRFIDMouseClicked(evt);
+            }
+        });
+        inpTutupRFID.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                inpTutupRFIDActionPerformed(evt);
+            }
+        });
+        inpTutupRFID.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                inpTutupRFIDKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                inpTutupRFIDKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                inpTutupRFIDKeyTyped(evt);
+            }
+        });
+        pnlMain.add(inpTutupRFID, new org.netbeans.lib.awtextra.AbsoluteConstraints(295, 225, 280, 28));
+
         inpRFID.setBorder(javax.swing.BorderFactory.createCompoundBorder());
         inpRFID.setOpaque(false);
         inpRFID.addActionListener(new java.awt.event.ActionListener() {
@@ -168,32 +194,6 @@ public class LoginWindow extends javax.swing.JFrame implements DocumentListener,
             }
         });
         pnlMain.add(inpRFID, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 225, 250, 28));
-
-        inpRFID1.setBorder(javax.swing.BorderFactory.createCompoundBorder());
-        inpRFID1.setEnabled(false);
-        inpRFID1.setOpaque(false);
-        inpRFID1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                inpRFID1MouseClicked(evt);
-            }
-        });
-        inpRFID1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                inpRFID1ActionPerformed(evt);
-            }
-        });
-        inpRFID1.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                inpRFID1KeyPressed(evt);
-            }
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                inpRFID1KeyReleased(evt);
-            }
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                inpRFID1KeyTyped(evt);
-            }
-        });
-        pnlMain.add(inpRFID1, new org.netbeans.lib.awtextra.AbsoluteConstraints(295, 225, 280, 28));
 
         inpUsername.setBorder(javax.swing.BorderFactory.createCompoundBorder());
         inpUsername.setOpaque(false);
@@ -449,26 +449,25 @@ public class LoginWindow extends javax.swing.JFrame implements DocumentListener,
 
     }//GEN-LAST:event_inpRFIDKeyPressed
 
-    private void inpRFID1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inpRFID1ActionPerformed
+    private void inpTutupRFIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inpTutupRFIDActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_inpRFID1ActionPerformed
+    }//GEN-LAST:event_inpTutupRFIDActionPerformed
 
-    private void inpRFID1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_inpRFID1KeyPressed
+    private void inpTutupRFIDKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_inpTutupRFIDKeyPressed
         // TODO add your handling code here:
-    }//GEN-LAST:event_inpRFID1KeyPressed
+    }//GEN-LAST:event_inpTutupRFIDKeyPressed
 
-    private void inpRFID1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_inpRFID1KeyReleased
+    private void inpTutupRFIDKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_inpTutupRFIDKeyReleased
         // TODO add your handling code here:
-    }//GEN-LAST:event_inpRFID1KeyReleased
+    }//GEN-LAST:event_inpTutupRFIDKeyReleased
 
-    private void inpRFID1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_inpRFID1KeyTyped
+    private void inpTutupRFIDKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_inpTutupRFIDKeyTyped
         // TODO add your handling code here:
-    }//GEN-LAST:event_inpRFID1KeyTyped
+    }//GEN-LAST:event_inpTutupRFIDKeyTyped
 
-    private void inpRFID1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inpRFID1MouseClicked
-        // TODO add your handling code here:
+    private void inpTutupRFIDMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inpTutupRFIDMouseClicked
         this.inpRFID.requestFocus();
-    }//GEN-LAST:event_inpRFID1MouseClicked
+    }//GEN-LAST:event_inpTutupRFIDMouseClicked
 
     public static void main(String args[]) {
 
@@ -498,7 +497,7 @@ public class LoginWindow extends javax.swing.JFrame implements DocumentListener,
     private javax.swing.JLabel btnLogin;
     private javax.swing.JPasswordField inpPassword;
     private javax.swing.JTextField inpRFID;
-    private javax.swing.JTextField inpRFID1;
+    private javax.swing.JTextField inpTutupRFID;
     private javax.swing.JTextField inpUsername;
     private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JLabel lblClose;

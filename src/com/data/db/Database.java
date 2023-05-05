@@ -195,7 +195,6 @@ public class Database {
         try {
             String query = "SELECT * FROM " + tabel + " WHERE " + field + " = '" + data + "'";
             res = stat.executeQuery(query);
-//            System.out.println("data query "+res.next());
             return res.next();
         } catch (SQLException ex) {
             Audio.play(Audio.SOUND_ERROR);
@@ -219,9 +218,7 @@ public class Database {
         try {
             sql = "SELECT " + field + " FROM " + table + " " + kondisi;
             res = stat.executeQuery(sql);
-            System.out.print("query "+ sql + "\t");
             if (res.next()) {
-                System.out.println(" hasil "+res.getString(field));
                 return res.getString(field);
             }
         } catch (SQLException ex) {

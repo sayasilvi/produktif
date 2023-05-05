@@ -125,7 +125,9 @@ public class Waktu {
     public String getCurrentDate(){
         return String.format("%d-%02d-%02d", getTahun(), getBulan()+1, getTanggal());
     }
-    
+    public String getTanggalNow(){
+        return String.format("%d-%02d-%02d", getTanggal(), getBulan()+1, getTahun());
+    }
     public String getCurrentDateTime(){
         return String.format("%s %02d:%02d:%02d.%03d", this.getCurrentDate(), getJam(), getMenit(), getDetik(), getMiliDetik());
     }
@@ -299,4 +301,9 @@ public class Waktu {
                 tanggal, this.getNamaBulan(bulan), tahun, jam, menit, detik
         );
     }
+//    public String getTanggal(){
+//        return String.format("%02d %s %d %02d:%02d:%02d", 
+//                tanggal, this.getNamaBulan(bulan), tahun, jam, menit, detik
+//        );
+//    }
 }

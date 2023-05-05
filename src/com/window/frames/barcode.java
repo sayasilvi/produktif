@@ -152,14 +152,14 @@ public class barcode extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void createActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createActionPerformed
-        String path = barcode.createBar(jTextField1.getText());
-        jLabel4.setIcon(Gambar.getBarcode(path));
+//        String path = barcode.createBarcode(jTextField1.getText());
+//        jLabel4.setIcon(Gambar.getBarcode(path));
     }//GEN-LAST:event_createActionPerformed
 
     private void scanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_scanActionPerformed
         try {
-            String data = barcode.scanBar(jTextField2.getText());
-            jLabel3.setText(data);
+//            String data = barcode.scanBar(jTextField2.getText());
+//            jLabel3.setText(data);
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
             ex.printStackTrace();

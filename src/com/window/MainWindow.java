@@ -112,7 +112,6 @@ public class MainWindow extends javax.swing.JFrame {
         for (JLabel btn : btns) {
             if (btn != this.activated) {
                 if (Gambar.isNoAktifIcon(btn.getIcon().toString())) {
-                    System.out.println("ganti ");
                     btn.setIcon(Gambar.getNoBiasaIcon(btn.getIcon().toString()));
                 }
             }
