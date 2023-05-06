@@ -9,7 +9,7 @@ import com.sun.glass.events.KeyEvent;
 //import com.users.Karyawan;
 import com.users.Users;
 import com.window.dialogs.InputKaryawan;
-
+import com.window.dialogs.InputSaldo;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.event.MouseEvent;
@@ -24,20 +24,16 @@ import javax.swing.JOptionPane;
  * @author Amirzan Fikri
  */
 public class DataKaryawan extends javax.swing.JPanel {
-
-//    private final Karyawan user = new Karyawan();
     private final Users user = new Users();
-
     private final Text text = new Text();
-
     private String idSelected = "", keyword = "", namaPetugas, noTelp, alamat, level, rfid;
-
     public DataKaryawan() {
         initComponents();
 
-        this.btnAdd.setUI(new javax.swing.plaf.basic.BasicButtonUI());
+        this.btnTambah.setUI(new javax.swing.plaf.basic.BasicButtonUI());
         this.btnEdit.setUI(new javax.swing.plaf.basic.BasicButtonUI());
-        this.btnDel.setUI(new javax.swing.plaf.basic.BasicButtonUI());
+        this.btnHapus.setUI(new javax.swing.plaf.basic.BasicButtonUI());
+        this.btnSaldo.setUI(new javax.swing.plaf.basic.BasicButtonUI());
 
         this.tabelData.setRowHeight(29);
         this.tabelData.getTableHeader().setBackground(new java.awt.Color(255, 255, 255));
@@ -164,9 +160,10 @@ public class DataKaryawan extends javax.swing.JPanel {
         valNoTelp = new javax.swing.JLabel();
         valAlamat = new javax.swing.JLabel();
         inpCari = new javax.swing.JTextField();
-        btnAdd = new javax.swing.JButton();
+        btnTambah = new javax.swing.JButton();
         btnEdit = new javax.swing.JButton();
-        btnDel = new javax.swing.JButton();
+        btnHapus = new javax.swing.JButton();
+        btnSaldo = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tabelData = new javax.swing.JTable();
         valLevel = new javax.swing.JLabel();
@@ -227,26 +224,26 @@ public class DataKaryawan extends javax.swing.JPanel {
         });
         add(inpCari, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 80, 180, 23));
 
-        btnAdd.setBackground(new java.awt.Color(41, 180, 50));
-        btnAdd.setForeground(new java.awt.Color(255, 255, 255));
-        btnAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/image/gambar_icon/btn-tambah-075.png"))); // NOI18N
-        btnAdd.setToolTipText("");
-        btnAdd.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        btnAdd.setOpaque(false);
-        btnAdd.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnTambah.setBackground(new java.awt.Color(41, 180, 50));
+        btnTambah.setForeground(new java.awt.Color(255, 255, 255));
+        btnTambah.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/image/gambar_icon/btn-tambah-075.png"))); // NOI18N
+        btnTambah.setToolTipText("");
+        btnTambah.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        btnTambah.setOpaque(false);
+        btnTambah.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnAddMouseEntered(evt);
+                btnTambahMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnAddMouseExited(evt);
+                btnTambahMouseExited(evt);
             }
         });
-        btnAdd.addActionListener(new java.awt.event.ActionListener() {
+        btnTambah.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAddActionPerformed(evt);
+                btnTambahActionPerformed(evt);
             }
         });
-        add(btnAdd, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 636, 154, 50));
+        add(btnTambah, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 636, 154, 50));
 
         btnEdit.setBackground(new java.awt.Color(34, 119, 237));
         btnEdit.setForeground(new java.awt.Color(255, 255, 255));
@@ -268,25 +265,46 @@ public class DataKaryawan extends javax.swing.JPanel {
         });
         add(btnEdit, new org.netbeans.lib.awtextra.AbsoluteConstraints(255, 636, 154, 50));
 
-        btnDel.setBackground(new java.awt.Color(220, 41, 41));
-        btnDel.setForeground(new java.awt.Color(255, 255, 255));
-        btnDel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/image/gambar_icon/btn-hapus-075.png"))); // NOI18N
-        btnDel.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        btnDel.setOpaque(false);
-        btnDel.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnHapus.setBackground(new java.awt.Color(220, 41, 41));
+        btnHapus.setForeground(new java.awt.Color(255, 255, 255));
+        btnHapus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/image/gambar_icon/btn-hapus-075.png"))); // NOI18N
+        btnHapus.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        btnHapus.setOpaque(false);
+        btnHapus.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnDelMouseEntered(evt);
+                btnHapusMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnDelMouseExited(evt);
+                btnHapusMouseExited(evt);
             }
         });
-        btnDel.addActionListener(new java.awt.event.ActionListener() {
+        btnHapus.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDelActionPerformed(evt);
+                btnHapusActionPerformed(evt);
             }
         });
-        add(btnDel, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 636, 154, 50));
+        add(btnHapus, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 636, 154, 50));
+
+        btnSaldo.setBackground(new java.awt.Color(41, 180, 50));
+        btnSaldo.setForeground(new java.awt.Color(255, 255, 255));
+        btnSaldo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/image/gambar_icon/btn-saldo-075.png"))); // NOI18N
+        btnSaldo.setToolTipText("");
+        btnSaldo.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        btnSaldo.setOpaque(false);
+        btnSaldo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnSaldoMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnSaldoMouseExited(evt);
+            }
+        });
+        btnSaldo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaldoActionPerformed(evt);
+            }
+        });
+        add(btnSaldo, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 636, 188, 49));
 
         tabelData.setBackground(new java.awt.Color(255, 255, 255));
         tabelData.setFont(new java.awt.Font("Ebrima", 1, 14)); // NOI18N
@@ -340,7 +358,7 @@ public class DataKaryawan extends javax.swing.JPanel {
         add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnDelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDelActionPerformed
+    private void btnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusActionPerformed
         int status;
         boolean delete;
 
@@ -381,9 +399,9 @@ public class DataKaryawan extends javax.swing.JPanel {
         } else {
             Message.showWarning(this, "Access Denied!\nAnda bukan Admin!");
         }
-    }//GEN-LAST:event_btnDelActionPerformed
+    }//GEN-LAST:event_btnHapusActionPerformed
 
-    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+    private void btnTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTambahActionPerformed
         // mengecek apakah user memiliki level admin
         if (user.isAdmin()) {
             // membuka window input user
@@ -402,7 +420,7 @@ public class DataKaryawan extends javax.swing.JPanel {
         } else {
             Message.showWarning(this, "Access Denied!\nAnda bukan Admin!");
         }
-    }//GEN-LAST:event_btnAddActionPerformed
+    }//GEN-LAST:event_btnTambahActionPerformed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
         // mengecek apakah user memiliki level admin
@@ -430,13 +448,13 @@ public class DataKaryawan extends javax.swing.JPanel {
         this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     }//GEN-LAST:event_btnEditActionPerformed
 
-    private void btnAddMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddMouseEntered
-        this.btnAdd.setIcon(Gambar.getAktiveIcon(this.btnAdd.getIcon().toString()));
-    }//GEN-LAST:event_btnAddMouseEntered
+    private void btnTambahMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTambahMouseEntered
+        this.btnTambah.setIcon(Gambar.getAktiveIcon(this.btnTambah.getIcon().toString()));
+    }//GEN-LAST:event_btnTambahMouseEntered
 
-    private void btnAddMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddMouseExited
-        this.btnAdd.setIcon(Gambar.getBiasaIcon(this.btnAdd.getIcon().toString()));
-    }//GEN-LAST:event_btnAddMouseExited
+    private void btnTambahMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTambahMouseExited
+        this.btnTambah.setIcon(Gambar.getBiasaIcon(this.btnTambah.getIcon().toString()));
+    }//GEN-LAST:event_btnTambahMouseExited
 
     private void btnEditMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMouseEntered
         this.btnEdit.setIcon(Gambar.getAktiveIcon(this.btnEdit.getIcon().toString()));
@@ -446,13 +464,13 @@ public class DataKaryawan extends javax.swing.JPanel {
         this.btnEdit.setIcon(Gambar.getBiasaIcon(this.btnEdit.getIcon().toString()));
     }//GEN-LAST:event_btnEditMouseExited
 
-    private void btnDelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDelMouseEntered
-        this.btnDel.setIcon(Gambar.getAktiveIcon(this.btnDel.getIcon().toString()));
-    }//GEN-LAST:event_btnDelMouseEntered
+    private void btnHapusMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHapusMouseEntered
+        this.btnHapus.setIcon(Gambar.getAktiveIcon(this.btnHapus.getIcon().toString()));
+    }//GEN-LAST:event_btnHapusMouseEntered
 
-    private void btnDelMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDelMouseExited
-        this.btnDel.setIcon(Gambar.getBiasaIcon(this.btnDel.getIcon().toString()));
-    }//GEN-LAST:event_btnDelMouseExited
+    private void btnHapusMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHapusMouseExited
+        this.btnHapus.setIcon(Gambar.getBiasaIcon(this.btnHapus.getIcon().toString()));
+    }//GEN-LAST:event_btnHapusMouseExited
 
     private void valNoTelpMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_valNoTelpMouseClicked
 //
@@ -510,12 +528,33 @@ public class DataKaryawan extends javax.swing.JPanel {
         this.updateTabel();
     }//GEN-LAST:event_inpCariKeyReleased
 
+    private void btnSaldoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSaldoMouseEntered
+        this.btnSaldo.setIcon(Gambar.getAktiveIcon(this.btnSaldo.getIcon().toString()));
+    }//GEN-LAST:event_btnSaldoMouseEntered
+
+    private void btnSaldoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSaldoMouseExited
+        this.btnSaldo.setIcon(Gambar.getBiasaIcon(this.btnSaldo.getIcon().toString()));
+    }//GEN-LAST:event_btnSaldoMouseExited
+
+    private void btnSaldoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaldoActionPerformed
+        // mengecek apakah user memiliki level admin
+        if (user.isAdmin()) {
+            // membuka window input user
+            Audio.play(Audio.SOUND_INFO);
+            InputSaldo tbh = new InputSaldo(null, true);
+            tbh.setVisible(true);
+        } else {
+            Message.showWarning(this, "Access Denied!\nAnda bukan Admin!");
+        }
+    }//GEN-LAST:event_btnSaldoActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel background;
-    private javax.swing.JButton btnAdd;
-    private javax.swing.JButton btnDel;
     private javax.swing.JButton btnEdit;
+    private javax.swing.JButton btnHapus;
+    private javax.swing.JButton btnSaldo;
+    private javax.swing.JButton btnTambah;
     private javax.swing.JTextField inpCari;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable tabelData;

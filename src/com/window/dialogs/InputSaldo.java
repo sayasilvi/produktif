@@ -16,7 +16,7 @@ import javax.swing.*;
  *
  * @author Amirzan
  */
-public class inputSaldo extends javax.swing.JDialog {
+public class InputSaldo extends javax.swing.JDialog {
 
     private Timer timer;
     private final Users user = new Users();
@@ -28,19 +28,15 @@ public class inputSaldo extends javax.swing.JDialog {
     private String saldo, newSaldo, pass, hashing;
     private boolean isUpdated = false;
 
-    public inputSaldo(Frame parent, boolean modal) {
+    public InputSaldo(Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         this.setIconImage(Gambar.getWindowIcon());
         // menyetting window untuk edit data
         this.setTitle("Ubah Saldo");
-        ImageIcon icon1 = new ImageIcon("src\\resources\\image\\gambar\\app-window-editBarang-075.png");
-        ImageIcon icon2 = new ImageIcon("src\\resources\\image\\gambar_icon\\btn-simpanB-075.png");
-        this.background.setIcon(icon1);
-        this.btnSimpan.setIcon(icon2);
-        
-        this.saldo = Integer.toString(user.getSaldo(user.getIdSaldo(""),""));
-        this.hashing = user.getPassword(user.getIdKaryawan(user.getCurrentLogin()));
+
+        this.saldo = Integer.toString(user.getSaldo(user.getIdSaldo(""), ""));
+        this.hashing = user.getPassword(user.getCurrentLogin());
         this.inpJumlah.setText(this.saldo);
         this.setLocationRelativeTo(null);
         this.btnSimpan.setUI(new javax.swing.plaf.basic.BasicButtonUI());
@@ -55,7 +51,6 @@ public class inputSaldo extends javax.swing.JDialog {
      * <strong>False</strong> jika user menekan tombol kembali / close.
      */
     public boolean isUpdated() {
-//        barang.closeConnection();
         return this.isUpdated;
     }
 
@@ -86,21 +81,28 @@ public class inputSaldo extends javax.swing.JDialog {
             error = true;
             this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
             Message.showWarning(this, "Saldo harus Angka !");
+        } else if (Integer.parseInt(this.newSaldo) <= 0) {
+            error = true;
+            this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+            Message.showWarning(this, "Saldo harus lebih dari 0 !");
         }
         if (!error) {
             // validasi data
             if (user.verifyPass(this.pass, this.hashing)) {
                 // mengedit data
-                if(user.editSaldo(text.toIntCase(this.newSaldo))){
-                // menutup dialog
-                Message.showInformation(this, "Data berhasil diedit!");
-                this.isUpdated = true;
-                this.user.closeConnection();
-                this.dispose();
-            }
+                if (user.editSaldo(Integer.parseInt(this.newSaldo))) {
+                    // menutup dialog
+                    Message.showInformation(this, "Data berhasil diedit!");
+                    this.isUpdated = true;
+                    this.user.closeConnection();
+                    this.dispose();
+                    this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+                }
+            } else {
+                Message.showWarning(this, "Password Salah !");
+                this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
             }
         }
-        this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     }
 
     @SuppressWarnings("unchecked")
@@ -127,7 +129,7 @@ public class inputSaldo extends javax.swing.JDialog {
 
         btnSimpan.setBackground(new java.awt.Color(34, 119, 237));
         btnSimpan.setForeground(new java.awt.Color(255, 255, 255));
-        btnSimpan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/image/gambar_icon/btn-tambahB-075.png"))); // NOI18N
+        btnSimpan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/image/gambar_icon/btn-simpanB-075.png"))); // NOI18N
         btnSimpan.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         btnSimpan.setOpaque(false);
         btnSimpan.setPreferredSize(new java.awt.Dimension(130, 28));
@@ -294,13 +296,13 @@ public class inputSaldo extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(inputSaldo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(InputSaldo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
 
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                inputSaldo dialog = new inputSaldo(new javax.swing.JFrame(), true);
+                InputSaldo dialog = new InputSaldo(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

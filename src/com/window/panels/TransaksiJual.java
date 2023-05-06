@@ -115,15 +115,15 @@ public class TransaksiJual extends javax.swing.JPanel implements DocumentListene
     private void cariBarcode(String cari) {
         try {
             String sql = "SELECT id_barang FROM barang WHERE barcode = '" + cari + "'";
-            System.out.println("sql barcode " + sql);
+//            System.out.println("sql barcode " + sql);
             barang.res = barang.stat.executeQuery(sql);
             if (barang.res.next()) {
                 this.idSelectedBarang = barang.res.getString("id_barang");
                 this.idBarang = this.idSelectedBarang;
-                System.out.println("barcode ditemukandi");
                 this.showBarang();
                 this.totalHarga = Integer.parseInt(inpJumlah.getText()) * hargaJual;
                 txtTotalHarga.setText(text.toMoneyCase(Integer.toString(this.totalHarga)));
+                this.inpCariBarang.setText("");
                 this.tambahBarang();
             }
         } catch (SQLException ex) {
@@ -209,7 +209,7 @@ public class TransaksiJual extends javax.swing.JPanel implements DocumentListene
     private void getDataBarang() {
         try {
             int rows = 0;
-            String sql = "SELECT id_barang, nama_barang, jenis_barang, stok, harga_beli, harga_jual FROM barang " + keywordBarang;
+            String sql = "SELECT id_barang, nama_barang, jenis_barang, stok, harga_beli, harga_jual FROM barang ";
             // mendefinisikan object berdasarkan total rows dan cols yang ada didalam tabel
             this.objBarang = new Object[barang.getJumlahData("barang", keywordBarang)][5];
             // mengeksekusi query
@@ -222,12 +222,37 @@ public class TransaksiJual extends javax.swing.JPanel implements DocumentListene
                 this.objBarang[rows][2] = text.toCapitalize(barang.res.getString("jenis_barang"));
                 this.objBarang[rows][3] = barang.res.getString("stok");
                 this.objBarang[rows][4] = text.toMoneyCase(barang.res.getString("harga_jual"));
-                System.out.println("jumlah data "+rows);
                 rows++; // rows akan bertambah 1 setiap selesai membaca 1 row pada tabel
             }
         } catch (SQLException ex) {
             Message.showException(this, "Terjadi kesalahan saat mengambil data dari database\n" + ex.getMessage(), ex, true);
         }
+    }
+    private Object[][] getDataBarangDb() {
+        try {
+            Object[][] obj;
+            int rows = 0;
+            String sql = "SELECT id_barang, nama_barang, jenis_barang, stok, harga_beli, harga_jual FROM barang " + keywordBarang;
+            System.out.println("sql pada db "+sql);
+            // mendefinisikan object berdasarkan total rows dan cols yang ada didalam tabel
+            obj = new Object[barang.getJumlahData("barang", keywordBarang)][5];
+            // mengeksekusi query
+            barang.res = barang.stat.executeQuery(sql);
+            // mendapatkan semua data yang ada didalam tabel
+            while (barang.res.next()) {
+                // menyimpan data dari tabel ke object
+                obj[rows][0] = barang.res.getString("id_barang");
+                obj[rows][1] = barang.res.getString("nama_barang");
+                obj[rows][2] = text.toCapitalize(barang.res.getString("jenis_barang"));
+                obj[rows][3] = barang.res.getString("stok");
+                obj[rows][4] = text.toMoneyCase(barang.res.getString("harga_jual"));
+                rows++; // rows akan bertambah 1 setiap selesai membaca 1 row pada tabel
+            }
+            return obj;
+        } catch (SQLException ex) {
+            Message.showException(this, "Terjadi kesalahan saat mengambil data dari database\n" + ex.getMessage(), ex, true);
+        }
+        return null;
     }
 
     private int getTotal(String table, String kolom, String kondisi) {
@@ -258,6 +283,23 @@ public class TransaksiJual extends javax.swing.JPanel implements DocumentListene
     private void updateTabelBarang() {
         this.tabelDataBarang.setModel(new javax.swing.table.DefaultTableModel(
                 this.objBarang,
+                new String[]{
+                    "ID Barang", "Nama Barang", "Jenis Barang", "Stok", "Harga"
+                }
+        ) {
+            boolean[] canEdit = new boolean[]{
+                false, false, false, false, false
+            };
+
+            @Override
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit[columnIndex];
+            }
+        });
+    }
+    private void updateTabelBarangDb() {
+        this.tabelDataBarang.setModel(new javax.swing.table.DefaultTableModel(
+                this.getDataBarangDb(),
                 new String[]{
                     "ID Barang", "Nama Barang", "Jenis Barang", "Stok", "Harga"
                 }
@@ -518,10 +560,12 @@ public class TransaksiJual extends javax.swing.JPanel implements DocumentListene
                             }
                             //ubah jumlah barang
                             inpJumlah.setText("1");
-                            //update tabel barang
-                            this.updateTabelBarang();
                             //reset
                             this.resetInput();
+//                            if(isBarcode){
+//                            update tabel barang
+                                this.updateTabelBarang();
+//                            }
                             //ubah cursor menjadi cursor default
                             this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
                         }
@@ -592,12 +636,14 @@ public class TransaksiJual extends javax.swing.JPanel implements DocumentListene
                                     txtSaldo.setText(text.toMoneyCase(Integer.toString(saldobaru)));
                                 }
                             }
-                            //update tabel barang
-                            this.updateTabelBarang();
                             //ubah jumlah barang
                             inpJumlah.setText("1");
                             //reset
                             this.resetInput();
+//                            if(isBarcode){
+                                //update tabel barang
+                                this.updateTabelBarang();
+//                            }
                             //ubah cursor
                             this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
                         }
@@ -623,7 +669,7 @@ public class TransaksiJual extends javax.swing.JPanel implements DocumentListene
                             this.totalHarga
                         });
                         System.out.println("data pada object "+this.objBarang[index][0]+", "+this.objBarang[index][1]);
-                        System.out.println("jumlah data pada object"+this.objBarang.length);
+//                        System.out.println("jumlah data pada object"+this.objBarang.length);
                         //ubah tabel barang
                         sisaStok = this.stok - jumlahB;
                         this.objBarang[index][3] = sisaStok;
@@ -668,12 +714,14 @@ public class TransaksiJual extends javax.swing.JPanel implements DocumentListene
                                 txtSaldo.setText(text.toMoneyCase(Integer.toString(saldobaru)));
                             }
                         }
-                        //update tabel barang
-                        this.updateTabelBarang();
                         //ubah jumlah barang
                         inpJumlah.setText("1");
                         //reset
                         this.resetInput();
+//                        if(isBarcode){
+                            //update tabel barang
+                            this.updateTabelBarang();
+//                        }
                         //ubah cursor ke default
                         this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
                     }
@@ -1056,6 +1104,7 @@ public class TransaksiJual extends javax.swing.JPanel implements DocumentListene
 
         txtSaldo.setBackground(new java.awt.Color(222, 222, 222));
         txtSaldo.setForeground(new java.awt.Color(255, 255, 255));
+        txtSaldo.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         txtSaldo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 txtSaldoMouseClicked(evt);
@@ -1099,16 +1148,16 @@ public class TransaksiJual extends javax.swing.JPanel implements DocumentListene
         add(inpTanggal, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 373, 285, 26));
 
         txtSebelum.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        add(txtSebelum, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 310, 340, 26));
+        add(txtSebelum, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 310, 355, 26));
 
         txtDiskon.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         add(txtDiskon, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 345, 200, 26));
 
         txtTotal.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        add(txtTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 345, 150, 26));
+        add(txtTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(965, 345, 155, 26));
 
         txtKembalian.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        add(txtKembalian, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 382, 190, 26));
+        add(txtKembalian, new org.netbeans.lib.awtextra.AbsoluteConstraints(965, 382, 155, 26));
 
         inpJumlah.setBackground(new java.awt.Color(255, 255, 255));
         inpJumlah.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
@@ -1173,7 +1222,7 @@ public class TransaksiJual extends javax.swing.JPanel implements DocumentListene
                 inpCariBarangKeyTyped(evt);
             }
         });
-        add(inpCariBarang, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 55, 360, 35));
+        add(inpCariBarang, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 55, 370, 35));
         inpCariBarang.getAccessibleContext().setAccessibleDescription("");
 
         tabelDataBarang.setBackground(new java.awt.Color(255, 255, 255));
@@ -1211,7 +1260,7 @@ public class TransaksiJual extends javax.swing.JPanel implements DocumentListene
         });
         jScrollPane2.setViewportView(tabelDataBarang);
 
-        add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 90, 590, 200));
+        add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 90, 600, 200));
 
         tabelData.setBackground(new java.awt.Color(255, 255, 255));
         tabelData.setFont(new java.awt.Font("Ebrima", 1, 14)); // NOI18N
@@ -1248,7 +1297,7 @@ public class TransaksiJual extends javax.swing.JPanel implements DocumentListene
         });
         jScrollPane3.setViewportView(tabelData);
 
-        add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 480, 1090, 200));
+        add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 480, 1100, 200));
 
         btnTambah.setBackground(new java.awt.Color(34, 119, 237));
         btnTambah.setForeground(new java.awt.Color(255, 255, 255));
@@ -1360,7 +1409,7 @@ public class TransaksiJual extends javax.swing.JPanel implements DocumentListene
                 btnBatalActionPerformed(evt);
             }
         });
-        add(btnBatal, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 423, -1, -1));
+        add(btnBatal, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 422, -1, -1));
 
         background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/image/gambar/app-transaksi-jual.png"))); // NOI18N
         add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -1439,15 +1488,13 @@ public class TransaksiJual extends javax.swing.JPanel implements DocumentListene
     private void inpCariBarangKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_inpCariBarangKeyTyped
         String key = this.inpCariBarang.getText();
         this.keywordBarang = "WHERE id_barang LIKE '%" + key + "%'";
-        this.getDataBarang();
-        this.updateTabelBarang();
+        this.updateTabelBarangDb();
     }//GEN-LAST:event_inpCariBarangKeyTyped
     
     private void inpCariBarangKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_inpCariBarangKeyReleased
         String key = this.inpCariBarang.getText();
         this.keywordBarang = "WHERE id_barang LIKE '%" + key + "%'";
-        this.getDataBarang();
-        this.updateTabelBarang();
+        this.updateTabelBarangDb();
     }//GEN-LAST:event_inpCariBarangKeyReleased
 
     private void inpCariBarangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inpCariBarangActionPerformed
@@ -1756,7 +1803,6 @@ public class TransaksiJual extends javax.swing.JPanel implements DocumentListene
                         txtTotalHarga.setText(text.toMoneyCase(Integer.toString(this.totalHarga)));
                     }
                 } else {
-//                    System.out.println("Jumlah Barang harus angka !");
                     Message.showWarning(this, "Jumlah Barang Harus Angka !");
                 }
             } else {
