@@ -48,7 +48,7 @@ import net.sf.jasperreports.view.JasperViewer;
  *
  * @author Amirzan
  */
-public class detailLaporanJual extends javax.swing.JDialog {
+public class DetailLaporanJualOld extends javax.swing.JDialog {
 
     private final Database db = new Database();
     private final Barang barang = new Barang();
@@ -74,7 +74,7 @@ public class detailLaporanJual extends javax.swing.JDialog {
     private int selectedIndex, totalHrg, harga;
     private boolean isUpdated = false;
 
-    public detailLaporanJual(Frame parent, boolean modal, String idtr) throws ParseException {
+    public DetailLaporanJualOld(Frame parent, boolean modal, String idtr) throws ParseException {
         super(parent, modal);
         initComponents();
         this.idTrSelected = idtr;
@@ -455,7 +455,7 @@ public class detailLaporanJual extends javax.swing.JDialog {
             this.keyword = "WHERE id_tr_jual = '" + this.idTrSelected + "' AND (id_barang LIKE '%" + key + "%' OR nama_barang LIKE '%" + key + "%')";
             this.updateTabel();
         } catch (ParseException ex) {
-            Logger.getLogger(detailLaporanJual.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DetailLaporanJualOld.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_inpCariActionPerformed
 
@@ -466,7 +466,7 @@ public class detailLaporanJual extends javax.swing.JDialog {
 
             this.updateTabel();
         } catch (ParseException ex) {
-            Logger.getLogger(detailLaporanJual.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DetailLaporanJualOld.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_inpCariKeyReleased
 
@@ -476,7 +476,7 @@ public class detailLaporanJual extends javax.swing.JDialog {
             this.keyword = "WHERE id_tr_jual = '" + this.idTrSelected + "' AND (id_barang LIKE '%" + key + "%' OR nama_barang LIKE '%" + key + "%')";
             this.updateTabel();
         } catch (ParseException ex) {
-            Logger.getLogger(detailLaporanJual.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DetailLaporanJualOld.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_inpCariKeyTyped
 

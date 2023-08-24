@@ -8,10 +8,11 @@ import com.manage.ManageTransaksiJual;
 import com.manage.Message;
 import com.manage.Text;
 import com.manage.Waktu;
-import com.window.panels.detailLaporanJual;
+import com.window.panels.DetailLaporanJualOld;
 import com.media.Audio;
 import com.media.Gambar;
 import com.sun.glass.events.KeyEvent;
+import com.window.MainWindow;
 //import com.users.Karyawan;
 import java.awt.*;
 import javax.swing.*;
@@ -1097,7 +1098,6 @@ public class LaporanJual extends javax.swing.JPanel {
     }//GEN-LAST:event_btnDetailMouseExited
 
     private void btnDetailMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDetailMouseClicked
-        System.out.println("btn detail");
         boolean erorr = false;
         this.setCursor(new Cursor(Cursor.WAIT_CURSOR));
         JTable tabel = new JTable();
@@ -1138,9 +1138,8 @@ public class LaporanJual extends javax.swing.JPanel {
         if (!erorr) {
             try {
                 Audio.play(Audio.SOUND_INFO);
-                System.out.println("id yg dipilih " + this.idTr);
-                detailLaporanJual detail = new detailLaporanJual(null, true, this.idTr);
-                detail.setVisible(true);
+                DetailLaporanJual detail = new DetailLaporanJual(this.idTr);
+                this.dataDetail(detail);
                 this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
             } catch (ParseException ex) {
                 Logger.getLogger(LaporanJual.class.getName()).log(Level.SEVERE, null, ex);
@@ -1148,7 +1147,20 @@ public class LaporanJual extends javax.swing.JPanel {
         }
         //
     }//GEN-LAST:event_btnDetailMouseClicked
-
+    
+    private void dataDetail(JPanel pnl){
+        this.setCursor(new Cursor(Cursor.WAIT_CURSOR));
+        // menghapus panel lama
+        MainWindow.pnlMenu.removeAll();
+        MainWindow.pnlMenu.repaint();
+        MainWindow.pnlMenu.revalidate();
+        this.closeKoneksi();
+        // menambahkan panel baru
+        MainWindow.pnlMenu.add(pnl);
+        MainWindow.pnlMenu.validate();
+        this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+    }
+    
     private void tbMinggu1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbMinggu1MouseClicked
     }//GEN-LAST:event_tbMinggu1MouseClicked
 

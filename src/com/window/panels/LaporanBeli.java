@@ -7,10 +7,11 @@ import com.manage.ManageTransaksiBeli;
 import com.manage.Message;
 import com.manage.Text;
 import com.manage.Waktu;
-import com.window.panels.detailLaporanBeli;
+import com.window.panels.DetailLaporanBeliOld;
 import com.media.Audio;
 import com.media.Gambar;
 import com.sun.glass.events.KeyEvent;
+import com.window.MainWindow;
 //import com.users.Karyawan;
 import java.awt.*;
 import javax.swing.*;
@@ -1104,10 +1105,8 @@ public class LaporanBeli extends javax.swing.JPanel {
 
     private void btnDetailMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDetailMouseClicked
         try {
-            System.out.println("btn detail");
             boolean erorr = false;
             this.setCursor(new Cursor(Cursor.WAIT_CURSOR));
-            JTable tabel = new JTable();
             switch (this.selectedIndex) {
                 case 1:
                     if (this.tabelDataS.getSelectedRow() < 0) {
@@ -1144,17 +1143,28 @@ public class LaporanBeli extends javax.swing.JPanel {
             }
             if (!erorr) {
                 Audio.play(Audio.SOUND_INFO);
-                System.out.println("id yg dipilih " + this.idTr);
-                detailLaporanBeli detail = new detailLaporanBeli(null, true, this.idTr);
-                detail.setVisible(true);
+                DetailLaporanBeli detail = new DetailLaporanBeli(this.idTr);
+                this.dataDetail(detail);
                 this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
             }
-            //
         } catch (ParseException ex) {
             Logger.getLogger(LaporanBeli.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnDetailMouseClicked
 
+    private void dataDetail(JPanel pnl){
+        this.setCursor(new Cursor(Cursor.WAIT_CURSOR));
+        // menghapus panel lama
+        MainWindow.pnlMenu.removeAll();
+        MainWindow.pnlMenu.repaint();
+        MainWindow.pnlMenu.revalidate();
+        this.closeKoneksi();
+        // menambahkan panel baru
+        MainWindow.pnlMenu.add(pnl);
+        MainWindow.pnlMenu.validate();
+        this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+    }
+    
     private void tbMinggu1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbMinggu1MouseClicked
     }//GEN-LAST:event_tbMinggu1MouseClicked
 

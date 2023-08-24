@@ -1,58 +1,26 @@
 package com.window.panels;
 
-import com.data.app.Log;
-import com.data.db.Database;
-import static com.data.db.Database.DB_NAME;
-import com.window.dialogs.*;
-import com.manage.Message;
-import com.media.Gambar;
-import com.manage.Barang;
+import com.window.MainWindow;
 import com.manage.ManageTransaksiBeli;
+import com.manage.Message;
 import com.manage.Text;
-import com.media.Audio;
-//import com.users.Karyawan;
-import com.users.Supplier;
-//import com.users.Users;
-import java.awt.Color;
+import com.media.Gambar;
+import com.sun.glass.events.KeyEvent;
 import java.awt.Cursor;
-import java.awt.Frame;
-import java.awt.event.KeyEvent;
-import java.awt.print.PrinterException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.JPanel;
 
 /**
  *
- * @author Amirzan
+ * @author Amirzan Fikri P
  */
-public class detailLaporanBeli extends javax.swing.JDialog {
-
-    private final Database db = new Database();
-    private final Barang barang = new Barang();
-    private final String namadb = Database.DB_NAME;
-//    private final Karyawan karyawan = new Karyawan();
-//    private final Users user = new Users();
+public class DetailLaporanBeli extends javax.swing.JPanel {
     private final ManageTransaksiBeli trb = new ManageTransaksiBeli();
-    private final Supplier supplier = new Supplier();
-    public int option;
-    private Connection con;
-    private Statement stmt;
-    private ResultSet res;
-    public static final int ADD_OPTION = 1, EDIT_OPTION = 2;
-
     private final Text text = new Text();
 
     DateFormat tanggalMilis = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
@@ -61,80 +29,36 @@ public class detailLaporanBeli extends javax.swing.JDialog {
     private final DateFormat date1 = new SimpleDateFormat("dd-MM-yyyy");
     private final DateFormat time = new SimpleDateFormat("hh:mm:ss");
     private final DateFormat timeMillis = new SimpleDateFormat("ss.SSS:mm:hh");
-    private int jumlahKoneksi = 0;
     private String idTrSelected = "", idSelected = "", keyword = "", idTr, idPd, IDSupplier, namaSupplier, IDBarang, namaBarang, jenisBarang, jumlahBarang;
     private int selectedIndex, totalHrg, harga;
-    private boolean isUpdated = false;
-
-    public detailLaporanBeli(Frame parent, boolean modal, String idtr) throws ParseException {
-        super(parent, modal);
+    public DetailLaporanBeli(String idtr) throws ParseException {
         initComponents();
-        this.idTrSelected = idtr;
+        this.btnKembali.setUI(new javax.swing.plaf.basic.BasicButtonUI());
+        this.btnPrint.setUI(new javax.swing.plaf.basic.BasicButtonUI());
+
         this.tabelData.setRowHeight(29);
         this.tabelData.getTableHeader().setBackground(new java.awt.Color(255, 255, 255));
         this.tabelData.getTableHeader().setForeground(new java.awt.Color(0, 0, 0));
-
-        this.setResizable(false);
-        this.setLocationRelativeTo(null);
+        this.idTrSelected = idtr;
         keyword = "WHERE id_tr_beli = '" + this.idTrSelected + "'";
         this.updateTabel();
         valTotal.setText(text.toMoneyCase(Integer.toString(getTotal("detail_transaksi_beli", "total_harga", "WHERE id_tr_beli = '" + this.idTrSelected + "'"))));
-        this.btnKembali.setUI(new javax.swing.plaf.basic.BasicButtonUI());
     }
-
-//    detailLaporanBeli(Object object, boolean b, Object object0) {
-//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-//    }
-    private void koneksi() {
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            this.con = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/" + this.namadb, "root", "");
-            this.stmt = con.createStatement();
-            this.jumlahKoneksi++;
-//            System.out.println("jumlah koneksi : " + db.jumlahKoneksi);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
+    private void closeKoneksi(){
+        trb.closeConnection();
     }
-
-    private void closeKoneksi() {
-        try {
-            for (int i = 0; i < this.jumlahKoneksi; i++) {
-
-                // Mengecek apakah conn kosong atau tidak, jika tidak maka akan diclose
-                if (this.con != null) {
-                    this.con.close();
-                }
-                // Mengecek apakah stat kosong atau tidak, jika tidak maka akan diclose
-                if (this.stmt != null) {
-                    this.stmt.close();
-                }
-                // Mengecek apakah res koson atau tidak, jika tidak maka akan diclose
-                if (this.res != null) {
-                    this.res.close();
-                }
-                Log.addLog(String.format("Berhasil memutus koneksi dari Database '%s'.", DB_NAME));
-            }
-        } catch (SQLException ex) {
-            Audio.play(Audio.SOUND_ERROR);
-            JOptionPane.showMessageDialog(null, "Terjadi Kesalahan!\n\nError message : " + ex.getMessage(), "Error", JOptionPane.WARNING_MESSAGE);
-        }
-    }
-
     private int getTotal(String table, String kolom, String kondisi) {
         try {
-            koneksi();
             int data = 0;
             String sql = "SELECT SUM(" + kolom + ") AS total FROM " + table + " " + kondisi;
-            System.out.println(sql);
-            this.res = this.stmt.executeQuery(sql);
-            while (res.next()) {
-                data = res.getInt("total");
+//            System.out.println(sql);
+            trb.res = trb.stat.executeQuery(sql);
+            while (trb.res.next()) {
+                data = trb.res.getInt("total");
             }
             return data;
         } catch (SQLException ex) {
-            Logger.getLogger(LaporanJual.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DetailLaporanJual.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NullPointerException n) {
 //            n.printStackTrace();
             System.out.println("errorr ");
@@ -142,7 +66,6 @@ public class detailLaporanBeli extends javax.swing.JDialog {
         }
         return -1;
     }
-
     private Object[][] getData() throws ParseException {
         try {
             Object[][] obj;
@@ -219,27 +142,12 @@ public class detailLaporanBeli extends javax.swing.JDialog {
         this.valJumlah.setText("<html><p>:&nbsp;" + this.jumlahBarang + "</p></html>");
     }
 
-    /**
-     * Mengecek apakah user menekan tombol simpan / tambah atau tidak
-     *
-     * @return <strong>True</strong> jika user menekan tombol simpan / tambah.
-     * <br>
-     * <strong>False</strong> jika user menekan tombol kembali / close.
-     */
-    public boolean isUpdated() {
-        this.closeKoneksi();
-        trb.closeConnection();
-        return this.isUpdated;
-    }
-
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        pnlMain = new javax.swing.JPanel();
         btnKembali = new javax.swing.JButton();
-        btnCetak = new javax.swing.JLabel();
+        btnPrint = new javax.swing.JButton();
         valIDPengeluaran = new javax.swing.JLabel();
         valIDTransaksi = new javax.swing.JLabel();
         valNamaSupplier = new javax.swing.JLabel();
@@ -256,9 +164,7 @@ public class detailLaporanBeli extends javax.swing.JDialog {
         tabelData = new javax.swing.JTable();
         background = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-
-        pnlMain.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnKembali.setBackground(new java.awt.Color(220, 41, 41));
         btnKembali.setForeground(new java.awt.Color(255, 255, 255));
@@ -281,77 +187,86 @@ public class detailLaporanBeli extends javax.swing.JDialog {
                 btnKembaliActionPerformed(evt);
             }
         });
-        pnlMain.add(btnKembali, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 710, 160, 40));
+        add(btnKembali, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 640, 154, 50));
 
-        btnCetak.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/image/gambar_icon/btn-print-075.png"))); // NOI18N
-        btnCetak.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnCetakMouseClicked(evt);
-            }
+        btnPrint.setBackground(new java.awt.Color(220, 41, 41));
+        btnPrint.setForeground(new java.awt.Color(255, 255, 255));
+        btnPrint.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/image/gambar_icon/btn-print-075.png"))); // NOI18N
+        btnPrint.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        btnPrint.setMaximumSize(new java.awt.Dimension(130, 28));
+        btnPrint.setMinimumSize(new java.awt.Dimension(130, 28));
+        btnPrint.setOpaque(false);
+        btnPrint.setPreferredSize(new java.awt.Dimension(130, 28));
+        btnPrint.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnCetakMouseEntered(evt);
+                btnPrintMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnCetakMouseExited(evt);
+                btnPrintMouseExited(evt);
             }
         });
-        pnlMain.add(btnCetak, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 710, -1, -1));
+        btnPrint.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPrintActionPerformed(evt);
+            }
+        });
+        add(btnPrint, new org.netbeans.lib.awtextra.AbsoluteConstraints(235, 640, 154, 50));
 
         valIDPengeluaran.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         valIDPengeluaran.setForeground(new java.awt.Color(0, 0, 0));
         valIDPengeluaran.setText(":");
-        pnlMain.add(valIDPengeluaran, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 69, 315, 32));
+        add(valIDPengeluaran, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 70, 410, 27));
 
         valIDTransaksi.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
         valIDTransaksi.setForeground(new java.awt.Color(0, 0, 0));
         valIDTransaksi.setText(": ");
-        pnlMain.add(valIDTransaksi, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 68, 230, 32));
+        add(valIDTransaksi, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 70, 320, 27));
 
         valNamaSupplier.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         valNamaSupplier.setForeground(new java.awt.Color(0, 0, 0));
         valNamaSupplier.setText(":");
-        pnlMain.add(valNamaSupplier, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 110, 315, 32));
+        add(valNamaSupplier, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 107, 410, 27));
 
         valIDSupplier.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         valIDSupplier.setForeground(new java.awt.Color(0, 0, 0));
         valIDSupplier.setText(":");
-        pnlMain.add(valIDSupplier, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 110, 230, 32));
+        add(valIDSupplier, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 107, 320, 27));
 
         valNamaBarang.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         valNamaBarang.setForeground(new java.awt.Color(0, 0, 0));
         valNamaBarang.setText(":");
-        pnlMain.add(valNamaBarang, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 152, 315, 32));
+        add(valNamaBarang, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 142, 410, 27));
 
         valIDBarang.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
         valIDBarang.setForeground(new java.awt.Color(0, 0, 0));
-        valIDBarang.setText(": ");
-        pnlMain.add(valIDBarang, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 152, 230, 32));
+        valIDBarang.setText(":");
+        add(valIDBarang, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 142, 320, 27));
 
         valHarga.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
         valHarga.setForeground(new java.awt.Color(0, 0, 0));
         valHarga.setText(":");
-        pnlMain.add(valHarga, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 194, 315, 32));
+        add(valHarga, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 178, 410, 27));
 
         valJenis.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
         valJenis.setForeground(new java.awt.Color(0, 0, 0));
         valJenis.setText(": ");
-        pnlMain.add(valJenis, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 195, 230, 32));
+        add(valJenis, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 179, 320, 27));
 
         valTotalHarga.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
         valTotalHarga.setForeground(new java.awt.Color(0, 0, 0));
         valTotalHarga.setText(":");
-        pnlMain.add(valTotalHarga, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 236, 315, 32));
+        add(valTotalHarga, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 215, 410, 27));
 
         valJumlah.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
         valJumlah.setForeground(new java.awt.Color(0, 0, 0));
         valJumlah.setText(": ");
         valJumlah.setName(""); // NOI18N
-        pnlMain.add(valJumlah, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 237, 230, 32));
+        add(valJumlah, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 215, 320, 27));
 
         valTotal.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         valTotal.setForeground(new java.awt.Color(0, 0, 0));
         valTotal.setText(":");
-        pnlMain.add(valTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 640, 330, 36));
+        add(valTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 585, 280, 25));
 
         inpCari.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         inpCari.addActionListener(new java.awt.event.ActionListener() {
@@ -367,7 +282,7 @@ public class detailLaporanBeli extends javax.swing.JDialog {
                 inpCariKeyTyped(evt);
             }
         });
-        pnlMain.add(inpCari, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 300, 220, 32));
+        add(inpCari, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 275, 315, 32));
 
         tabelData.setBackground(new java.awt.Color(255, 255, 255));
         tabelData.setFont(new java.awt.Font("Ebrima", 1, 14)); // NOI18N
@@ -403,34 +318,12 @@ public class detailLaporanBeli extends javax.swing.JDialog {
             }
         });
         lpSemua.setViewportView(tabelData);
-        if (tabelData.getColumnModel().getColumnCount() > 0) {
-            tabelData.getColumnModel().getColumn(9).setResizable(false);
-        }
 
-        pnlMain.add(lpSemua, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 332, 1040, 300));
+        add(lpSemua, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 305, 1130, 275));
 
-        background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/image/gambar/app-window-detail-laporan-pengeluaran-075.png"))); // NOI18N
-        pnlMain.add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
-
-        jScrollPane1.setViewportView(pnlMain);
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 862, Short.MAX_VALUE)
-                .addGap(50, 50, 50))
-        );
-
-        pack();
+        background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/image/gambar/app-detail-laporan-pengeluaran.png"))); // NOI18N
+        background.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnKembaliMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnKembaliMouseEntered
@@ -440,10 +333,28 @@ public class detailLaporanBeli extends javax.swing.JDialog {
     private void btnKembaliMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnKembaliMouseExited
         this.btnKembali.setIcon(Gambar.getBiasaIcon(this.btnKembali.getIcon().toString()));
     }//GEN-LAST:event_btnKembaliMouseExited
-
+    private void dataLaporan(JPanel pnl) {
+        this.setCursor(new Cursor(Cursor.WAIT_CURSOR));
+//        MainWindow.setTitle("Data");
+        // menghapus panel lama
+        MainWindow.pnlMenu.removeAll();
+        MainWindow.pnlMenu.repaint();
+        MainWindow.pnlMenu.revalidate();
+//        pnlMenu.revalidate();
+        this.closeKoneksi();
+        // menambahkan panel baru
+        MainWindow.pnlMenu.add(pnl);
+        MainWindow.pnlMenu.validate();
+        this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+    }
     private void btnKembaliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKembaliActionPerformed
-        barang.closeConnection();
-        this.dispose();
+        try {
+//            barang.closeConnection();
+            LaporanBeli pnl = new LaporanBeli();
+            this.dataLaporan(pnl);
+        } catch (ParseException ex) {
+            Logger.getLogger(DetailLaporanBeli.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnKembaliActionPerformed
 
     private void inpCariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inpCariActionPerformed
@@ -452,7 +363,7 @@ public class detailLaporanBeli extends javax.swing.JDialog {
             this.keyword = "WHERE id_tr_beli = '" + this.idTrSelected + "' AND (id_barang LIKE '%" + key + "%' OR nama_barang LIKE '%" + key + "%')";
             this.updateTabel();
         } catch (ParseException ex) {
-            Logger.getLogger(detailLaporanBeli.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DetailLaporanBeliOld.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_inpCariActionPerformed
 
@@ -463,7 +374,7 @@ public class detailLaporanBeli extends javax.swing.JDialog {
 
             this.updateTabel();
         } catch (ParseException ex) {
-            Logger.getLogger(detailLaporanBeli.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DetailLaporanBeliOld.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_inpCariKeyReleased
 
@@ -473,7 +384,7 @@ public class detailLaporanBeli extends javax.swing.JDialog {
             this.keyword = "WHERE id_tr_beli = '" + this.idTrSelected + "' AND (id_barang LIKE '%" + key + "%' OR nama_barang LIKE '%" + key + "%')";
             this.updateTabel();
         } catch (ParseException ex) {
-            Logger.getLogger(detailLaporanBeli.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DetailLaporanBeliOld.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_inpCariKeyTyped
 
@@ -508,64 +419,24 @@ public class detailLaporanBeli extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_tabelDataKeyPressed
 
-    private void btnCetakMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCetakMouseClicked
-        try {
-            this.setCursor(new Cursor(Cursor.WAIT_CURSOR));
-            if (tabelData.getRowCount() > 0) {
-                tabelData.print();
-            } else {
-                this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-                Message.showWarning(this, "Tabel kosong !");
-            }
-        } catch (PrinterException ex) {
-            Logger.getLogger(LaporanJual.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_btnCetakMouseClicked
-
-    private void btnCetakMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCetakMouseEntered
+    private void btnPrintMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPrintMouseEntered
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnCetakMouseEntered
+    }//GEN-LAST:event_btnPrintMouseEntered
 
-    private void btnCetakMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCetakMouseExited
+    private void btnPrintMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPrintMouseExited
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnCetakMouseExited
+    }//GEN-LAST:event_btnPrintMouseExited
 
-    public static void main(String args[]) {
-
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
-//            java.util.logging.Logger.getLogger(InputPembeli.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            @Override
-//            public void run() {
-////                InputPembeli dialog = new InputPembeli(new javax.swing.JFrame(), true, null);
-//                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-//                    @Override
-//                    public void windowClosing(java.awt.event.WindowEvent e) {
-//                        System.exit(0);
-//                    }
-//                });
-//                dialog.setVisible(true);
-//            }
-//        });
-    }
+    private void btnPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnPrintActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel background;
-    private javax.swing.JLabel btnCetak;
     private javax.swing.JButton btnKembali;
+    private javax.swing.JButton btnPrint;
     private javax.swing.JTextField inpCari;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane lpSemua;
-    private javax.swing.JPanel pnlMain;
     private javax.swing.JTable tabelData;
     private javax.swing.JLabel valHarga;
     private javax.swing.JLabel valIDBarang;
